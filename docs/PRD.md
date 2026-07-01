@@ -3,8 +3,14 @@
 **Working title:** Nigori Notes *(placeholder — confirm or replace before build)*
 **Owner:** Angela
 **Location / market:** Europe (based in Amsterdam)
-**Version:** 2.0
-**Status:** Website = ready to build (Phase 1). App = specified, build later (Phase 2).
+**Version:** 2.1
+**Status:** Website = Phase 1 built (Direction C, since rejected — new visual direction to be chosen from §5). App = specified, build later (Phase 2).
+
+**Changelog v2.1 (2026-07-01):**
+- Added §2.11 — the site is bilingual: Dutch and English.
+- Added §2.12 — visitor journey: primary call to action and the return loop, previously implicit.
+- Rewrote §5 — Direction C was built and rejected on preview; three new candidate directions (D, E, F) specified with token sets.
+- §2.3 Post model extended with `lang` and `translationKey` for bilingual content.
 
 ---
 
@@ -27,6 +33,8 @@ Sake content online is barbelled: on one end, Japan-based insiders with brewery 
 
 ### 1.3 Audience
 Curious European beginners and early-intermediate drinkers who want to understand *why*, not just be told what to buy. They are comfortable with a bit of depth and reward an "oh, that's what that means" moment.
+
+**Languages:** the site publishes in **both Dutch and English** (see §2.11). English reaches the whole European audience; Dutch serves the home market and no competitor covers it at all — rigorous Dutch-language sake content is effectively an empty niche.
 
 ### 1.4 Non-negotiable brand rules
 1. **The key number is the hero.** Every explainer is anchored to one number found on a sake label (a polishing ratio, a nihonshu-dō value, weeks of fermentation). It is the visual centrepiece of the piece and a first-class field in the data model — not decoration.
@@ -79,6 +87,10 @@ interface Post {
     label: string;         // what it is, e.g. "of the grain remains"
     term?: string;         // the Japanese term, e.g. "seimaibuai" (romaji only)
   };
+
+  // bilingual content (§2.11)
+  lang: 'en' | 'nl';       // language of this file
+  translationKey?: string; // shared id linking a post to its translation, if one exists
 
   series?: 'reading-the-label' | 'process-and-flavour' | 'european-table';
   order?: number;          // position within its series (for the beginner arc)
@@ -157,6 +169,39 @@ Rules: exactly **one loud accent** (two only in the riso direction, by design). 
 - [ ] RSS, sitemap, privacy-analytics, newsletter capture live.
 - [ ] Lighthouse: Performance & Accessibility ≥ 95; AA contrast verified (esp. dark direction).
 - [ ] No literal Japanese motifs present anywhere.
+- [ ] Both languages live: NL under `/nl/`, hreflang pairs correct, language switcher works (§2.11).
+- [ ] Primary CTA present at the end of every post and on home; no screen carries more than one CTA (§2.12).
+
+### 2.11 Languages — Dutch and English
+
+The site is **bilingual from launch**: English and Dutch are both first-class, not one a translation appendix of the other.
+
+- **Why both.** English serves the whole European positioning (§1.1). Dutch serves the home market — and is a genuine moat: there is effectively zero rigorous Dutch-language sake writing, so the Dutch pages can own that niche outright (search included).
+- **URL scheme.** English at the root (`/posts/slug`), Dutch mirrored under `/nl/` (`/nl/posts/slug`). Every translated pair links both ways with `hreflang` alternates; the header carries a small language switcher that goes to the translated equivalent when it exists, otherwise to the other language's home page.
+- **Content model.** Each post file declares `lang`; a `translationKey` joins a post to its counterpart. **Translations may lag** — a post can ship in one language first and gain its twin later. That honesty fits learning-in-public; never block publishing on translation.
+- **Write, don't machine-translate.** The voice (§1.5) must survive in both languages, so the Dutch version is *rewritten* by the author, not run through a translator. Idiom over fidelity.
+- **Terminology.** Sake terms stay in romaji in both languages (seimaibuai is seimaibuai in Dutch too); the glossary (§7) is maintained per language.
+- **Mechanics.** UI microcopy centralised in one strings file per locale; dates localised (`en-GB` / `nl-NL`); RSS feed per language; OG share cards per language (same number, translated label).
+- **Scope guard.** Two languages, no more. No language-negotiation redirects (EU users get a predictable URL, not a guess based on browser headers).
+
+### 2.12 Visitor journey — call to action & the return loop
+
+Answering explicitly: what do we ask a visitor to do, and why would they ever come back?
+
+**The primary CTA is the newsletter.** One action asked of a first-time reader who just finished a post: leave an email. Rationale: it is the only owned channel (no algorithm between us and the reader), it is the natural container for learning-in-public ("here's what clicked this week"), and it converts a one-time visitor from a shared link — our main acquisition path, per §2.1 — into a returning one. Placement: end of every post, home page, about page. **Discipline: one CTA per screen** (rule §1.4.3 applied to conversion): where the newsletter block appears, nothing else competes with it.
+
+**The in-session CTA is "next in series."** Before a reader is ready to subscribe, the job is to get them one post deeper into the arc. Prev/next and the numbered path on home do this; they outrank any other link in prominence.
+
+**Passive affordances:** RSS and the save/share buttons — present, quiet, never competing with the two above.
+
+**Why a reader returns** (the retention logic, in order of importance):
+1. **The arc is a course, not a feed.** A numbered path (§2.9) creates an "I'm on step 2 of 4" pull that a reverse-chronological blog never has. Finishing the arc is a reason to return in itself.
+2. **The newsletter is the return trigger.** Each new explainer lands in the inbox; the email's job is to deliver the "oh, that's what that means" hook, not the whole post.
+3. **Pairing posts are reference material.** The European Table series gets *reused* ("what went with aged Gouda again?") — utility revisits, not just reading revisits. Design these posts to be scannable on the second visit.
+4. **A person mid-journey is serial content.** Learning-in-public means the site has a protagonist; following along is a return motive no listicle site has.
+5. **Later: the app (Phase 2)** is the long-term retention product. The website builds the audience for it; once the app nears, a waitlist becomes the newsletter's sibling CTA — never earlier.
+
+**Measures of success:** newsletter subscribers and their click-through on new-post emails; arc completion (readers who hit all four arc posts); returning-visitor share in the privacy-friendly analytics. Raw traffic remains explicitly *not* the goal (§2.1).
 
 ---
 
@@ -236,41 +281,43 @@ Documented for direction only: affiliate commissions from EU sake retailers on "
 
 ---
 
-## 5. THE ONE DECISION TO MAKE BEFORE BUILDING — visual direction
+## 5. THE ONE DECISION TO MAKE — visual direction *(v2.1: re-opened)*
 
-Pick one. Each is a complete token set; switching later is a token+font swap, not a rewrite. All three keep the number as hero and use zero Japanese motifs.
+**Decision history.** v2.0 offered three directions (A — Warm Editorial, B — Dark Brutalist, C — Risograph Pop). **C was built on 2026-07-01 and rejected by the owner on preview** — too loud/zine-flavoured for the intent. Because the identity lives entirely in the token file, the rejection costs a token swap, not a rebuild; the site renders C until a replacement is chosen. A and B remain available (their token files ship in `src/styles/directions/`), but three **new candidates** below aim in a deliberately different direction: calmer, more grown-up, less hand-made. All keep the number as hero and use zero Japanese motifs; each has a rendered preview and a complete token file in the repo.
 
-**Direction A — Warm Editorial** *(safest for long reading)*
-Calm, trustworthy, recedes behind the words. Light.
+**Direction D — Gallery White** *(most minimal)*
+Near-white field, near-black ink, one cobalt accent, hairline borders. The design disappears entirely behind the number and the words — gallery-catalogue calm. Sharpest contrast with C.
 ```
---bg:#F5F1E8  --ink:#1E1B14  --ink-muted:#6E6656  --accent:#BA7517  --border:#E0D9C8
---font-display: 'Source Serif 4' | 'Newsreader' | 'Lora'
---font-body: same serif   --font-label: a quiet sans   --radius: 8px
-```
-
-**Direction B — Dark Brutalist** *(sharpest / most confrontational)*
-Cool, nightlife, opinionated. Watch contrast on long reads.
-```
---bg:#0F0F0D  --ink:#F3F1E9  --ink-muted:#908E84  --accent:#C5F23C  --border:#2A2A22
---font-display: 'Space Grotesk' (700)   --font-body: system/geometric sans (400)
---font-label: monospace   --radius: 10px   /* lowercase headings; giant number */
+--bg:#FDFDFB  --ink:#131311  --ink-muted:#6B6B66  --accent:#2430E8  --border:#E4E4DE
+--font-display: 'Archivo' | 'Space Grotesk' (600)   --font-body: Inter / system sans
+--font-label: same sans, letterspaced caps   --radius: 4px
+signature: hero number set solid ink at huge size; accent reserved for one detail
 ```
 
-**Direction C — Risograph Pop** *(RECOMMENDED default)* — *stands out AND stays readable*
-Warm, hand-made, print-zine; daylight energy. Best marriage of "edgy/distinctive" with a light, long-read-friendly field. Two accents by design.
+**Direction E — Cellar / Quiet Luxury** *(RECOMMENDED)* — *premium without shouting*
+Warm white paper, espresso ink, a single deep burgundy accent, fine hairlines. Wine-magazine elegance — matches the subject's price point and the adult, trustworthy voice; the kindest of the three to long explainers.
 ```
---bg:#F2E9D2  --ink:#1C1A14  --ink-muted:#6E6552
---accent:#DA4A2C  --accent-2:#1C7A6B  --border:#1C1A14
---font-display: 'Fraunces' (opsz 144)   --font-body: 'Fraunces' 400 or a warm serif
---font-label: monospace   --radius: 999px (pills) / 12px (cards)
-signature: off-register two-colour "stamp" for the hero number
+--bg:#FBF7F0  --ink:#2B2118  --ink-muted:#7D7062  --accent:#7D1D2E  --border:#E7DFD2
+--font-display: 'Newsreader' (opsz) | 'Fraunces' used quietly (500–600)
+--font-body: same serif at 400   --font-label: discreet sans   --radius: 4px
+signature: hero number in burgundy, generous whitespace, hairline rules
 ```
-> Recommendation rationale: you asked for something edgy and standing out. C delivers a distinctive identity while keeping a light field that's kind to text-heavy explainers — where a fully dark scheme can fatigue. If you want maximum edge over readability, choose B. If you want the writing to lead and the design to whisper, choose A. **Set this in the token file before the first build.**
+
+**Direction F — North Sea** *(most contemporary)*
+Pale cool grey-blue field, deep slate ink, one bright signal-orange accent — a Netherlands wink with zero motifs of any nation. Crisp, younger, design-studio energy.
+```
+--bg:#F3F5F7  --ink:#12181F  --ink-muted:#5D6670  --accent:#E8501F  --border:#D4D9DE
+--font-display: 'Space Grotesk' | 'Instrument Sans' (700)   --font-body: clean sans
+--font-label: monospace   --radius: 10px
+signature: hero number solid accent; grid-crisp layout
+```
+
+> Recommendation rationale: **E** best matches what the rejection of C implies — the riso treatment read as loud and hand-made, so the correction is quiet and premium, not a different flavour of loud. E keeps a warm, light reading field (the PRD's long-read requirement), signals the quality of the subject the way a good wine shop does, and works identically in Dutch and English. Choose **D** if even burgundy feels like too much presence; choose **F** if the site should feel young and contemporary rather than refined. As before: the choice is a token file, and the hero-number treatment adapts per direction (the off-register stamp was C-specific; D/E/F set the number solid).
 
 ---
 
 ## 6. Roadmap summary
-1. **Now — Website Phase 1:** confirm name → choose direction (§5) → scaffold Astro + tokens + `HeroNumber` → publish the four-post arc → RSS/OG/newsletter/analytics.
+1. **Now — Website Phase 1:** confirm name → choose direction (§5) → scaffold Astro + tokens + `HeroNumber` → publish the four-post arc → RSS/OG/newsletter/analytics → **add the Dutch locale (§2.11): `/nl/` routes, switcher, translated arc**.
 2. **Next — Website 1.1:** grow the arc; per-post OG cards; light polish.
 3. **Later — App Phase 2 (PWA):** build the isolated pairing engine + manual-input UI + European starter library, sharing the tokens.
 4. **Future:** app v1/v2 (favourites, buy-in-Europe, scan-assist); revisit monetization only once there's an audience.

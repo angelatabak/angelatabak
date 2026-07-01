@@ -1,0 +1,32 @@
+/*
+ * Direction E — Cellar / Quiet Luxury (candidate, PRD §5 v2.1). NOT ACTIVE.
+ * Wine-magazine elegance: warm white paper, espresso ink, one deep burgundy
+ * accent, fine hairlines. Adult, premium, kind to long reads — the feel of
+ * a good wine shop rather than a zine. Suits the sake subject's price point.
+ * Fonts: display 'Newsreader' (opsz, 500–600) or Fraunces used quietly;
+ * body the same serif at 400; labels a discreet sans or small caps.
+ */
+:root {
+  --bg: #fbf7f0;
+  --ink: #2b2118;
+  --ink-muted: #7d7062;
+  --accent: #7d1d2e;
+  --accent-2: transparent; /* hairlines and one wine accent — nothing else */
+  --border: #e7dfd2;
+
+  --font-display: 'Fraunces Variable', 'Newsreader', Georgia, serif;
+  --font-body: 'Fraunces Variable', 'Newsreader', Georgia, serif;
+  --font-label: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius: 4px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}
