@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroNumber from '../components/HeroNumber.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts, formatDate } from '../lib/posts';
+import { SERIES } from '../lib/series';
+import { BEGINNER_ARC } from '../data/arc';
+
+const posts = await getPublishedPosts();
+const arcPosts = BEGINNER_ARC.map((slug) => posts.find((p) => p.data.slug === slug)).filter(
+  (p) => p !== undefined,
+);
+const arcSlugs = new Set(BEGINNER_ARC);
+const latestBeyondArc = posts.filter((p) => !arcSlugs.has(p.data.slug)).slice(0, 4);
+---
+
+<BaseLayout>
+  <section class="wrap section hero">
+    <p class="kicker">Sake, explained clearly — from Europe</p>
+    <h1 class="hero-title">
+      Every sake label has one number that tells you what's inside.<br />
+      <span class="hero-title-accent">Nobody explains it. Let's fix that.</span>
+    </h1>
+    <p class="hero-sub">
+      No brewery tours, no insider posturing, no "5 sakes to try" lists. One concept per post,
+      written from Amsterdam while I learn this myself — until it clicks for both of us.
+    </p>
+  </section>
+
+  <section class="wrap section" aria-labelledby="arc-heading">
+    <p class="kicker">Start here</p>
+    <h2 id="arc-heading">The beginner arc — read in order</h2>
+    <p class="arc-intro">
+      The path through the sake learning curve that I wish had existed: each post hands you one
+      idea the next one builds on.
+    </p>
+    <ol class="arc">
+      {
+        arcPosts.map((post, i) => (
+          <li class="arc-step">
+            <span class="arc-index" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div class="arc-number">
+              <HeroNumber
+                value={post.data.heroNumber.value}
+                unit={post.data.heroNumber.unit}
+                label={post.data.heroNumber.label}
+                size="card"
+              />
+            </div>
+            <div class="arc-body">
+              {post.data.series && <p class="kicker">{SERIES[post.data.series].name}</p>}
+              <h3 class="arc-title">
+                <a href={`/posts/${post.data.slug}`}>{post.data.title}</a>
+              </h3>
+              <p class="arc-excerpt">{post.data.excerpt}</p>
+              <p class="meta">
+                {formatDate(post.data.date)} · {post.data.readingMinutes} min read
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    latestBeyondArc.length > 0 && (
+      <section class="wrap section" aria-labelledby="latest-heading">
+        <p class="kicker">Beyond the arc</p>
+        <h2 id="latest-heading">Latest posts</h2>
+        <div class="latest-grid">
+          {latestBeyondArc.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="wrap section">
+    <NewsletterForm />
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block-start: var(--space-5);
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 5vw, 3.1rem);
+    max-width: 24em;
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .hero-title-accent {
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--ink-muted);
+    max-width: 34em;
+  }
+
+  .arc-intro {
+    color: var(--ink-muted);
+    max-width: 40em;
+    margin-block-end: var(--space-4);
+  }
+
+  .arc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .arc-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 11rem 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    padding-block: var(--space-4);
+    border-top: 2px solid var(--border);
+  }
+
+  .arc-step:last-child {
+    border-bottom: 2px solid var(--border);
+  }
+
+  .arc-index {
+    font-family: var(--font-label);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--bg);
+    background: var(--ink);
+    border-radius: var(--radius-pill);
+    padding: 0.35em 0;
+    text-align: center;
+    margin-block-start: 0.3rem;
+  }
+
+  .arc-title {
+    font-size: 1.45rem;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .arc-title a {
+    text-decoration: none;
+  }
+
+  .arc-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .arc-title a:hover {
+    color: var(--accent);
+  }
+
+  .arc-excerpt {
+    color: var(--ink-muted);
+    max-width: 52ch;
+  }
+
+  .latest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--space-3);
+    margin-block-start: var(--space-3);
+  }
+
+  @media (max-width: 44rem) {
+    .arc-step {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .arc-index {
+      width: 3.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import HeroNumber from './HeroNumber.astro';
+import { SERIES } from '../lib/series';
+import { formatDate, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, slug, excerpt, date, readingMinutes, heroNumber, series } = post.data;
+---
+
+<article class="card">
+  <HeroNumber
+    value={heroNumber.value}
+    unit={heroNumber.unit}
+    label={heroNumber.label}
+    term={heroNumber.term}
+    size="card"
+  />
+  <div class="card-body">
+    {series && <p class="kicker">{SERIES[series].name}</p>}
+    <h3 class="card-title">
+      <a href={`/posts/${slug}`}>{title}</a>
+    </h3>
+    <p class="card-excerpt">{excerpt}</p>
+    <p class="meta">{formatDate(date)} · {readingMinutes} min read</p>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    transition: box-shadow 120ms ease;
+  }
+
+  .card:hover,
+  .card:focus-within {
+    box-shadow: 6px 6px 0 var(--accent-2);
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  /* stretch the primary link over the whole card */
+  .card-title a {
+    text-decoration: none;
+  }
+
+  .card-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+
+  .card-excerpt {
+    color: var(--ink-muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .meta {
+    margin: 0;
+  }
+</style>

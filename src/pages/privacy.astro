@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout title="Privacy" description="What this site knows about you: almost nothing.">
+  <section class="wrap--reading wrap section prose">
+    <p class="kicker">Privacy</p>
+    <h1>Short, because there's little to say</h1>
+
+    <p>
+      <strong>No cookies, no consent banner needed.</strong> {SITE.name} uses privacy-friendly,
+      cookieless analytics that count visits in aggregate without identifying you, storing
+      anything on your device, or following you across the web.
+    </p>
+
+    <p>
+      <strong>Newsletter.</strong> If you subscribe, your email address is stored by the
+      newsletter provider solely to send you the posts. Nothing else about you is collected,
+      and every email contains an unsubscribe link that works immediately.
+    </p>
+
+    <p>
+      <strong>No ads, no trackers, no data sales.</strong> There is nothing to opt out of,
+      because nothing is opted in.
+    </p>
+
+    <p class="meta">
+      Questions? Say hello via the newsletter reply address once you're subscribed.
+    </p>
+  </section>
+</BaseLayout>

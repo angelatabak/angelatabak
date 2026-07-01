@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nigorinotes.com/sitemap-index.xml

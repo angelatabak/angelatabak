@@ -1,0 +1,156 @@
+---
+import { render } from 'astro:content';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroNumber from '../../components/HeroNumber.astro';
+import ShareSave from '../../components/ShareSave.astro';
+import { getPublishedPosts, seriesNeighbours, formatDate } from '../../lib/posts';
+import { SERIES } from '../../lib/series';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { post } = Astro.props;
+const { title, excerpt, date, readingMinutes, heroNumber, series, tags } = post.data;
+const { Content } = await render(post);
+
+const allPosts = await getPublishedPosts();
+const { prev, next } = seriesNeighbours(allPosts, post);
+---
+
+<BaseLayout
+  title={title}
+  description={excerpt}
+  ogImage={`/og/${post.data.slug}.png`}
+  ogType="article"
+>
+  <article>
+    <header class="wrap--reading wrap post-header">
+      {
+        series && (
+          <p class="kicker">
+            <a href={`/series/${series}`}>{SERIES[series].name}</a>
+          </p>
+        )
+      }
+      <HeroNumber
+        value={heroNumber.value}
+        unit={heroNumber.unit}
+        label={heroNumber.label}
+        term={heroNumber.term}
+        size="hero"
+      />
+      <h1 class="post-title">{title}</h1>
+      <p class="meta">
+        <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time> ·{' '}
+        {readingMinutes} min read
+      </p>
+    </header>
+
+    <div class="wrap--reading wrap prose">
+      <Content />
+    </div>
+
+    <footer class="wrap--reading wrap post-footer">
+      {
+        tags.length > 0 && (
+          <p class="tags">
+            {tags.map((tag) => (
+              <a class="pill" href={`/tags/${tag}`}>
+                {tag}
+              </a>
+            ))}
+          </p>
+        )
+      }
+
+      <ShareSave title={title} />
+
+      {
+        (prev || next) && (
+          <nav class="series-nav" aria-label="More in this series">
+            {prev ? (
+              <a class="series-link" href={`/posts/${prev.data.slug}`} rel="prev">
+                <span class="kicker">← Previous in series</span>
+                <span class="series-link-title">{prev.data.title}</span>
+              </a>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <a class="series-link series-link--next" href={`/posts/${next.data.slug}`} rel="next">
+                <span class="kicker">Next in series →</span>
+                <span class="series-link-title">{next.data.title}</span>
+              </a>
+            )}
+          </nav>
+        )
+      }
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header {
+    padding-block-start: var(--space-4);
+    margin-block-end: var(--space-4);
+  }
+
+  .post-header .kicker {
+    margin-block-end: var(--space-2);
+  }
+
+  .post-title {
+    font-size: clamp(1.9rem, 5vw, 2.9rem);
+    margin-block-start: var(--space-3);
+  }
+
+  .post-footer {
+    margin-block-start: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+  }
+
+  .series-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    border-top: 2px solid var(--border);
+    padding-block-start: var(--space-3);
+  }
+
+  .series-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-decoration: none;
+    max-width: 45%;
+  }
+
+  .series-link--next {
+    text-align: right;
+    margin-inline-start: auto;
+  }
+
+  .series-link-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .series-link:hover .series-link-title {
+    color: var(--accent);
+  }
+</style>

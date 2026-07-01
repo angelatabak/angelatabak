@@ -1,0 +1,91 @@
+---
+import { SITE, newsletterAction } from '../config';
+
+const action = newsletterAction();
+---
+
+<section class="newsletter" aria-label="Newsletter">
+  <h2 class="newsletter-title">Learn sake with me, one number at a time</h2>
+  <p class="newsletter-copy">
+    A short email whenever a new explainer is published — what clicked, what I got wrong first,
+    and nothing else. No spam, no tracking, unsubscribe any time.
+  </p>
+  {
+    action ? (
+      <form {action} method="post" class="newsletter-form">
+        <label class="visually-hidden" for="newsletter-email">
+          Email address
+        </label>
+        <input
+          id="newsletter-email"
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          autocomplete="email"
+        />
+        <button type="submit" class="pill pill--accent">Subscribe</button>
+      </form>
+    ) : (
+      <p class="meta">
+        The newsletter is warming up — in the meantime, <a href="/rss.xml">subscribe via RSS</a> so
+        you don't miss the next post from {SITE.name}.
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .newsletter {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 8px 8px 0 var(--accent);
+    padding: var(--space-4);
+  }
+
+  .newsletter-title {
+    font-size: 1.5rem;
+  }
+
+  .newsletter-copy {
+    color: var(--ink-muted);
+    max-width: 46ch;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-block-start: var(--space-2);
+  }
+
+  .newsletter-form input {
+    flex: 1 1 16rem;
+    font: inherit;
+    font-family: var(--font-label);
+    font-size: 0.9rem;
+    padding: 0.6em 1em;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .newsletter-form input::placeholder {
+    color: var(--ink-muted);
+  }
+
+  .newsletter-form button {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

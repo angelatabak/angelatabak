@@ -1,0 +1,191 @@
+---
+// Direction C fonts (PRD §5): Fraunces variable, wght+opsz axes, latin
+// subsets, self-hosted via fontsource, font-display: swap. If you switch
+// visual direction, swap these two imports along with tokens.css.
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import { SITE } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Path to the OG image for this page, e.g. `/og/some-slug.png` */
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = SITE.description,
+  ogImage = '/og/default.png',
+  ogType = 'website',
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageAbs = new URL(ogImage, Astro.site);
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE.name}
+      href={new URL('rss.xml', Astro.site)}
+    />
+
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title ?? SITE.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? SITE.name} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+
+    {/* Privacy-friendly, cookieless analytics (PRD §2.2) — only when configured. */}
+    {
+      plausibleDomain && (
+        <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="wrap site-nav" aria-label="Main">
+        <a class="wordmark" href="/">
+          <span class="wordmark-stamp" aria-hidden="true"></span>
+          {SITE.name.toLowerCase()}
+        </a>
+        <div class="nav-links">
+          <a href="/posts">Posts</a>
+          <a href="/about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p class="meta">
+          {SITE.name} — {SITE.tagline}<br />
+          Written from Amsterdam. Learning in public.
+        </p>
+        <p class="meta footer-links">
+          <a href="/rss.xml">RSS</a> · <a href="/posts">All posts</a> ·
+          <a href="/about">About</a> · <a href="/privacy">Privacy</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    border-bottom: 2px solid var(--border);
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--space-2);
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  /* The riso stamp mark: two off-register dots. Abstract, no motifs (PRD §1.4). */
+  .wordmark-stamp {
+    position: relative;
+    width: 0.9em;
+    height: 0.9em;
+    flex: none;
+  }
+
+  .wordmark-stamp::before,
+  .wordmark-stamp::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+  }
+
+  .wordmark-stamp::before {
+    background: var(--accent-2);
+    transform: translate(0.12em, 0.12em);
+  }
+
+  .wordmark-stamp::after {
+    background: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-3);
+    font-family: var(--font-label);
+    font-size: 0.875rem;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .site-footer {
+    border-top: 2px solid var(--border);
+    margin-block-start: var(--space-6);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: space-between;
+    padding-block: var(--space-3);
+  }
+
+  .footer-links a {
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+</style>

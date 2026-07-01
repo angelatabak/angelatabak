@@ -1,0 +1,131 @@
+---
+/**
+ * The signature component (PRD §2.6): the key number from the label,
+ * rendered as an off-register two-colour riso stamp (Direction C).
+ * Used full-size at the top of every post and scaled down on cards.
+ */
+interface Props {
+  value: string;
+  unit?: string | undefined;
+  label: string;
+  term?: string | undefined;
+  size?: 'hero' | 'card';
+}
+
+const { value, unit, label, term, size = 'hero' } = Astro.props;
+---
+
+<div class:list={['hero-number', `hero-number--${size}`]}>
+  <span class="figure">
+    {/* second pass of the press, slightly off-register — decorative */}
+    <span class="stamp ghost" aria-hidden="true">
+      {value}{unit && <span class="unit">{unit}</span>}
+    </span>
+    <span class="stamp print">
+      {value}{unit && <span class="unit">{unit}</span>}
+    </span>
+  </span>
+  <span class="caption">
+    <span class="label">{label}</span>
+    {term && <span class="term">{term}</span>}
+  </span>
+</div>
+
+<style>
+  .hero-number {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .figure {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variation-settings: 'WONK' 1;
+  }
+
+  .stamp {
+    display: inline-block;
+  }
+
+  .print {
+    position: relative;
+    color: var(--accent);
+    mix-blend-mode: multiply;
+  }
+
+  .ghost {
+    position: absolute;
+    inset: 0;
+    color: var(--accent-2);
+    transform: translate(0.045em, 0.055em);
+    mix-blend-mode: multiply;
+    user-select: none;
+  }
+
+  .unit {
+    font-size: 0.45em;
+    font-weight: 600;
+    margin-inline-start: 0.12em;
+  }
+
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.75em;
+  }
+
+  .label {
+    font-family: var(--font-label);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .term {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--ink-muted);
+  }
+
+  /* full-size: the focal point above the headline (PRD §2.6) */
+  .hero-number--hero .figure {
+    font-size: clamp(5rem, 17vw, 10rem);
+  }
+
+  .hero-number--hero .caption {
+    margin-block-start: var(--space-1);
+  }
+
+  .hero-number--hero .label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .hero-number--hero .term {
+    font-size: 1rem;
+  }
+
+  /* card size: the brand read at a glance in listings */
+  .hero-number--card .figure {
+    font-size: 2.75rem;
+  }
+
+  .hero-number--card .caption {
+    margin-block-start: 0.35rem;
+  }
+
+  .hero-number--card .label {
+    font-size: 0.625rem;
+  }
+
+  .hero-number--card .term {
+    display: none;
+  }
+</style>

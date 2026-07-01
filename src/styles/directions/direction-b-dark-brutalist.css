@@ -1,0 +1,23 @@
+/*
+ * Direction B — Dark Brutalist (PRD §5). NOT ACTIVE.
+ * To activate: copy these values into src/styles/tokens.css and swap the
+ * font import in BaseLayout.astro to Space Grotesk (display) + a geometric
+ * sans body. Headings lowercase; giant hero number. Re-verify AA contrast
+ * on long reads (PRD flags this direction as the one to watch).
+ */
+:root {
+  --bg: #0f0f0d;
+  --ink: #f3f1e9;
+  --ink-muted: #908e84;
+  --accent: #c5f23c;
+  --accent-2: #c5f23c;
+  --border: #2a2a22;
+
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-label: ui-monospace, Menlo, Consolas, monospace;
+
+  --radius: 10px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+}
