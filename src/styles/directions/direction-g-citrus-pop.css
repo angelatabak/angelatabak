@@ -1,0 +1,34 @@
+/*
+ * Direction G — Citrus Pop (candidate, "fun set"). NOT ACTIVE.
+ * Full-sun yellow field, ink black, red + blue accents: primary-colour
+ * energy with an unmistakable (but motif-free) Dutch art-school wink.
+ * The loudest light option — reads like a poster, still black-on-yellow
+ * for the long-read body. Keeps the off-register stamp, now red-over-blue.
+ * Fonts: a chunky display serif (Fraunces 900, WONK on) or a fat grotesk;
+ * labels monospace.
+ */
+:root {
+  --bg: #ffe14d;
+  --ink: #171204;
+  --ink-muted: #6b5c17;
+  --accent: #e4372e; /* poster red */
+  --accent-2: #1d3feb; /* cobalt blue — second pass of the stamp */
+  --border: #171204;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Fraunces Variable', Georgia, serif;
+  --font-label: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+  --stamp-blend: multiply;
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}

@@ -312,7 +312,38 @@ Pale cool grey-blue field, deep slate ink, one bright signal-orange accent — a
 signature: hero number solid accent; grid-crisp layout
 ```
 
-> Recommendation rationale: **E** best matches what the rejection of C implies — the riso treatment read as loud and hand-made, so the correction is quiet and premium, not a different flavour of loud. E keeps a warm, light reading field (the PRD's long-read requirement), signals the quality of the subject the way a good wine shop does, and works identically in Dutch and English. Choose **D** if even burgundy feels like too much presence; choose **F** if the site should feel young and contemporary rather than refined. As before: the choice is a token file, and the hero-number treatment adapts per direction (the off-register stamp was C-specific; D/E/F set the number solid).
+> Recommendation rationale (calm set): **E** reads premium and is kindest to long explainers; **D** if even burgundy is too much presence; **F** for young and contemporary. The hero-number treatment adapts per direction (D/E/F set the number solid).
+
+**v2.1 owner feedback on the calm set: "more excitement, more fun."** Three louder candidates follow — playful, but deliberately *not* the cream-riso-zine flavour of the rejected C. All keep the off-register two-colour stamp (it earns its keep as fun); a `--stamp-blend` token lets it glow (`screen`) on dark fields.
+
+**Direction G — Citrus Pop** *(loudest light)*
+Full-sun yellow, ink black, red + cobalt accents: primary-colour poster energy with a motif-free Dutch art-school wink. Black-on-yellow keeps body text highly readable.
+```
+--bg:#FFE14D  --ink:#171204  --ink-muted:#6B5C17
+--accent:#E4372E (red)  --accent-2:#1D3FEB (cobalt)  --border:#171204
+--font-display: chunky serif (Fraunces 900, WONK) or fat grotesk
+--font-label: monospace   --radius: 12px   stamp: red-over-cobalt
+```
+
+**Direction H — Grape Soda** *(fun-dark)*
+Deep violet night, hot pink + lime: izakaya-at-midnight party energy — dark without brutalism. Same long-read contrast caveat as old B.
+```
+--bg:#1D1033  --ink:#F5EFFF  --ink-muted:#A99BC7
+--accent:#FF4FA3 (hot pink)  --accent-2:#B6FF3C (lime)  --border:#3A2A5E
+--font-display: heavy grotesk or high-contrast serif   --font-label: monospace
+--radius: 14px   --stamp-blend: screen (the number glows)
+```
+
+**Direction I — Bubblegum Fizz** *(sweetest)*
+Candy-pink field, plum ink, hot pink + teal: fizzy and joyful, and quietly on-name — nigori *is* the cloudy pale one. Softest of the fun set for long reads.
+```
+--bg:#FFE4EE  --ink:#2A1220  --ink-muted:#7C4E63
+--accent:#E81F76 (hot pink)  --accent-2:#00A98F (teal)  --border:#2A1220
+--font-display: Fraunces (WONK) or rounded sans   --font-label: monospace
+--radius: 16px   stamp: pink-over-teal
+```
+
+> Recommendation rationale (fun set): **G — Citrus Pop.** It has the most *daylight* fun — energetic without tipping into nightclub (H) or sugary (I) — the yellow field stays honest for reading, and the red/cobalt/black palette gives the hero number real poster impact that survives shrinking to an OG card in a feed. Choose **H** for maximum attitude, accepting the dark-field reading trade-off; choose **I** if the site should charm rather than shout.
 
 ---
 
