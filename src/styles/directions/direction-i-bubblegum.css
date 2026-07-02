@@ -1,0 +1,34 @@
+/*
+ * Direction I — Bubblegum Fizz (candidate, "fun set"). NOT ACTIVE.
+ * Candy-pink field, deep plum ink, hot pink + teal accents: sweet,
+ * fizzy, joyful — nigori-cloudy pink is even quietly on-name. The most
+ * playful light option that still keeps a soft field for long reads.
+ * Keeps the off-register stamp, hot-pink-over-teal.
+ * Fonts: Fraunces with WONK on (bouncy serif) or a rounded sans display;
+ * labels monospace.
+ */
+:root {
+  --bg: #ffe4ee;
+  --ink: #2a1220;
+  --ink-muted: #7c4e63;
+  --accent: #e81f76; /* hot pink */
+  --accent-2: #00a98f; /* teal — second pass of the stamp */
+  --border: #2a1220;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Fraunces Variable', Georgia, serif;
+  --font-label: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --radius: 16px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+  --stamp-blend: multiply;
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}

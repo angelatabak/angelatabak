@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout
+  title="About"
+  description="Why this site exists: sake explained from outside the insider bubble, one concept at a time, while I learn it myself."
+>
+  <section class="wrap--reading wrap section prose">
+    <p class="kicker">About</p>
+    <h1>I'm learning sake in public. That's the whole idea.</h1>
+
+    <p>
+      <em>
+        (Draft copy — Angela, rewrite this in your own words before launch. The structure follows
+        the PRD; the voice needs to be yours.)
+      </em>
+    </p>
+
+    <p>
+      Most sake writing comes from two places. On one end: people in Japan with brewery access,
+      writing for other insiders. On the other: listicles that tell you five bottles to buy
+      without ever explaining anything. If you live in Europe and want to actually
+      <em>understand</em> sake — why a label number matters, why one bottle tastes like flowers
+      and another like a farmhouse — there's almost nothing written for you.
+    </p>
+
+    <p>{SITE.name} sits in that gap, on purpose.</p>
+
+    <h2>What you'll get here</h2>
+    <p>
+      One idea per post, explained until it clicks. Every explainer is anchored to a single
+      number you can find on a real bottle — a polishing ratio, a sake-meter value, weeks of
+      fermentation — because the numbers are the fastest honest way into this subject. No
+      cherry-blossom clichés, no pretending I've toured breweries I haven't.
+    </p>
+
+    <h2>What I am not</h2>
+    <p>
+      I'm not a certified sake sommelier, I don't live in Japan, and I have no importer
+      sponsoring these pages. I'm a curious drinker in Amsterdam working through this subject
+      properly, writing down each concept once I finally understand it — including what I got
+      wrong the first time. That last part is a feature, not an apology: the misunderstandings
+      of a fellow beginner are usually the exact things nobody bothers to explain.
+    </p>
+
+    <h2>Where to start</h2>
+    <p>
+      The <a href="/">beginner arc on the home page</a> is the ordered path — four posts that
+      hand each other one idea at a time. Or browse <a href="/posts">all posts</a> and
+      <a href="/rss.xml">subscribe via RSS</a>.
+    </p>
+  </section>
+
+  <section class="wrap--reading wrap section">
+    <NewsletterForm />
+  </section>
+</BaseLayout>

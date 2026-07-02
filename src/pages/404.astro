@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroNumber from '../components/HeroNumber.astro';
+---
+
+<BaseLayout title="Page not found" description="Nothing at this address.">
+  <section class="wrap section notfound">
+    <HeroNumber value="0" label="posts at this address" size="hero" />
+    <h1>This page doesn't exist — or hasn't been written yet.</h1>
+    <p>
+      Head back to <a href="/">the beginner arc</a> or browse <a href="/posts">all posts</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block-start: var(--space-5);
+  }
+
+  .notfound h1 {
+    margin-block-start: var(--space-3);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    max-width: 24em;
+  }
+</style>

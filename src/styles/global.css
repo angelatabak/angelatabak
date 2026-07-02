@@ -1,0 +1,216 @@
+/* Base styles. All values come from tokens.css — never hard-code identity here. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 var(--space-2);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* layout ------------------------------------------------------------- */
+
+.wrap {
+  width: min(100% - 2.5rem, 68rem);
+  margin-inline: auto;
+}
+
+.wrap--reading {
+  width: min(100% - 2.5rem, var(--measure));
+}
+
+.section {
+  margin-block: var(--space-5);
+}
+
+/* label typography — kickers, meta, tags (PRD --font-label) ----------- */
+
+.kicker {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+
+.kicker a {
+  text-decoration: none;
+}
+
+.kicker a:hover {
+  color: var(--accent);
+}
+
+.meta {
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+}
+
+/* pills — the riso stamp vocabulary ----------------------------------- */
+
+.pill {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  padding: 0.3em 0.9em;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  background: transparent;
+  color: var(--ink);
+}
+
+a.pill:hover,
+button.pill:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--bg);
+}
+
+.pill--accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+/* prose — the reading experience (PRD §2.8) --------------------------- */
+
+.prose {
+  font-size: 1.125rem;
+}
+
+.prose > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  margin-block-start: var(--space-4);
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+  margin-block-start: var(--space-3);
+}
+
+.prose blockquote {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--accent-2);
+  font-style: normal;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-inline-start: 1.4em;
+}
+
+.prose li + li {
+  margin-block-start: 0.4em;
+}
+
+.prose hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  width: 6rem;
+  margin: var(--space-4) auto;
+}
+
+.prose em {
+  font-variation-settings: 'WONK' 1;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+/* skip link + reduced motion ------------------------------------------ */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.6em 1.2em;
+  border-radius: var(--radius-pill);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  left: var(--space-2);
+  top: var(--space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

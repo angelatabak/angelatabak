@@ -1,0 +1,68 @@
+---
+/**
+ * The save + share affordance (PRD §2.1: success = posts get saved and sent
+ * to a friend). Share uses the native share sheet where available; both
+ * buttons fall back to copying a clean permalink. Progressive enhancement:
+ * without JS the permalink is still shown as plain text.
+ */
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="share-save" data-title={title}>
+  <span class="kicker">Worth keeping?</span>
+  <button type="button" class="pill" data-share>Send to a friend</button>
+  <button type="button" class="pill" data-copy>Copy link to save</button>
+  <span class="meta" data-feedback role="status" aria-live="polite"></span>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('.share-save')) {
+    const title = root.dataset.title ?? document.title;
+    const url = window.location.origin + window.location.pathname;
+    const feedback = root.querySelector<HTMLElement>('[data-feedback]')!;
+
+    const copy = async (message: string) => {
+      await navigator.clipboard.writeText(url);
+      feedback.textContent = message;
+    };
+
+    root.querySelector('[data-share]')?.addEventListener('click', async () => {
+      try {
+        if (navigator.share) {
+          await navigator.share({ title, url });
+        } else {
+          await copy('Link copied — paste it anywhere.');
+        }
+      } catch {
+        /* user dismissed the share sheet */
+      }
+    });
+
+    root.querySelector('[data-copy]')?.addEventListener('click', () => {
+      copy('Saved to your clipboard.').catch(() => {
+        feedback.textContent = url;
+      });
+    });
+  }
+</script>
+
+<style>
+  .share-save {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .share-save .kicker {
+    margin-inline-end: var(--space-1);
+  }
+
+  .share-save button {
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,39 @@
+/*
+ * DESIGN TOKENS — the single source of visual truth (PRD §2.7).
+ *
+ * Active direction: C — Risograph Pop (PRD §5, the recommended default).
+ * To switch direction: replace the values below with a set from
+ * src/styles/directions/ and swap the font import in BaseLayout.astro.
+ * Nothing else in the codebase should hard-code a colour, font, or radius.
+ *
+ * Rules (PRD §2.7): one loud accent (two only in this riso direction, by
+ * design); body copy always meets WCAG AA on --bg; no literal Japanese
+ * motifs anywhere.
+ */
+:root {
+  /* colour */
+  --bg: #f2e9d2; /* warm cream field */
+  --ink: #1c1a14; /* primary text — 14.9:1 on --bg */
+  --ink-muted: #6e6552; /* secondary text — 4.9:1 on --bg */
+  --accent: #da4a2c; /* riso red-orange: the loud one */
+  --accent-2: #1c7a6b; /* riso teal: second pass of the press */
+  --border: #1c1a14; /* zine linework is ink, not grey */
+
+  /* type */
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-label: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* form */
+  --radius: 12px; /* cards */
+  --radius-pill: 999px; /* pills, tags, buttons */
+  --measure: 66ch; /* reading column, PRD §2.5 */
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}

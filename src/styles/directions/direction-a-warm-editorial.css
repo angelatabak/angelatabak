@@ -1,0 +1,30 @@
+/*
+ * Direction A — Warm Editorial (PRD §5). NOT ACTIVE.
+ * To activate: copy these values into src/styles/tokens.css and swap the
+ * font import in BaseLayout.astro to a Source Serif 4 / Newsreader / Lora
+ * fontsource package. --accent-2 falls back to --accent (one loud colour).
+ */
+:root {
+  --bg: #f5f1e8;
+  --ink: #1e1b14;
+  --ink-muted: #6e6656;
+  --accent: #ba7517;
+  --accent-2: #ba7517;
+  --border: #e0d9c8;
+
+  --font-display: 'Source Serif 4 Variable', Georgia, serif;
+  --font-body: 'Source Serif 4 Variable', Georgia, serif;
+  --font-label: system-ui, sans-serif;
+
+  --radius: 8px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}

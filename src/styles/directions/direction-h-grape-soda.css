@@ -1,0 +1,34 @@
+/*
+ * Direction H — Grape Soda (candidate, "fun set"). NOT ACTIVE.
+ * Deep violet night, hot-pink + lime accents: izakaya-at-midnight energy
+ * without a single motif. The fun-dark option — party, not brutalist.
+ * Watch AA contrast on long reads (same caveat as old Direction B).
+ * The stamp blends with `screen` so the two passes glow on the dark field.
+ * Fonts: heavy grotesk display ('Space Grotesk' 700 / 'Clash Display');
+ * labels monospace.
+ */
+:root {
+  --bg: #1d1033;
+  --ink: #f5efff;
+  --ink-muted: #a99bc7;
+  --accent: #ff4fa3; /* hot pink */
+  --accent-2: #b6ff3c; /* lime — second pass of the stamp */
+  --border: #3a2a5e;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-label: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --radius: 14px;
+  --radius-pill: 999px;
+  --measure: 66ch;
+  --stamp-blend: screen;
+
+  /* rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+}

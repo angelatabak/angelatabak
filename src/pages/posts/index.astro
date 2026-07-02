@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts, allTags } from '../../lib/posts';
+import { SERIES, SERIES_IDS } from '../../lib/series';
+
+const posts = await getPublishedPosts();
+const tags = allTags(posts);
+---
+
+<BaseLayout title="All posts" description="Every explainer, newest first.">
+  <section class="wrap section">
+    <p class="kicker">Archive</p>
+    <h1>All posts</h1>
+
+    <div class="filters">
+      <p class="kicker filter-label">By series</p>
+      <p class="filter-pills">
+        {SERIES_IDS.map((id) => <a class="pill" href={`/series/${id}`}>{SERIES[id].name}</a>)}
+      </p>
+      <p class="kicker filter-label">By tag</p>
+      <p class="filter-pills">
+        {tags.map((tag) => <a class="pill" href={`/tags/${tag}`}>{tag}</a>)}
+      </p>
+    </div>
+
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filters {
+    margin-block: var(--space-3) var(--space-4);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .filter-label {
+    margin: 0;
+  }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--space-3);
+  }
+</style>
