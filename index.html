@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Siña Papiamentu</title>
+</head>
+<body>
+<style>
+:root{
+  --bg:#F3F7F6; --panel:#FFFFFF; --panel2:#EAF1EF; --ink:#14323B; --muted:#5E7A80;
+  --line:#D9E5E2; --sea:#0E7C86; --sea-deep:#0A5C64; --sea-soft:#DDEDEE;
+  --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
+  --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
+  --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0C1E24; --panel:#122B33; --panel2:#0F252C; --ink:#E6F1EF; --muted:#8FACAE;
+    --line:#1F3F48; --sea:#3FB8C4; --sea-deep:#5ECBD6; --sea-soft:#123A42;
+    --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
+    --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
+    --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F3F7F6; --panel:#FFFFFF; --panel2:#EAF1EF; --ink:#14323B; --muted:#5E7A80;
+  --line:#D9E5E2; --sea:#0E7C86; --sea-deep:#0A5C64; --sea-soft:#DDEDEE;
+  --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
+  --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
+  --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#0C1E24; --panel:#122B33; --panel2:#0F252C; --ink:#E6F1EF; --muted:#8FACAE;
+  --line:#1F3F48; --sea:#3FB8C4; --sea-deep:#5ECBD6; --sea-soft:#123A42;
+  --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
+  --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
+  --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Avenir Next","Segoe UI",Seravek,system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.pap{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; color:var(--pap)}
+#shell{max-width:720px;margin:0 auto;padding:0 16px 96px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:6px}
+input{font:inherit;color:var(--ink)}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 6px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h1{font-size:20px;font-weight:700}
+.brand h1 .pap{font-weight:400;font-style:italic}
+.facades{display:flex;align-items:flex-end;gap:2px;height:26px}
+.facades span{width:9px;border-radius:1px 1px 0 0;display:block}
+.facades span::before{content:""}
+.hbtns{display:flex;gap:6px}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--panel);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:16px}
+.iconbtn[aria-pressed="false"]{opacity:.45}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat.sun b{color:var(--sun-ink)}
+.stat.due b{color:var(--sea-deep)}
+
+/* cards / panels */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  background:var(--sea);color:#fff;font-weight:700;font-size:16px;border-radius:12px;padding:14px;margin:6px 0}
+:root[data-theme="dark"] .cta{color:#07242a}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cta{color:#07242a} }
+.cta.quiet{background:var(--panel);color:var(--sea-deep);border:1px solid var(--line)}
+.cta:disabled{opacity:.5;cursor:default}
+
+/* deck list */
+.decks{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.deck{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;text-align:left;box-shadow:var(--shadow)}
+.deck .em{font-size:22px;width:32px;text-align:center;flex:none}
+.deck .dt{flex:1;min-width:0}
+.deck .dt b{display:block;font-size:15px}
+.deck .dt small{color:var(--muted);font-size:12.5px}
+.bar{display:block;height:5px;border-radius:3px;background:var(--panel2);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px;background:var(--sea)}
+.bar i.full{background:var(--sun)}
+.deck .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+
+/* session */
+.sess-top{display:flex;align-items:center;gap:12px;padding:16px 0 10px}
+.sess-top .bar{flex:1;margin:0;height:8px;border-radius:4px}
+.xbtn{font-size:20px;color:var(--muted);width:34px;height:34px}
+.qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 20px;
+  box-shadow:var(--shadow);text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.qcard .big{font-size:34px;line-height:1.15}
+.qcard .mid{font-size:22px}
+.qcard .lit{color:var(--muted);font-size:14px;font-style:italic}
+.qcard .note{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;margin-top:4px}
+.speak{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;
+  background:var(--sea-soft);color:var(--sea-deep);font-size:15px;margin:0 auto}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;text-align:left;
+  font-size:16px;box-shadow:var(--shadow)}
+.opt.right{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.grade{border-radius:12px;padding:12px 6px;font-weight:700;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}
+.grade small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.grade.again{color:var(--bad)} .grade.good{color:var(--sea-deep)} .grade.easy{color:var(--good)}
+.typebox{display:flex;gap:8px;margin-top:14px}
+.typebox input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px}
+.typebox button{background:var(--sea);color:#fff;border-radius:12px;padding:0 18px;font-weight:700}
+.accents{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.accents button{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:4px 10px;font-size:15px}
+.feedback{margin-top:12px;border-radius:12px;padding:12px 14px;font-size:15px}
+.feedback.ok{background:var(--good-soft);color:var(--ink)}
+.feedback.no{background:var(--bad-soft);color:var(--ink)}
+.contbtn{margin-top:10px}
+
+/* done screen */
+.done{ text-align:center;padding:40px 0}
+.done .big{font-size:40px}
+.done h2{margin:10px 0 4px}
+.done p{color:var(--muted)}
+
+/* grammar */
+.gram h2{font-size:19px;margin:22px 0 8px}
+.gram p{margin:8px 0;max-width:62ch}
+.gram .panel{margin:10px 0}
+.gram table{border-collapse:collapse;width:100%;font-size:15px}
+.gram td,.gram th{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+.gram th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gram .ex{color:var(--pap);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.tablewrap{overflow-x:auto}
+
+/* browse list */
+.browse{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.brow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+.brow .pap{font-size:17px}
+.brow small{color:var(--muted);text-align:right}
+
+/* tabs */
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);z-index:5}
+.tabs{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{padding:10px 4px 12px;text-align:center;color:var(--muted);font-size:11px;font-weight:600}
+.tab .ti{display:block;font-size:20px;margin-bottom:2px}
+.tab.on{color:var(--sea-deep)}
+.badge{display:inline-block;min-width:17px;padding:1px 5px;border-radius:9px;background:var(--coral);color:#fff;
+  font-size:10.5px;font-weight:700;margin-left:3px;font-variant-numeric:tabular-nums}
+.backrow{padding:16px 0 4px}
+.backrow button{color:var(--sea-deep);font-weight:600;font-size:14px}
+.subtle{color:var(--muted);font-size:13.5px}
+.center{text-align:center}
+@media (prefers-reduced-motion: no-preference){
+  .qcard{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+
+<div id="shell">
+  <header>
+    <div class="brand">
+      <div class="facades" aria-hidden="true"></div>
+      <h1>Siña <span class="pap">Papiamentu</span></h1>
+    </div>
+    <div class="hbtns">
+      <button class="iconbtn" id="ttsbtn" title="Audio (approximate, Spanish voice)" aria-pressed="true">🔊</button>
+      <button class="iconbtn" id="themebtn" title="Toggle light/dark">◐</button>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+<nav aria-label="Sections"><div class="tabs" id="tabs"></div></nav>
+
+<script>
+"use strict";
+/* ================= DATA ================= */
+/* Card: [papiamentu, english, note?]  — Curaçao/Bonaire spelling */
+const DECKS=[
+{id:"survival",em:"🛟",name:"Survival kit",desc:"The 26 phrases that carry your first day",cards:[
+["Bon biní","Welcome","You'll hear it everywhere — often written 'Bon bini'"],
+["Danki","Thank you","From Dutch 'dank je'"],
+["Masha danki","Thank you very much","'masha' = very, a lot"],
+["Por fabor","Please"],
+["Di nada","You're welcome"],
+["Si","Yes"],["Nò","No"],
+["Ayó","Goodbye"],
+["Te aworó","See you later","lit. 'until later today'"],
+["Te mañan","See you tomorrow"],
+["Kon ta bai?","How's it going?","THE standard greeting"],
+["Mi ta bon","I'm fine"],
+["Tur kos ta bon","Everything is fine","lit. 'all things are good'"],
+["Ta bon","Okay / fine"],
+["Klaro","Of course"],
+["Podisé","Maybe"],
+["Mi no sa","I don't know"],
+["Mi no ta komprondé","I don't understand"],
+["Bo ta papia ingles?","Do you speak English?"],
+["Papia poko-poko, por fabor","Speak slowly, please"],
+["Un biaha mas","One more time","'biaha' = time/trip"],
+["Despensá mi","Excuse me / sorry"],
+["Unda e baño ta?","Where is the bathroom?"],
+["Kuantu esaki ta kosta?","How much does this cost?"],
+["Ayudo!","Help!"],
+["Mi ta pèrdí","I'm lost"]]},
+{id:"greet",em:"👋",name:"Greetings & small talk",desc:"Meet people like a local",cards:[
+["Bon dia","Good morning"],
+["Bon tardi","Good afternoon"],
+["Bon nochi","Good evening / night"],
+["Kon bo yama?","What's your name?"],
+["Mi yama Angela","My name is Angela"],
+["Di unda bo ta?","Where are you from?"],
+["Mi ta di Hulanda","I'm from the Netherlands"],
+["Kontentu di konosé bo","Nice to meet you"],
+["Kon ta ku bida?","How's life?"],
+["Hopi bon, danki","Very well, thanks"],
+["Mas o ménos","So-so"],
+["Mi ta kansá","I'm tired"],
+["Pasa un bon dia","Have a good day"],
+["Bon siman","Have a good week"],
+["Salú!","Cheers!"],
+["Dushi","Sweet / lovely / darling","The most Caribbean word there is — food, people, life can all be dushi"],
+["Hopi dushi!","Delicious! / wonderful!"],
+["Te otro biaha","Until next time"]]},
+{id:"particles",em:"⚙️",name:"Pronouns & magic particles",desc:"The entire verb system — yes, really",cards:[
+["mi","I / me / my"],
+["bo","you / your (informal)"],
+["e","he / she / it — and 'the'"],
+["su","his / her / its"],
+["nos","we / us / our"],
+["boso","you all / your (plural)"],
+["nan","they / them / their"],
+["Mi ta kome","I eat / I am eating","'ta' = present"],
+["Mi a kome","I ate","'a' = past"],
+["Lo mi kome","I will eat","'lo' = future"],
+["Mi tabata kome","I was eating","'tabata' = past ongoing"],
+["Mi no ta kome","I am not eating","'no' goes before the particle"],
+["Mi ke kome","I want to eat"],
+["Mi por papia","I can speak"],
+["Mi mester bai","I have to go"],
+["Mi tin un kas","I have a house"],
+["Nos ta bai playa","We're going to the beach"],
+["Mi ta siña papiamentu","I'm learning Papiamentu"],
+["Ban!","Let's go!"],
+["Ban kome!","Let's eat!"]]},
+{id:"questions",em:"❓",name:"Question words",desc:"Ask anything — word order never changes",cards:[
+["Ken?","Who?"],
+["Kiko?","What?"],
+["Unda?","Where?"],
+["Kuandu?","When?"],
+["Dikon?","Why?"],
+["Kon?","How?"],
+["Kuantu?","How much / how many?"],
+["Kua?","Which?"],
+["Kiko esaki ta?","What is this?"],
+["Unda bo ta bai?","Where are you going?"],
+["Ken e ta?","Who is he/she?"],
+["Dikon nò?","Why not?"],
+["Kon yama esaki na papiamentu?","What is this called in Papiamentu?"]]},
+{id:"numbers",em:"🔢",name:"Numbers",desc:"Count, pay, bargain",cards:[
+["un","one"],["dos","two"],["tres","three"],["kuater","four"],["sinku","five"],
+["seis","six"],["shete","seven"],["ocho","eight"],["nuebe","nine"],["dies","ten"],
+["diesun","eleven","dies + un"],["diesdos","twelve"],["diestres","thirteen"],
+["binti","twenty"],["bintisinku","twenty-five"],
+["trinta","thirty"],["kuarenta","forty"],["sinkuenta","fifty"],["sesenta","sixty"],
+["setenta","seventy"],["ochenta","eighty"],["nobenta","ninety"],
+["shen","one hundred"],["mil","one thousand"]]},
+{id:"verbs1",em:"⚡",name:"Power verbs",desc:"22 verbs that do 80% of the talking",cards:[
+["ta","to be"],
+["tin","to have"],
+["bai","to go"],
+["bin","to come"],
+["ke","to want","also 'kier'"],
+["por","can / may"],
+["mester","must / to need"],
+["kome","to eat"],
+["bebe","to drink"],
+["papia","to speak","the language is named after it!"],
+["hasi","to do / to make"],
+["mira","to see"],
+["tende","to hear"],
+["sa","to know (facts)"],
+["konosé","to know (people)"],
+["bisa","to say / to tell"],
+["duna","to give"],
+["traha","to work / to make"],
+["kumpra","to buy"],
+["haña","to get / to find"],
+["yuda","to help"],
+["siña","to learn / to teach"]]},
+{id:"verbs2",em:"🏃",name:"More verbs",desc:"Round out your toolkit",cards:[
+["gusta","to like"],
+["stima","to love"],
+["biba","to live"],
+["drumi","to sleep"],
+["lanta","to get up"],
+["kana","to walk"],
+["kore","to drive / to run"],
+["skirbi","to write"],
+["lesa","to read"],
+["puntra","to ask"],
+["kontestá","to answer"],
+["warda","to wait / to keep"],
+["keda","to stay"],
+["habri","to open"],
+["sera","to close"],
+["paga","to pay"],
+["buska","to look for"],
+["kuminsá","to begin"],
+["kaba","to finish","also means 'already': 'mi a kome kaba'"],
+["pensa","to think"],
+["sinti","to feel"],
+["hunga","to play"],
+["kanta","to sing"],
+["baila","to dance"]]},
+{id:"glue",em:"🔗",name:"Glue words",desc:"Little words that hold sentences together",cards:[
+["i","and"],
+["òf","or"],
+["pero","but"],
+["pasobra","because"],
+["ku","with / that"],
+["sin","without"],
+["pa","for / to"],
+["di","of / from"],
+["na","in / at / to"],
+["den","in / inside"],
+["riba","on / on top of"],
+["te","until"],
+["tambe","also / too"],
+["so","only"],
+["ainda","still / yet"],
+["djis","just"],
+["mes","self / same","'mi mes' = myself"],
+["tur","all / every"],
+["otro","other"],
+["algu","something"],
+["nada","nothing"],
+["tur hende","everyone"],
+["niun hende","nobody"]]},
+{id:"food",em:"🍽️",name:"Food & drink",desc:"Order like you were born there",cards:[
+["kuminda","food"],
+["awa","water"],
+["pan","bread"],
+["keshi","cheese"],
+["keshi yená","stuffed cheese","Curaçao's signature dish"],
+["pastechi","fried pastry","the beloved breakfast snack"],
+["funchi","cornmeal side dish"],
+["piská","fish"],
+["karni","meat"],
+["galiña","chicken"],
+["aros","rice"],
+["webu","egg"],
+["fruta","fruit"],
+["batata","potato"],
+["lechi","milk"],
+["kòfi","coffee"],
+["te","tea"],
+["suku","sugar"],
+["salu","salt"],
+["pika","hot pepper / spicy"],
+["serbes","beer"],
+["biña","wine"],
+["refresko","soft drink"],
+["Mi tin hamber","I'm hungry","lit. 'I have hunger'"],
+["Mi tin set","I'm thirsty","lit. 'I have thirst'"],
+["E kuminda ta dushi","The food is delicious"],
+["Un serbes friu, por fabor","A cold beer, please"]]},
+{id:"time",em:"🕐",name:"Time & days",desc:"Yesterday, today, mañan",cards:[
+["awe","today"],
+["mañan","tomorrow"],
+["ayera","yesterday"],
+["awor","now"],
+["despues","later / afterwards"],
+["promé","first / before"],
+["semper","always"],
+["nunka","never"],
+["tur dia","every day"],
+["awe nochi","tonight"],
+["dia","day"],
+["siman","week"],
+["luna","month","also 'moon'"],
+["aña","year"],
+["ora","hour / time"],
+["Kuant'or tin?","What time is it?"],
+["mainta","morning"],
+["atardi","afternoon"],
+["anochi","evening / night"],
+["djaluna","Monday"],
+["djamars","Tuesday"],
+["djarason","Wednesday"],
+["djaweps","Thursday"],
+["djabièrnè","Friday"],
+["djasabra","Saturday"],
+["djadumingu","Sunday"]]},
+{id:"places",em:"📍",name:"Places & directions",desc:"Find your way around the island",cards:[
+["kas","house / home"],
+["kaya","street"],
+["kamina","road / way"],
+["stat","town / city"],
+["tienda","shop"],
+["merkado","market"],
+["banko","bank"],
+["botika","pharmacy"],
+["hòspital","hospital"],
+["skol","school"],
+["misa","church"],
+["restorant","restaurant"],
+["kamber","room","from Dutch 'kamer'"],
+["porta","door"],
+["man drechi","right (side)","lit. 'right hand'"],
+["man robes","left (side)"],
+["stret","straight ahead"],
+["aki","here"],
+["ayá","there"],
+["serka","near / close"],
+["leu","far"],
+["banda di","next to"]]},
+{id:"people",em:"👨‍👩‍👧",name:"People & family",desc:"Talk about who matters",cards:[
+["hende","person / people"],
+["homber","man"],
+["muhé","woman"],
+["mucha","child"],
+["mucha homber","boy"],
+["mucha muhé","girl"],
+["yu","child (son/daughter)"],
+["yu homber","son"],
+["yu muhé","daughter"],
+["mama","mother"],
+["tata","father"],
+["ruman","sibling"],
+["ruman homber","brother"],
+["ruman muhé","sister"],
+["wela","grandmother"],
+["welo","grandfather"],
+["amigu","friend (male)"],
+["amiga","friend (female)"],
+["famia","family"],
+["kasá","spouse"],
+["bisiña","neighbor"]]},
+{id:"adj",em:"🎨",name:"Describing things",desc:"Adjectives & colors — no gender, no endings",cards:[
+["bon","good"],
+["malu","bad / sick"],
+["grandi","big"],
+["chikitu","small"],
+["hopi","much / many / very"],
+["poko","little / few"],
+["nobo","new"],
+["bieu","old"],
+["bunita","beautiful"],
+["mahos","ugly"],
+["kayente","hot (temperature)"],
+["friu","cold"],
+["lihé","fast / quick"],
+["largu","long / tall"],
+["kòrtiku","short"],
+["yen","full"],
+["bashí","empty"],
+["kontentu","happy"],
+["tristu","sad"],
+["limpi","clean"],
+["sushi","dirty"],
+["kòrá","red"],
+["blou","blue"],
+["bèrdè","green"],
+["hel","yellow","from Dutch 'geel'"],
+["blanku","white"],
+["pretu","black"]]},
+{id:"beach",em:"🏖️",name:"Beach & weather",desc:"Island life essentials",cards:[
+["solo","sun"],
+["awaseru","rain"],
+["bientu","wind"],
+["nubia","cloud"],
+["kalor","heat"],
+["Awe tin hopi kalor","It's very hot today"],
+["laman","sea"],
+["playa","beach"],
+["santu","sand"],
+["landa","to swim"],
+["piská","fish"],
+["tortuga","turtle"],
+["barku","boat"],
+["isla","island"]]},
+{id:"money",em:"💰",name:"Money & shopping",desc:"Pay, bargain, browse",cards:[
+["plaka","money"],
+["florin","guilder","the currency of Curaçao"],
+["karu","expensive"],
+["barata","cheap"],
+["gratis","free (no cost)"],
+["kambio","change (money)"],
+["karchi","card"],
+["Mi por paga ku karchi?","Can I pay by card?"],
+["Esaki ta muchu karu","This is too expensive"],
+["Mi ta djis wak","I'm just looking"],
+["Mi ke kumpra esaki","I want to buy this"],
+["E ta riba seli?","Is it on sale?"]]}
+];
+
+const GRAMMAR=[
+{t:"Why you can learn Papiamentu fast",h:`
+<p>Papiamentu (called <i>Papiamento</i> on Aruba) is a creole of Portuguese, Spanish, Dutch and West-African languages, spoken by ~330,000 people on Curaçao, Bonaire and Aruba. It may be the friendliest grammar in the Western Hemisphere:</p>
+<div class="panel"><ul style="margin:0;padding-left:20px">
+<li><b>Verbs never change.</b> No conjugations at all — <span class="ex">mi kome, bo kome, nan kome</span>.</li>
+<li><b>No grammatical gender.</b> One word for 'the' (<span class="ex">e</span>), one for 'a' (<span class="ex">un</span>).</li>
+<li><b>Tense = one small particle</b> in front of the verb (next chapter).</li>
+<li><b>Possessives are just the pronouns:</b> <span class="ex">mi kas</span> = my house.</li>
+<li><b>Word order is plain English-style:</b> subject – verb – object, even in questions.</li>
+</ul></div>
+<p>So the whole game is <b>vocabulary</b>. That's why this app front-loads the highest-frequency words and drills them with spaced repetition — reviews arrive right before you'd forget.</p>`},
+{t:"The four magic particles",h:`
+<p>Take any verb, put one particle in front, and you have a full tense system:</p>
+<div class="panel tablewrap"><table>
+<tr><th>Particle</th><th>Meaning</th><th>Example</th></tr>
+<tr><td><b>ta</b></td><td>present / right now</td><td class="ex">Mi ta traha — I work / am working</td></tr>
+<tr><td><b>a</b></td><td>past (completed)</td><td class="ex">Mi a traha — I worked</td></tr>
+<tr><td><b>lo</b></td><td>future</td><td class="ex">Lo mi traha — I will work</td></tr>
+<tr><td><b>tabata</b></td><td>past ongoing</td><td class="ex">Mi tabata traha — I was working</td></tr>
+</table></div>
+<p><b>Negation:</b> put <span class="ex">no</span> before the particle: <span class="ex">Mi no ta traha</span> — I'm not working. <span class="ex">Mi no a bai</span> — I didn't go.</p>
+<p><b>Exceptions worth knowing:</b> the helper verbs <span class="ex">tin</span> (have), <span class="ex">ke</span> (want), <span class="ex">por</span> (can), <span class="ex">mester</span> (must), <span class="ex">sa</span> (know) usually drop <span class="ex">ta</span>: <span class="ex">Mi tin plaka</span>, <span class="ex">Mi por bai</span>.</p>`},
+{t:"Pronouns, possession & plurals",h:`
+<div class="panel tablewrap"><table>
+<tr><th>Papiamentu</th><th>Subject</th><th>Possessive</th></tr>
+<tr><td class="ex">mi</td><td>I</td><td>my</td></tr>
+<tr><td class="ex">bo</td><td>you</td><td>your</td></tr>
+<tr><td class="ex">e</td><td>he / she / it</td><td>(use <span class="ex">su</span>)</td></tr>
+<tr><td class="ex">nos</td><td>we</td><td>our</td></tr>
+<tr><td class="ex">boso</td><td>you all</td><td>your</td></tr>
+<tr><td class="ex">nan</td><td>they</td><td>their</td></tr>
+</table></div>
+<p>The same little words are subject, object <i>and</i> possessive: <span class="ex">mi ta stima bo</span> — I love you; <span class="ex">bo kas</span> — your house.</p>
+<p><b>Plural:</b> add <span class="ex">-nan</span> to the noun — <span class="ex">e buki</span> (the book) → <span class="ex">e bukinan</span> (the books). After a number you don't even need it: <span class="ex">tres buki</span> — three books.</p>`},
+{t:"Questions & handy patterns",h:`
+<p>Questions keep normal word order — just add a question word (or only rising intonation): <span class="ex">Bo tin yu?</span> — Do you have children? <span class="ex">Unda bo ta biba?</span> — Where do you live?</p>
+<div class="panel tablewrap"><table>
+<tr><th>Pattern</th><th>Example</th></tr>
+<tr><td>Mi ke … — I want …</td><td class="ex">Mi ke un kòfi</td></tr>
+<tr><td>Mi tin mester di … — I need …</td><td class="ex">Mi tin mester di awa</td></tr>
+<tr><td>Bo por … ? — Can you …?</td><td class="ex">Bo por yuda mi?</td></tr>
+<tr><td>Unda … ta? — Where is …?</td><td class="ex">Unda e banko ta?</td></tr>
+<tr><td>Mi gusta … — I like …</td><td class="ex">Mi gusta e isla</td></tr>
+<tr><td>Tin … ? — Is/are there …?</td><td class="ex">Tin pastechi?</td></tr>
+</table></div>`},
+{t:"Pronunciation & the two spellings",h:`
+<p>Papiamentu reads mostly like Spanish. Every letter is pronounced. Quick keys:</p>
+<div class="panel tablewrap"><table>
+<tr><th>Letter</th><th>Sound</th></tr>
+<tr><td><b>è / ò / ù</b></td><td>open vowels, like <i>bed</i>, <i>bore</i>, <i>hurt</i> — <span class="ex">kòfi, bèrdè</span></td></tr>
+<tr><td><b>ñ</b></td><td>'ny' as in Spanish — <span class="ex">aña, mañan</span></td></tr>
+<tr><td><b>dj</b></td><td>'j' as in <i>jam</i> — <span class="ex">djaluna</span></td></tr>
+<tr><td><b>sh</b></td><td>as in <i>ship</i> — <span class="ex">shete, shen</span></td></tr>
+<tr><td><b>accent mark (á, é…)</b></td><td>stressed syllable — <span class="ex">kontestá</span></td></tr>
+</table></div>
+<p><b>Two spellings, one language:</b> Curaçao &amp; Bonaire write phonemically (<i>Papiamentu, kas, sinku</i>); Aruba writes etymologically (<i>Papiamento, cas, cinco</i>). Spoken, they're the same language — everything you learn here works on all three islands.</p>
+<p class="subtle">🔊 A note on the audio button: no browser has a Papiamentu voice yet, so this app uses a <b>Spanish voice as an approximation</b>. It gets vowels and rhythm roughly right — but trust your ears with real speakers over the robot.</p>`}
+];
+
+/* ================= STATE ================= */
+const LS="sina_pap_v1";
+let S=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(LS));if(s&&s.srs)return s;}catch(e){}
+  return {srs:{},streak:{last:"",count:0},xp:0,tts:true,theme:""};}
+function save(){localStorage.setItem(LS,JSON.stringify(S));}
+function today(){return new Date().toISOString().slice(0,10);}
+function bumpStreak(){const t=today();if(S.streak.last===t)return;
+  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  S.streak.count=(S.streak.last===y)?S.streak.count+1:1;S.streak.last=t;save();}
+function streakLive(){const t=today(),y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  return (S.streak.last===t||S.streak.last===y)?S.streak.count:0;}
+
+const ALL={}; DECKS.forEach(d=>d.cards.forEach(c=>{ALL[d.id+":"+c[0]]={d:d.id,p:c[0],e:c[1],n:c[2]||""}}));
+const IDS=Object.keys(ALL);
+function st(id){return S.srs[id];}
+const DAY=864e5;
+/* SM-2 lite. grade: 0 again, 1 good, 2 easy */
+function gradeCard(id,g){
+  let c=S.srs[id]||{ivl:0,ease:2.5,due:0,reps:0,lapses:0};
+  if(g===0){c.lapses++;c.reps=Math.max(0,c.reps-1);c.ivl=0;c.due=Date.now()+60e3;c.ease=Math.max(1.3,c.ease-0.2);}
+  else{
+    c.reps++;
+    if(c.ivl===0)c.ivl=g===2?3:(c.reps>1?1:0.007);   /* first pass: ~10 min; easy jumps to 3 d */
+    else if(c.ivl<1)c.ivl=(g===2?3:1);
+    else c.ivl=Math.round(c.ivl*(g===2?c.ease*1.3:c.ease)*10)/10;
+    if(g===2)c.ease=Math.min(3,c.ease+0.05);
+    c.due=Date.now()+c.ivl*DAY;
+  }
+  S.srs[id]=c;S.xp+=g===0?1:2;save();
+}
+function dueIds(){const n=Date.now();return IDS.filter(id=>st(id)&&st(id).due<=n);}
+function startedCount(){return IDS.filter(id=>st(id)).length;}
+function strongCount(){return IDS.filter(id=>st(id)&&st(id).ivl>=7).length;}
+function deckStats(d){let s=0,k=0;d.cards.forEach(c=>{const t=st(d.id+":"+c[0]);if(t){s++;if(t.ivl>=7)k++;}});return{s,k};}
+
+/* ================= AUDIO ================= */
+let VOICE=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();
+  VOICE=vs.find(v=>/es[-_](419|US|MX|CO)/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null;}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(txt){if(!S.tts||!("speechSynthesis" in window))return;
+  const u=new SpeechSynthesisUtterance(txt.replace(/[èòù]/g,m=>({è:"e",ò:"o",ù:"u"}[m])));
+  if(VOICE)u.voice=VOICE;u.lang=VOICE?VOICE.lang:"es-419";u.rate=0.85;
+  speechSynthesis.cancel();speechSynthesis.speak(u);}
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s);
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
+  .replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();}
+function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;
+  const m=[...Array(a.length+1)].map((_,i)=>[i,...Array(b.length).fill(0)]);
+  for(let j=0;j<=b.length;j++)m[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)
+    m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return m[a.length][b.length];}
+function answerOk(guess,target){const g=norm(guess),t=norm(target);if(!g)return false;
+  if(g===t)return true;return t.length>4&&lev(g,t)<=1;}
+
+/* ================= ROUTER / VIEWS ================= */
+let TAB="home";
+const TABS=[["home","🏠","Home"],["review","🌀","Repasá"],["quiz","🎯","Tèst"],["grammar","📖","Gramátika"]];
+function renderTabs(){const due=dueIds().length;
+  $("#tabs").innerHTML=TABS.map(([id,ic,lb])=>
+    `<button class="tab${TAB===id?" on":""}" data-tab="${id}"><span class="ti">${ic}</span>${lb}${id==="review"&&due?`<span class="badge">${due}</span>`:""}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{TAB=b.dataset.tab;render();});}
+function render(){renderTabs();
+  ({home,review:reviewHome,quiz:quizHome,grammar}[TAB])();window.scrollTo(0,0);}
+
+function facades(){const cs=["var(--sun)","var(--sea)","var(--coral)","var(--sea-deep)","var(--sun)"];
+  $(".facades").innerHTML=cs.map((c,i)=>`<span style="background:${c};height:${[18,24,15,21,17][i]}px"></span>`).join("");}
+
+/* ---- home ---- */
+function home(){
+  const due=dueIds().length,started=startedCount(),strong=strongCount(),total=IDS.length;
+  $("#view").innerHTML=`
+  <div class="stats">
+    <div class="stat sun"><b>${streakLive()}🔥</b><span>Day streak</span></div>
+    <div class="stat due"><b>${due}</b><span>Due now</span></div>
+    <div class="stat"><b>${started}<small style="font-size:12px;color:var(--muted)">/${total}</small></b><span>Started</span></div>
+    <div class="stat"><b>${strong}</b><span>Strong</span></div>
+  </div>
+  ${due?`<button class="cta" id="gorev">🌀 Review ${due} due card${due>1?"s":""} — keep them fresh</button>`:
+        `<div class="panel subtle center">No reviews due — learn something new below 👇</div>`}
+  <p class="eyebrow" style="margin:18px 0 2px">Course · highest-frequency first</p>
+  <div class="decks">${DECKS.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
+    return `<button class="deck" data-d="${d.id}">
+      <span class="em">${d.em}</span>
+      <span class="dt"><b>${esc(d.name)}</b><small>${esc(d.desc)}</small>
+      <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
+      <span class="n">${s}/${n}</span></button>`;}).join("")}
+  </div>
+  <p class="subtle" style="margin-top:18px">Curaçao/Bonaire spelling. Progress is saved on this device. <button id="reset" style="color:var(--bad);text-decoration:underline">Reset progress</button></p>`;
+  if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Review");
+  $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
+  $("#reset").onclick=()=>{if(confirm("Erase all learning progress on this device?")){localStorage.removeItem(LS);S=load();render();}};
+}
+
+/* ---- deck ---- */
+function deckView(id){
+  const d=DECKS.find(x=>x.id===id);const{s}=deckStats(d);
+  const fresh=d.cards.filter(c=>!st(id+":"+c[0]));
+  $("#view").innerHTML=`
+  <div class="backrow"><button id="back">← All decks</button></div>
+  <div class="panel">
+    <p class="eyebrow">${d.em} Deck · ${d.cards.length} cards · ${s} started</p>
+    <h2 style="margin:6px 0 4px">${esc(d.name)}</h2>
+    <p class="subtle" style="margin:0 0 12px">${esc(d.desc)}</p>
+    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>📚 Learn ${Math.min(8,fresh.length)||""} new cards</button>
+    <button class="cta quiet" id="drill">🌀 Drill this deck (all ${d.cards.length})</button>
+  </div>
+  <div class="browse">${d.cards.map(c=>`<div class="brow"><span class="pap">${esc(c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
+  $("#back").onclick=render;
+  $("#learn").onclick=()=>startLearn(d);
+  $("#drill").onclick=()=>startSession(d.cards.map(c=>id+":"+c[0]),esc(d.name),true);
+}
+
+/* ---- sessions ---- */
+let Q=null;
+function startLearn(d){
+  const fresh=d.cards.filter(c=>!st(d.id+":"+c[0])).slice(0,8).map(c=>d.id+":"+c[0]);
+  if(!fresh.length)return;
+  const steps=fresh.map(id=>({id,mode:"intro"}));
+  shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_pe"}));
+  shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_ep"}));
+  Q={steps,i:0,title:"Learn · "+d.name,right:0,wrong:0,learn:true};step();
+}
+function startSession(ids,title,drill){
+  if(!ids.length)return;
+  const steps=shuffle(ids).slice(0,drill?ids.length:20).map(id=>{
+    const c=st(id)||{reps:0};
+    const mode=c.reps<=1?"mc_pe":c.reps===2?"mc_ep":(Math.random()<0.5?"type_ep":"flash");
+    return {id,mode};});
+  Q={steps,i:0,title,right:0,wrong:0,drill:!!drill};step();
+}
+function sessTop(){const pct=Math.round(100*Q.i/Q.steps.length);
+  return `<div class="sess-top"><button class="xbtn" id="quit" title="End session">✕</button>
+  <div class="bar"><i style="width:${pct}%"></i></div>
+  <span class="subtle" style="font-variant-numeric:tabular-nums">${Q.i}/${Q.steps.length}</span></div>`;}
+function step(){
+  if(!Q||Q.i>=Q.steps.length)return finish();
+  const s=Q.steps[Q.i],c=ALL[s.id];
+  ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c)})[s.mode]?.(s,c);
+  $("#quit").onclick=()=>{Q=null;render();};
+}
+function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Hear it (Spanish voice approximation)">🔊</button>`;}
+function wireSpeak(){$("#view").querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));}
+
+function intro(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">New card</p>
+    <div class="big pap">${esc(c.p)}</div>
+    <div class="mid">${esc(c.e)}</div>
+    ${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}
+    ${speakBtn(c.p)}
+  </div>
+  <button class="cta contbtn" id="next">Got it →</button>`;
+  wireSpeak();speak(c.p);
+  $("#next").onclick=()=>{Q.i++;step();};
+}
+function flash(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">Remember?</p>
+    <div class="big pap">${esc(c.p)}</div>
+    ${speakBtn(c.p)}
+    <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
+  </div>
+  <div id="zone"><button class="cta contbtn" id="show">Show answer</button></div>`;
+  wireSpeak();
+  $("#show").onclick=()=>{$("#ans").hidden=false;
+    $("#zone").innerHTML=`<div class="grades">
+      <button class="grade again">Again<small>&lt;1 min</small></button>
+      <button class="grade good">Good<small>${ivlPreview(s.id,1)}</small></button>
+      <button class="grade easy">Easy<small>${ivlPreview(s.id,2)}</small></button></div>`;
+    [["again",0],["good",1],["easy",2]].forEach(([k,g])=>
+      $(".grade."+k).onclick=()=>{answer(s,g===0?false:true,g);});};
+}
+function ivlPreview(id,g){const c=st(id);if(!c||c.ivl<1)return g===2?"3 d":"1 d";
+  const n=Math.round(c.ivl*(g===2?c.ease*1.3:c.ease));return n+" d";}
+function mc(s,c,papToEng){
+  const pool=shuffle(IDS.filter(x=>x!==s.id&&ALL[x].e!==c.e&&ALL[x].p!==c.p)).slice(0,3).map(x=>ALL[x]);
+  const opts=shuffle([c,...pool]);
+  const q=papToEng?c.p:c.e, side=x=>papToEng?x.e:x.p;
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${papToEng?"What does it mean?":"How do you say it?"}</p>
+    <div class="big ${papToEng?"pap":""}">${esc(q)}</div>
+    ${papToEng?speakBtn(c.p):""}
+  </div>
+  <div class="opts">${opts.map((o,i)=>`<button class="opt ${papToEng?"":"pap"}" data-i="${i}">${esc(side(o))}</button>`).join("")}</div>
+  <div id="fb"></div>`;
+  wireSpeak();if(papToEng)speak(c.p);
+  $("#view").querySelectorAll(".opt").forEach((b,i)=>b.onclick=()=>{
+    const ok=opts[i]===c;
+    $("#view").querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;
+      if(opts[j]===c)x.classList.add("right");else if(j===i&&!ok)x.classList.add("wrong");});
+    if(!papToEng)speak(c.p);
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${c.n?`<br><small>💡 ${esc(c.n)}</small>`:""}`);
+  });
+}
+function typeEx(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">Type it in Papiamentu</p>
+    <div class="mid">${esc(c.e)}</div>
+  </div>
+  <div class="typebox"><input id="tin" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…"><button id="chk">Check</button></div>
+  <div class="accents">${["è","ò","ù","á","é","í","ó","ú","ñ"].map(a=>`<button data-a="${a}">${a}</button>`).join("")}</div>
+  <div id="fb"></div>`;
+  const inp=$("#tin");inp.focus();
+  $("#view").querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{inp.value+=b.dataset.a;inp.focus();});
+  const go=()=>{const ok=answerOk(inp.value,c.p);inp.disabled=true;$("#chk").disabled=true;speak(c.p);
+    const exact=norm(inp.value)===norm(c.p);
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${ok&&!exact?`<br><small>Close enough — mind the spelling: <b>${esc(c.p)}</b></small>`:""}`);};
+  $("#chk").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter"&&!inp.disabled)go();};
+}
+function fbAndNext(s,ok,detail){
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}">${ok?"✅ Bon trabou!":"❌ Not quite."}<br>${detail}</div>
+  <button class="cta contbtn" id="next">Continue →</button>`;
+  const n=$("#next");n.focus();
+  n.onclick=()=>answer(s,ok);
+}
+function answer(s,ok,flashGrade){
+  if(ok){Q.right++;}else{Q.wrong++;}
+  if(Q.learn){
+    if(s.mode==="mc_ep")gradeCard(s.id,ok?1:0);
+    else if(!ok)Q.steps.push({id:s.id,mode:"mc_pe"});
+  } else if(flashGrade!==undefined){gradeCard(s.id,flashGrade);if(flashGrade===0)requeue(s);}
+  else{gradeCard(s.id,ok?1:0);if(!ok)requeue(s);}
+  Q.i++;step();
+}
+function requeue(s){const pos=Math.min(Q.steps.length,Q.i+3);
+  Q.steps.splice(pos,0,{id:s.id,mode:"mc_pe"});}
+function finish(){
+  if(!Q)return render();
+  const {right,wrong,title}=Q;Q=null;
+  if(right+wrong>0)bumpStreak();
+  const acc=right+wrong?Math.round(100*right/(right+wrong)):100;
+  $("#view").innerHTML=`<div class="done">
+    <div class="big">${acc>=90?"🏝️":acc>=70?"🌊":"🐢"}</div>
+    <h2>${acc>=90?"Masha bon!":acc>=70?"Bon trabou!":"Sigui purba!"}</h2>
+    <p>${right} right · ${wrong} missed · ${acc}% — ${esc(title)}</p>
+    <p class="subtle">Streak: ${streakLive()} day${streakLive()===1?"":"s"} 🔥</p>
+    <button class="cta" id="home2">Continue</button></div>`;
+  $("#home2").onclick=render;
+}
+
+/* ---- review / quiz / grammar tabs ---- */
+function reviewHome(){
+  const due=dueIds();
+  $("#view").innerHTML=`<div style="padding-top:16px">
+  <p class="eyebrow">Spaced repetition</p>
+  <h2 style="margin:4px 0 10px">Repasá — review</h2>
+  <div class="panel">${due.length?
+    `<p style="margin:0 0 10px"><b>${due.length}</b> card${due.length>1?"s are":" is"} due. Reviews land right before you'd forget — this is where the fast learning happens.</p>
+     <button class="cta" id="go">🌀 Start review</button>`:
+    `<p style="margin:0">Nothing due right now — dushi! 🎉<br><span class="subtle">Learn new cards on Home, or run a deck drill. Come back when the badge lights up.</span></p>`}
+  </div>
+  ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Practice 20 random learned cards</button>`:""}
+  </div>`;
+  if(due.length)$("#go").onclick=()=>startSession(due,"Review");
+  const a=$("#all");if(a)a.onclick=()=>startSession(shuffle(IDS.filter(id=>st(id))).slice(0,20),"Practice");
+}
+function quizHome(){
+  const learned=IDS.filter(id=>st(id));
+  $("#view").innerHTML=`<div style="padding-top:16px">
+  <p class="eyebrow">Quick quiz</p>
+  <h2 style="margin:4px 0 10px">Tèst bo mes — test yourself</h2>
+  <div class="panel">
+    <p style="margin:0 0 10px">10 rapid questions, mixed formats. ${learned.length>=8?"Pulls from the "+learned.length+" cards you've started.":"Starts with the Survival kit until you've learned more."}</p>
+    <button class="cta" id="go">🎯 Start quiz</button>
+  </div></div>`;
+  $("#go").onclick=()=>{
+    let pool=learned.length>=8?learned:DECKS[0].cards.map(c=>"survival:"+c[0]);
+    const steps=shuffle(pool).slice(0,10).map(id=>({id,mode:Math.random()<0.5?"mc_pe":"mc_ep"}));
+    Q={steps,i:0,title:"Quiz",right:0,wrong:0,drill:true};step();};
+}
+function grammar(){
+  $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
+  <p class="eyebrow">Crash course</p>
+  <h2 style="margin-top:4px">Gramátika — read this once, speak forever</h2>
+  ${GRAMMAR.map((g,i)=>`<h2>${i+1}. ${g.t}</h2>${g.h}`).join("")}
+  <p class="subtle" style="margin:20px 0">Sources &amp; further practice: the <i>Papiamentu</i> Wikipedia article, Wikivoyage's Papiamento phrasebook, and — best of all — any dushi local who'll chat with you. Papia, papia, papia!</p>
+  </div>`;
+}
+
+/* ================= BOOT ================= */
+$("#ttsbtn").setAttribute("aria-pressed",String(S.tts));
+$("#ttsbtn").onclick=()=>{S.tts=!S.tts;save();$("#ttsbtn").setAttribute("aria-pressed",String(S.tts));};
+$("#themebtn").onclick=()=>{
+  const cur=document.documentElement.dataset.theme||
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=next;S.theme=next;save();};
+if(S.theme)document.documentElement.dataset.theme=S.theme;
+facades();render();
+</script>
+</body>
+</html>
