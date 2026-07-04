@@ -142,6 +142,22 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .gram .ex{color:var(--pap);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
 .tablewrap{overflow-x:auto}
 
+/* dialogues & resources */
+.dlg{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:10px 0;box-shadow:var(--shadow)}
+.dlg summary{padding:12px 16px;cursor:pointer;font-size:15px;list-style-position:inside}
+.dlg summary small{color:var(--muted)}
+.dlines{display:flex;flex-direction:column;gap:2px;padding:4px 10px 12px}
+.dline{display:flex;gap:10px;text-align:left;padding:7px 8px;border-radius:8px;align-items:baseline;width:100%}
+.dline:hover{background:var(--panel2)}
+.dline .pap{display:block;font-size:16.5px}
+.dline small{color:var(--muted)}
+.who{flex:none;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.who.a{background:var(--sea-soft);color:var(--sea-deep)}
+.who.b{background:var(--sun-soft);color:var(--sun-ink)}
+.res{margin:0;padding-left:20px}
+.res li{margin:8px 0}
+.res a{color:var(--sea-deep);font-weight:600}
+
 /* browse list */
 .browse{display:flex;flex-direction:column;gap:6px;margin-top:12px}
 .brow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--panel);
@@ -232,6 +248,19 @@ const DECKS=[
 ["Dushi","Sweet / lovely / darling","The most Caribbean word there is — food, people, life can all be dushi"],
 ["Hopi dushi!","Delicious! / wonderful!"],
 ["Te otro biaha","Until next time"]]},
+{id:"dialog",em:"💬",name:"Conversation moves",desc:"Lines lifted straight from the dialogues",cards:[
+["Kon ta?","Hi — how's it? (casual)"],
+["I abo?","And you?"],
+["Mi nòmber ta…","My name is…","alternative to 'Mi yama…'"],
+["Algu mas?","Anything else?"],
+["Esei ta tur","That's all"],
+["Duna mi dos, por fabor","Give me two, please"],
+["Tin pastechi ainda?","Are there still pastechis?"],
+["Esei ta muchu karu!","That's too expensive!"],
+["Sigui stret","Keep going straight"],
+["Bai man drechi","Turn right"],
+["Masha danki pa bo ayudo","Thanks a lot for your help"],
+["Suerte!","Good luck!"]]},
 {id:"particles",em:"⚙️",name:"Pronouns & magic particles",desc:"The entire verb system — yes, really",cards:[
 ["mi","I / me / my"],
 ["bo","you / your (informal)"],
@@ -505,6 +534,58 @@ const DECKS=[
 ["E ta riba seli?","Is it on sale?"]]}
 ];
 
+/* Dialog line: [speaker, papiamentu, english] */
+const DIALOGS=[
+{t:"Topa un hende",tr:"Meeting someone",lines:[
+["A","Bon dia! Kon ta bai?","Good morning! How's it going?"],
+["B","Mi ta bon, danki. I abo?","I'm fine, thanks. And you?"],
+["A","Hopi bon. Kon bo yama?","Very well. What's your name?"],
+["B","Mi yama Angela. I bo?","My name is Angela. And you?"],
+["A","Mi nòmber ta Carlos. Kontentu di konosé bo.","My name is Carlos. Nice to meet you."],
+["B","Di unda bo ta?","Where are you from?"],
+["A","Mi ta di Kòrsou. I abo?","I'm from Curaçao. And you?"],
+["B","Mi ta di Hulanda, pero mi ta siña papiamentu.","I'm from the Netherlands, but I'm learning Papiamentu."],
+["A","Masha bon! Bo ta papia dushi kaba!","Very good! You already speak nicely!"]]},
+{t:"Na snèk",tr:"At the snack bar",lines:[
+["A","Bon tardi! Kiko bo ke bebe?","Good afternoon! What would you like to drink?"],
+["B","Un awa friu, por fabor. Kuantu e ta kosta?","A cold water, please. How much does it cost?"],
+["A","Dos florin.","Two guilders."],
+["B","Tin pastechi ainda?","Are there still pastechis?"],
+["A","Sí, tin pastechi di keshi i di piská.","Yes, there are cheese and fish pastechis."],
+["B","Duna mi dos di keshi, por fabor.","Give me two cheese ones, please."],
+["A","Ta bon. Algu mas?","Okay. Anything else?"],
+["B","Nò, danki. Esei ta tur.","No thanks. That's all."],
+["A","Sinku florin, por fabor. … Masha danki!","Five guilders, please. … Thank you very much!"],
+["B","Danki, ayó!","Thanks, bye!"]]},
+{t:"Na merkado",tr:"At the market",lines:[
+["A","Bon dia dushi! Kiko bo ta buska?","Good morning dear! What are you looking for?"],
+["B","Mi ta buska fruta. Kuantu e mango ta kosta?","I'm looking for fruit. How much is the mango?"],
+["A","Tres florin pa un.","Three guilders each."],
+["B","Esei ta muchu karu!","That's too expensive!"],
+["A","Ta bon… dos florin pa bo.","Okay… two guilders for you."],
+["B","Duna mi kuater, por fabor.","Give me four, please."],
+["A","Ocho florin. Bo ke algu mas?","Eight guilders. Would you like anything else?"],
+["B","Nò, danki. Pasa un bon dia!","No thanks. Have a good day!"]]},
+{t:"Pidi direkshon",tr:"Asking for directions",lines:[
+["A","Despensá mi, unda e botika ta?","Excuse me, where is the pharmacy?"],
+["B","E ta den kaya grandi, banda di e banko.","It's on the main street, next to the bank."],
+["A","E ta leu?","Is it far?"],
+["B","Nò, e ta serka. Sigui stret i despues bai man drechi.","No, it's close. Keep going straight, then turn right."],
+["A","Masha danki pa bo ayudo!","Thanks a lot for your help!"],
+["B","Di nada. Suerte!","You're welcome. Good luck!"]]}
+];
+
+const RESOURCES=[
+["Lora — Learn Papiamentu","https://learnpapiamentu.app/en/","Modern app with native-speaker audio, made for Curaçao/Bonaire Papiamentu. The best complement to this trainer for real pronunciation."],
+["uTalk Papiamento","https://utalk.com/store/papiamento","2,500+ phrases recorded by native speakers, works offline."],
+["Henky's Papiamento","https://henkyspapiamento.com/","Free themed vocabulary lessons (uses Aruban spelling — see chapter 5)."],
+["Papiamentu Language Course","https://learn.papiamentucourse.com/","Self-paced beginner course from Curaçao, with a YouTube channel of free lessons."],
+["PAPIAMENTU ABC on YouTube","https://www.youtube.com/watch?v=_Z7vjb9YPMs","Short conversation-starter lessons — great for training your ear on real voices."],
+["Wikivoyage Papiamento phrasebook","https://en.wikivoyage.org/wiki/Papiamento_phrasebook","Free reference phrasebook with pronunciation notes."],
+["The Moreish Podcast — Papiamentu episode","https://podcasts.apple.com/us/podcast/papiamentu-the-language-of-cura%C3%A7ao-with-sheedia-jansen/id1728305327?i=1000706523265","The story and culture of the language, in English."],
+["Paper dictionaries","","Betty Ratzlaff's 'Dikshonario Papiamentu–Ingles' and Edwin Wernet's 'Curso di Papiamento' are the standard print references."]
+];
+
 const GRAMMAR=[
 {t:"Why you can learn Papiamentu fast",h:`
 <p>Papiamentu (called <i>Papiamento</i> on Aruba) is a creole of Portuguese, Spanish, Dutch and West-African languages, spoken by ~330,000 people on Curaçao, Bonaire and Aruba. It may be the friendliest grammar in the Western Hemisphere:</p>
@@ -627,7 +708,7 @@ function answerOk(guess,target){const g=norm(guess),t=norm(target);if(!g)return 
 
 /* ================= ROUTER / VIEWS ================= */
 let TAB="home";
-const TABS=[["home","🏠","Home"],["review","🌀","Repasá"],["quiz","🎯","Tèst"],["grammar","📖","Gramátika"]];
+const TABS=[["home","🏠","Home"],["review","🌀","Repasá"],["quiz","🎯","Tèst"],["grammar","📖","Mas"]];
 function renderTabs(){const due=dueIds().length;
   $("#tabs").innerHTML=TABS.map(([id,ic,lb])=>
     `<button class="tab${TAB===id?" on":""}" data-tab="${id}"><span class="ti">${ic}</span>${lb}${id==="review"&&due?`<span class="badge">${due}</span>`:""}</button>`).join("");
@@ -847,11 +928,30 @@ function quizHome(){
 }
 function grammar(){
   $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
-  <p class="eyebrow">Crash course</p>
+  <p class="eyebrow">Read &amp; listen</p>
+  <h2 style="margin-top:4px">Kombersashon — dialogues</h2>
+  <p class="subtle">Real conversations, move by move. Tap any line to hear it (approximate voice). Read one aloud each day — dialogue practice is how phrases become reflexes.</p>
+  ${DIALOGS.map((d,i)=>`<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(d.t)}</b> <small>· ${esc(d.tr)}</small></summary>
+    <div class="dlines">${d.lines.map(l=>`<button class="dline" data-say="${esc(l[1])}">
+      <span class="who ${l[0]==="A"?"a":"b"}">${l[0]}</span>
+      <span><span class="pap">${esc(l[1])}</span><small>${esc(l[2])}</small></span></button>`).join("")}
+    </div></details>`).join("")}
+  <button class="cta quiet" id="prlines">💬 Drill these lines as flashcards</button>
+
+  <p class="eyebrow" style="margin-top:28px">Crash course</p>
   <h2 style="margin-top:4px">Gramátika — read this once, speak forever</h2>
   ${GRAMMAR.map((g,i)=>`<h2>${i+1}. ${g.t}</h2>${g.h}`).join("")}
-  <p class="subtle" style="margin:20px 0">Sources &amp; further practice: the <i>Papiamentu</i> Wikipedia article, Wikivoyage's Papiamento phrasebook, and — best of all — any dushi local who'll chat with you. Papia, papia, papia!</p>
+
+  <p class="eyebrow" style="margin-top:28px">Go deeper</p>
+  <h2 style="margin-top:4px">Mas rekurso — for real native audio</h2>
+  <p class="subtle">This app builds your vocabulary and grammar; your ear needs real voices. These are the best Papiamentu-specific resources out there:</p>
+  <div class="panel"><ul class="res">
+  ${RESOURCES.map(r=>`<li>${r[1]?`<a href="${esc(r[1])}" target="_blank" rel="noopener">${esc(r[0])}</a>`:`<b>${esc(r[0])}</b>`} — ${esc(r[2])}</li>`).join("")}
+  </ul></div>
+  <p class="subtle" style="margin:20px 0">And — best of all — any dushi local who'll chat with you. Papia, papia, papia!</p>
   </div>`;
+  wireSpeak();
+  $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
 }
 
 /* ================= BOOT ================= */
