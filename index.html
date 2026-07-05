@@ -182,6 +182,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
   border:1px solid var(--line);border-radius:10px;padding:9px 14px}
 .brow .pap{font-size:17px}
 .brow small{color:var(--muted);text-align:right}
+.lvldots{font-size:9px;color:var(--sea);letter-spacing:2px;vertical-align:2px;white-space:nowrap}
 
 /* tabs */
 nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);z-index:5}
@@ -705,11 +706,16 @@ function gradeCard(id,g){
   S.srs[id]=c;S.xp+=g===0?1:2;save();
 }
 function dueIds(){const n=Date.now();return IDS.filter(id=>st(id)&&st(id).due<=n);}
+/* Level per card: 0 new, 1 herkennen, 2 kiezen, 3 typen & spreken, 4 alleen Papiamentu */
+function lvl(id){const c=st(id);if(!c)return 0;return c.reps<=1?1:c.reps===2?2:c.reps===3?3:4;}
+function lvlTag(id){const l=lvl(id);return l?`Niveau ${l}/4 · `:"";}
+function lvlDots(id){const l=lvl(id);return `<span class="lvldots" title="Niveau ${l}/4">${"●".repeat(l)}${"○".repeat(4-l)}</span>`;}
 function startedCount(){return IDS.filter(id=>st(id)).length;}
 function strongCount(){return IDS.filter(id=>st(id)&&st(id).ivl>=7).length;}
 function deckStats(d){let s=0,k=0;d.cards.forEach(c=>{const t=st(d.id+":"+c[0]);if(t){s++;if(t.ivl>=7)k++;}});return{s,k};}
 
 /* ================= AUDIO ================= */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
 let VOICE=null;
 function pickVoice(){const vs=speechSynthesis.getVoices();
   VOICE=vs.find(v=>/es[-_](419|US|MX|CO)/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null;}
@@ -801,7 +807,8 @@ function deckView(id){
     <button class="cta" id="learn" ${fresh.length?"":"disabled"}>📚 Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
     <button class="cta quiet" id="drill">🌀 Oefen dit hele deck (alle ${d.cards.length})</button>
   </div>
-  <div class="browse">${d.cards.map(c=>`<div class="brow"><span class="pap">${esc(c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
+  <p class="subtle" style="margin:14px 2px 0">Elke kaart klimt in niveau: <b>1</b> herkennen → <b>2</b> kiezen → <b>3</b> typen &amp; spreken → <b>4</b> alleen Papiamentu, zonder vertaling.</p>
+  <div class="browse">${d.cards.map(c=>`<div class="brow"><span><span class="pap">${esc(c[0])}</span> ${lvlDots(id+":"+c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
   $("#back").onclick=render;
   $("#learn").onclick=()=>startLearn(d);
   $("#drill").onclick=()=>startSession(d.cards.map(c=>id+":"+c[0]),esc(d.name),true);
@@ -820,8 +827,10 @@ function startLearn(d){
 function startSession(ids,title,drill){
   if(!ids.length)return;
   const steps=shuffle(ids).slice(0,drill?ids.length:20).map(id=>{
-    const c=st(id)||{reps:0};
-    const mode=c.reps<=1?"mc_pe":c.reps===2?"mc_ep":(Math.random()<0.5?"type_ep":"flash");
+    const l=lvl(id);
+    const mode=l<=1?"mc_pe":l===2?"mc_ep":
+      l===3?(Math.random()<0.5?"type_ep":"speak_ep"):
+      ["flash","type_ep","speak_ep"][Math.floor(Math.random()*3)];
     return {id,mode};});
   Q={steps,i:0,title,right:0,wrong:0,drill:!!drill};step();
 }
@@ -832,7 +841,7 @@ function sessTop(){const pct=Math.round(100*Q.i/Q.steps.length);
 function step(){
   if(!Q||Q.i>=Q.steps.length)return finish();
   const s=Q.steps[Q.i],c=ALL[s.id];
-  ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c)})[s.mode]?.(s,c);
+  ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c),speak_ep:()=>speakEx(s,c)})[s.mode]?.(s,c);
   $("#quit").onclick=()=>{Q=null;render();};
 }
 function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Luister (benadering met Spaanse stem)">🔊</button>`;}
@@ -846,6 +855,7 @@ function intro(s,c){
     <div class="mid">${esc(c.e)}</div>
     ${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}
     ${speakBtn(c.p)}
+    <div class="lit">🗣️ Zeg het hardop na — spreken vanaf dag één</div>
   </div>
   <button class="cta contbtn" id="next">Begrepen →</button>`;
   wireSpeak();speak(c.p);
@@ -854,7 +864,7 @@ function intro(s,c){
 function flash(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">Weet je 'm nog?</p>
+    <p class="eyebrow">${lvlTag(s.id)}Alleen Papiamentu — weet je 'm nog?</p>
     <div class="big pap">${esc(c.p)}</div>
     ${speakBtn(c.p)}
     <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
@@ -871,13 +881,49 @@ function flash(s,c){
 }
 function ivlPreview(id,g){const c=st(id);if(!c||c.ivl<1)return g===2?"3 d":"1 d";
   const n=Math.round(c.ivl*(g===2?c.ease*1.3:c.ease));return n+" d";}
+function speakEx(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${lvlTag(s.id)}🗣️ Zeg het hardop in het Papiamentu</p>
+    <div class="mid">${esc(c.e)}</div>
+    <div id="heard" class="lit"></div>
+    <div id="ans" hidden><div class="big pap">${esc(c.p)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
+  </div>
+  <div id="zone">
+    ${SR?`<button class="cta" id="mic">🎙️ Spreek nu — ik luister</button>`:""}
+    <button class="cta ${SR?"quiet ":""}contbtn" id="show">Toon antwoord</button>
+  </div>`;
+  let rec=null;
+  const reveal=()=>{if(rec){try{rec.abort();}catch(e){}rec=null;}
+    $("#ans").hidden=false;speak(c.p);
+    $("#zone").innerHTML=`<div class="grades">
+      <button class="grade again">Opnieuw<small>&lt;1 min</small></button>
+      <button class="grade good">Goed<small>${ivlPreview(s.id,1)}</small></button>
+      <button class="grade easy">Makkelijk<small>${ivlPreview(s.id,2)}</small></button></div>
+    <p class="subtle center" style="margin-top:8px">Zei je het (bijna) goed? Wees eerlijk — dat is het hele spel.</p>`;
+    [["again",0],["good",1],["easy",2]].forEach(([k,g])=>
+      $(".grade."+k).onclick=()=>{answer(s,g!==0,g);});};
+  $("#show").onclick=()=>reveal();
+  if(SR)$("#mic").onclick=()=>{
+    try{
+      rec=new SR();rec.lang=VOICE?VOICE.lang:"es-ES";rec.maxAlternatives=3;
+      $("#heard").textContent="🎙️ Ik luister…";
+      rec.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);
+        const hit=alts.find(t=>answerOk(t,c.p));
+        $("#heard").textContent=`Ik hoorde: “${alts[0]}” ${hit?"— klinkt goed! ✓":"— vergelijk zelf ↓"}`;
+        reveal();};
+      rec.onerror=()=>{$("#heard").textContent="Microfoon niet beschikbaar hier — zeg het hardop en beoordeel jezelf.";};
+      rec.start();
+    }catch(e){$("#heard").textContent="Spraakherkenning niet beschikbaar — zeg het hardop en beoordeel jezelf.";}
+  };
+}
 function mc(s,c,papToEng){
   const pool=shuffle(IDS.filter(x=>x!==s.id&&ALL[x].e!==c.e&&ALL[x].p!==c.p)).slice(0,3).map(x=>ALL[x]);
   const opts=shuffle([c,...pool]);
   const q=papToEng?c.p:c.e, side=x=>papToEng?x.e:x.p;
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">${papToEng?"Wat betekent dit?":"Hoe zeg je dit?"}</p>
+    <p class="eyebrow">${lvlTag(s.id)}${papToEng?"Wat betekent dit?":"Hoe zeg je dit?"}</p>
     <div class="big ${papToEng?"pap":""}">${esc(q)}</div>
     ${papToEng?speakBtn(c.p):""}
   </div>
@@ -895,7 +941,7 @@ function mc(s,c,papToEng){
 function typeEx(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">Typ het in het Papiamentu</p>
+    <p class="eyebrow">${lvlTag(s.id)}Typ het in het Papiamentu</p>
     <div class="mid">${esc(c.e)}</div>
   </div>
   <div class="typebox"><input id="tin" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…"><button id="chk">Check</button></div>
@@ -947,6 +993,7 @@ function reviewHome(){
   <h2 style="margin:4px 0 10px">Repasá — herhalen</h2>
   <div class="panel">${due.length?
     `<p style="margin:0 0 10px"><b>${due.length}</b> kaart${due.length>1?"en staan":" staat"} klaar. Herhalingen komen precies vóórdat je zou vergeten — hier gebeurt het snelle leren.</p>
+     <p class="subtle" style="margin:0 0 10px">Oefenvorm groeit mee met je niveau: herkennen → kiezen → typen &amp; hardop zeggen → alleen Papiamentu.</p>
      <button class="cta" id="go">🌀 Start herhaling</button>`:
     `<p style="margin:0">Niets te herhalen — dushi! 🎉<br><span class="subtle">Leer nieuwe kaarten op Home, of oefen een deck. Kom terug zodra het bolletje oplicht.</span></p>`}
   </div>
