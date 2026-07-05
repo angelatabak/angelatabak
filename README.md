@@ -1,26 +1,26 @@
 # Siña Papiamentu 🏝️
 
-A fast, science-based Papiamentu learning app — a single HTML file, no install, works offline, progress saved in your browser.
+Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstaligen — één HTML-bestand, geen installatie, werkt offline, voortgang wordt in je browser bewaard.
 
-**Just open `index.html` in any browser** (or serve it via GitHub Pages) and start learning.
+**Open gewoon `index.html` in een browser** (of zet het op GitHub Pages) en begin met leren.
 
-## Why this teaches fast
+## Waarom je hiermee snel leert
 
-- **331 highest-frequency words & phrases** in 16 themed decks, ordered by real-world usefulness — survival phrases first.
-- **4 practical dialogues** (meeting someone, the snack bar, the market, asking directions) with tap-to-listen lines, plus a matching flashcard deck.
-- **Spaced repetition (SM-2)**: reviews arrive right before you'd forget. Research shows ~85% retention vs ~22% for cramming.
-- **Active recall in mixed formats**: flashcards, multiple choice in both directions, and typing with accent-insensitive typo tolerance.
-- **A 5-chapter grammar crash course** — Papiamentu has no conjugations and no gender; tense is 4 particles (`ta`, `a`, `lo`, `tabata`). You can read the whole grammar in 10 minutes.
-- **Streaks and progress tracking** to keep you coming back daily (the real secret of fast learning).
-- **Approximate audio** via your browser's Spanish voice (no Papiamentu TTS exists yet) — toggle with 🔊.
+- **331 meest gebruikte woorden & zinnen** in 16 themadecks, geordend op bruikbaarheid — overlevingszinnen eerst.
+- **4 praktijkdialogen** (iemand ontmoeten, de snackbar, de markt, de weg vragen) met tik-om-te-luisteren regels, plus een bijpassend flashcard-deck.
+- **Spaced repetition (SM-2)**: herhalingen komen precies vóórdat je zou vergeten. Onderzoek laat ~85% retentie zien versus ~22% bij stampen.
+- **Actief ophalen in gemengde vormen**: flashcards, meerkeuze in beide richtingen, en typen met accent-tolerante typefoutcorrectie.
+- **Een spoedcursus grammatica in 5 hoofdstukken** — Papiamentu kent geen vervoegingen en geen geslacht; tijd bestaat uit 4 partikels (`ta`, `a`, `lo`, `tabata`). Je leest de hele grammatica in 10 minuten. Als Nederlander heb je bovendien honderden leenwoorden cadeau (*danki*, *hel*, *kamber*, *skol*…).
+- **Streaks en voortgang** zodat je elke dag terugkomt (hét echte geheim van snel leren).
+- **Benaderde audio** via de Spaanse stem van je browser (er bestaat nog geen Papiamentu-stem) — aan/uit met 🔊.
 
-Uses Curaçao/Bonaire spelling (*Papiamentu*); the grammar section explains the Aruban (*Papiamento*) differences. Light & dark themes, phone-friendly.
+Gebruikt de spelling van Curaçao/Bonaire (*Papiamentu*); het grammaticadeel legt de Arubaanse (*Papiamento*) verschillen uit. Licht & donker thema, geschikt voor je telefoon.
 
-## Suggested routine (≈15 min/day)
+## Aanbevolen routine (±15 min/dag)
 
-1. Read one grammar chapter (first five days only).
-2. Clear your due reviews (🌀 badge).
-3. Learn 8 new cards from the next deck.
-4. Finish with a quick 🎯 quiz.
+1. Lees één grammaticahoofdstuk (alleen de eerste vijf dagen).
+2. Werk je herhalingen weg (🌀-bolletje).
+3. Leer 8 nieuwe kaarten uit het volgende deck.
+4. Sluit af met een snelle 🎯-quiz.
 
-At that pace you'll have all 331 cards started in about six weeks — enough to hold real conversations. Pair it with the native-audio resources listed in the app's **Mas** tab (Lora, uTalk, YouTube lessons) to train your ear. *Bon suerte — bo por!*
+In dat tempo heb je alle 331 kaarten in ongeveer zes weken gestart — genoeg voor echte gesprekken. Combineer het met de bronnen met echte stemmen in het **Mas**-tabblad (Lora, uTalk, YouTube-lessen) om je oor te trainen. *Bon suerte — bo por!*

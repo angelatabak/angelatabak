@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +13,7 @@
   --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
   --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
   --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
+  --hero1:#0F7E88; --hero2:#09515B; --heroink:#F2FAF9;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -21,6 +22,7 @@
     --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
     --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
     --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+    --hero1:#134049; --hero2:#0A2930; --heroink:#DFF1EF;
   }
 }
 :root[data-theme="light"]{
@@ -29,6 +31,7 @@
   --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
   --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
   --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
+  --hero1:#0F7E88; --hero2:#09515B; --heroink:#F2FAF9;
 }
 :root[data-theme="dark"]{
   --bg:#0C1E24; --panel:#122B33; --panel2:#0F252C; --ink:#E6F1EF; --muted:#8FACAE;
@@ -36,6 +39,7 @@
   --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
   --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
   --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  --hero1:#134049; --hero2:#0A2930; --heroink:#DFF1EF;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -65,6 +69,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
   display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:16px}
 .iconbtn[aria-pressed="false"]{opacity:.45}
 
+/* hero */
+.hero{position:relative;background:linear-gradient(165deg,var(--hero1),var(--hero2));border-radius:16px;
+  padding:20px 18px 0;color:var(--heroink);box-shadow:var(--shadow);overflow:hidden;margin-top:6px}
+.hero .pap{color:var(--heroink)}
+.hgreet .g{font-size:32px;font-style:italic}
+.hsub{font-size:13.5px;opacity:.85;display:block;margin-top:2px}
+.wod{margin:14px 0 4px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16)}
+.wod .eyebrow{color:var(--heroink);opacity:.65}
+.wod button{text-align:left;font-size:15.5px;color:var(--heroink);display:block;margin-top:3px}
+.wod .pap{font-size:19px}
+.skyline{display:flex;align-items:flex-end;gap:3px;height:32px;margin-top:12px}
+.skyline i{display:block;flex:1;border-radius:2px 2px 0 0;opacity:.92}
+
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
@@ -86,7 +103,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .decks{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .deck{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);
   border-radius:12px;padding:12px 14px;text-align:left;box-shadow:var(--shadow)}
-.deck .em{font-size:22px;width:32px;text-align:center;flex:none}
+.deck .em{font-size:20px;width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--panel2);border-radius:12px}
 .deck .dt{flex:1;min-width:0}
 .deck .dt b{display:block;font-size:15px}
 .deck .dt small{color:var(--muted);font-size:12.5px}
@@ -177,9 +195,18 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1p
 .backrow button{color:var(--sea-deep);font-weight:600;font-size:14px}
 .subtle{color:var(--muted);font-size:13.5px}
 .center{text-align:center}
+/* micro-interactions */
+.deck,.opt,.cta,.grade,.iconbtn{transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,filter .12s ease}
+.deck:hover,.opt:not(:disabled):hover{transform:translateY(-1px);border-color:var(--sea)}
+.cta:hover:not(:disabled){filter:brightness(1.06)}
+.cta:active,.deck:active,.opt:active,.grade:active{transform:scale(.985)}
+.bar i{transition:width .35s ease}
 @media (prefers-reduced-motion: no-preference){
   .qcard{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
 }
 </style>
 
@@ -190,459 +217,460 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1p
       <h1>Siña <span class="pap">Papiamentu</span></h1>
     </div>
     <div class="hbtns">
-      <button class="iconbtn" id="ttsbtn" title="Audio (approximate, Spanish voice)" aria-pressed="true">🔊</button>
-      <button class="iconbtn" id="themebtn" title="Toggle light/dark">◐</button>
+      <button class="iconbtn" id="ttsbtn" title="Audio (benadering, Spaanse stem)" aria-pressed="true">🔊</button>
+      <button class="iconbtn" id="themebtn" title="Licht/donker wisselen">◐</button>
     </div>
   </header>
   <main id="view"></main>
 </div>
-<nav aria-label="Sections"><div class="tabs" id="tabs"></div></nav>
+<nav aria-label="Onderdelen"><div class="tabs" id="tabs"></div></nav>
 
 <script>
 "use strict";
 /* ================= DATA ================= */
 /* Card: [papiamentu, english, note?]  — Curaçao/Bonaire spelling */
 const DECKS=[
-{id:"survival",em:"🛟",name:"Survival kit",desc:"The 26 phrases that carry your first day",cards:[
-["Bon biní","Welcome","You'll hear it everywhere — often written 'Bon bini'"],
-["Danki","Thank you","From Dutch 'dank je'"],
-["Masha danki","Thank you very much","'masha' = very, a lot"],
-["Por fabor","Please"],
-["Di nada","You're welcome"],
-["Si","Yes"],["Nò","No"],
-["Ayó","Goodbye"],
-["Te aworó","See you later","lit. 'until later today'"],
-["Te mañan","See you tomorrow"],
-["Kon ta bai?","How's it going?","THE standard greeting"],
-["Mi ta bon","I'm fine"],
-["Tur kos ta bon","Everything is fine","lit. 'all things are good'"],
-["Ta bon","Okay / fine"],
-["Klaro","Of course"],
-["Podisé","Maybe"],
-["Mi no sa","I don't know"],
-["Mi no ta komprondé","I don't understand"],
-["Bo ta papia ingles?","Do you speak English?"],
-["Papia poko-poko, por fabor","Speak slowly, please"],
-["Un biaha mas","One more time","'biaha' = time/trip"],
-["Despensá mi","Excuse me / sorry"],
-["Unda e baño ta?","Where is the bathroom?"],
-["Kuantu esaki ta kosta?","How much does this cost?"],
+{id:"survival",em:"🛟",name:"Overlevingskit",desc:"De 26 zinnen voor je eerste dag",cards:[
+["Bon biní","Welkom","Hoor je overal — vaak geschreven als 'Bon bini'"],
+["Danki","Dank je","Van het Nederlandse 'dank je'"],
+["Masha danki","Heel erg bedankt","'masha' = heel, erg"],
+["Por fabor","Alsjeblieft (bij een verzoek)"],
+["Di nada","Graag gedaan"],
+["Si","Ja"],["Nò","Nee"],
+["Ayó","Doei / tot ziens"],
+["Te aworó","Tot straks","lett. 'tot later vandaag'"],
+["Te mañan","Tot morgen"],
+["Kon ta bai?","Hoe gaat het?","DÉ standaardbegroeting"],
+["Mi ta bon","Met mij gaat het goed"],
+["Tur kos ta bon","Alles is goed","lett. 'alle dingen zijn goed'"],
+["Ta bon","Oké / prima"],
+["Klaro","Natuurlijk"],
+["Podisé","Misschien"],
+["Mi no sa","Ik weet het niet"],
+["Mi no ta komprondé","Ik begrijp het niet"],
+["Bo ta papia hulandes?","Spreek je Nederlands?"],
+["Papia poko-poko, por fabor","Praat langzaam, alsjeblieft"],
+["Un biaha mas","Nog een keer","'biaha' = keer/reis"],
+["Despensá mi","Sorry / pardon"],
+["Unda e baño ta?","Waar is het toilet?"],
+["Kuantu esaki ta kosta?","Hoeveel kost dit?"],
 ["Ayudo!","Help!"],
-["Mi ta pèrdí","I'm lost"]]},
-{id:"greet",em:"👋",name:"Greetings & small talk",desc:"Meet people like a local",cards:[
-["Bon dia","Good morning"],
-["Bon tardi","Good afternoon"],
-["Bon nochi","Good evening / night"],
-["Kon bo yama?","What's your name?"],
-["Mi yama Angela","My name is Angela"],
-["Di unda bo ta?","Where are you from?"],
-["Mi ta di Hulanda","I'm from the Netherlands"],
-["Kontentu di konosé bo","Nice to meet you"],
-["Kon ta ku bida?","How's life?"],
-["Hopi bon, danki","Very well, thanks"],
-["Mas o ménos","So-so"],
-["Mi ta kansá","I'm tired"],
-["Pasa un bon dia","Have a good day"],
-["Bon siman","Have a good week"],
-["Salú!","Cheers!"],
-["Dushi","Sweet / lovely / darling","The most Caribbean word there is — food, people, life can all be dushi"],
-["Hopi dushi!","Delicious! / wonderful!"],
-["Te otro biaha","Until next time"]]},
-{id:"dialog",em:"💬",name:"Conversation moves",desc:"Lines lifted straight from the dialogues",cards:[
-["Kon ta?","Hi — how's it? (casual)"],
-["I abo?","And you?"],
-["Mi nòmber ta…","My name is…","alternative to 'Mi yama…'"],
-["Algu mas?","Anything else?"],
-["Esei ta tur","That's all"],
-["Duna mi dos, por fabor","Give me two, please"],
-["Tin pastechi ainda?","Are there still pastechis?"],
-["Esei ta muchu karu!","That's too expensive!"],
-["Sigui stret","Keep going straight"],
-["Bai man drechi","Turn right"],
-["Masha danki pa bo ayudo","Thanks a lot for your help"],
-["Suerte!","Good luck!"]]},
-{id:"particles",em:"⚙️",name:"Pronouns & magic particles",desc:"The entire verb system — yes, really",cards:[
-["mi","I / me / my"],
-["bo","you / your (informal)"],
-["e","he / she / it — and 'the'"],
-["su","his / her / its"],
-["nos","we / us / our"],
-["boso","you all / your (plural)"],
-["nan","they / them / their"],
-["Mi ta kome","I eat / I am eating","'ta' = present"],
-["Mi a kome","I ate","'a' = past"],
-["Lo mi kome","I will eat","'lo' = future"],
-["Mi tabata kome","I was eating","'tabata' = past ongoing"],
-["Mi no ta kome","I am not eating","'no' goes before the particle"],
-["Mi ke kome","I want to eat"],
-["Mi por papia","I can speak"],
-["Mi mester bai","I have to go"],
-["Mi tin un kas","I have a house"],
-["Nos ta bai playa","We're going to the beach"],
-["Mi ta siña papiamentu","I'm learning Papiamentu"],
-["Ban!","Let's go!"],
-["Ban kome!","Let's eat!"]]},
-{id:"questions",em:"❓",name:"Question words",desc:"Ask anything — word order never changes",cards:[
-["Ken?","Who?"],
-["Kiko?","What?"],
-["Unda?","Where?"],
-["Kuandu?","When?"],
-["Dikon?","Why?"],
-["Kon?","How?"],
-["Kuantu?","How much / how many?"],
-["Kua?","Which?"],
-["Kiko esaki ta?","What is this?"],
-["Unda bo ta bai?","Where are you going?"],
-["Ken e ta?","Who is he/she?"],
-["Dikon nò?","Why not?"],
-["Kon yama esaki na papiamentu?","What is this called in Papiamentu?"]]},
-{id:"numbers",em:"🔢",name:"Numbers",desc:"Count, pay, bargain",cards:[
-["un","one"],["dos","two"],["tres","three"],["kuater","four"],["sinku","five"],
-["seis","six"],["shete","seven"],["ocho","eight"],["nuebe","nine"],["dies","ten"],
-["diesun","eleven","dies + un"],["diesdos","twelve"],["diestres","thirteen"],
-["binti","twenty"],["bintisinku","twenty-five"],
-["trinta","thirty"],["kuarenta","forty"],["sinkuenta","fifty"],["sesenta","sixty"],
-["setenta","seventy"],["ochenta","eighty"],["nobenta","ninety"],
-["shen","one hundred"],["mil","one thousand"]]},
-{id:"verbs1",em:"⚡",name:"Power verbs",desc:"22 verbs that do 80% of the talking",cards:[
-["ta","to be"],
-["tin","to have"],
-["bai","to go"],
-["bin","to come"],
-["ke","to want","also 'kier'"],
-["por","can / may"],
-["mester","must / to need"],
-["kome","to eat"],
-["bebe","to drink"],
-["papia","to speak","the language is named after it!"],
-["hasi","to do / to make"],
-["mira","to see"],
-["tende","to hear"],
-["sa","to know (facts)"],
-["konosé","to know (people)"],
-["bisa","to say / to tell"],
-["duna","to give"],
-["traha","to work / to make"],
-["kumpra","to buy"],
-["haña","to get / to find"],
-["yuda","to help"],
-["siña","to learn / to teach"]]},
-{id:"verbs2",em:"🏃",name:"More verbs",desc:"Round out your toolkit",cards:[
-["gusta","to like"],
-["stima","to love"],
-["biba","to live"],
-["drumi","to sleep"],
-["lanta","to get up"],
-["kana","to walk"],
-["kore","to drive / to run"],
-["skirbi","to write"],
-["lesa","to read"],
-["puntra","to ask"],
-["kontestá","to answer"],
-["warda","to wait / to keep"],
-["keda","to stay"],
-["habri","to open"],
-["sera","to close"],
-["paga","to pay"],
-["buska","to look for"],
-["kuminsá","to begin"],
-["kaba","to finish","also means 'already': 'mi a kome kaba'"],
-["pensa","to think"],
-["sinti","to feel"],
-["hunga","to play"],
-["kanta","to sing"],
-["baila","to dance"]]},
-{id:"glue",em:"🔗",name:"Glue words",desc:"Little words that hold sentences together",cards:[
-["i","and"],
-["òf","or"],
-["pero","but"],
-["pasobra","because"],
-["ku","with / that"],
-["sin","without"],
-["pa","for / to"],
-["di","of / from"],
-["na","in / at / to"],
-["den","in / inside"],
-["riba","on / on top of"],
-["te","until"],
-["tambe","also / too"],
-["so","only"],
-["ainda","still / yet"],
-["djis","just"],
-["mes","self / same","'mi mes' = myself"],
-["tur","all / every"],
-["otro","other"],
-["algu","something"],
-["nada","nothing"],
-["tur hende","everyone"],
-["niun hende","nobody"]]},
-{id:"food",em:"🍽️",name:"Food & drink",desc:"Order like you were born there",cards:[
-["kuminda","food"],
+["Mi ta pèrdí","Ik ben verdwaald"]]},
+{id:"greet",em:"👋",name:"Begroeten & kletsen",desc:"Maak contact als een local",cards:[
+["Bon dia","Goedemorgen"],
+["Bon tardi","Goedemiddag"],
+["Bon nochi","Goedenavond / goedenacht"],
+["Kon bo yama?","Hoe heet je?"],
+["Mi yama Angela","Ik heet Angela"],
+["Di unda bo ta?","Waar kom je vandaan?"],
+["Mi ta di Hulanda","Ik kom uit Nederland"],
+["Kontentu di konosé bo","Leuk je te ontmoeten"],
+["Kon ta ku bida?","Hoe is het leven?"],
+["Hopi bon, danki","Heel goed, dank je"],
+["Mas o ménos","Zo-zo / het gaat wel"],
+["Mi ta kansá","Ik ben moe"],
+["Pasa un bon dia","Fijne dag nog"],
+["Bon siman","Fijne week"],
+["Salú!","Proost!"],
+["Dushi","Lekker / lief / schatje","Hét Caribische woord — eten, mensen en het leven kunnen allemaal dushi zijn"],
+["Hopi dushi!","Heerlijk!"],
+["Te otro biaha","Tot de volgende keer"]]},
+{id:"dialog",em:"💬",name:"Gesprekszinnen",desc:"Zinnen rechtstreeks uit de dialogen",cards:[
+["Kon ta?","Hoi — hoe is 't? (informeel)"],
+["I abo?","En jij?"],
+["Mi nòmber ta…","Mijn naam is…","alternatief voor 'Mi yama…'"],
+["Algu mas?","Nog iets anders?"],
+["Esei ta tur","Dat is alles"],
+["Duna mi dos, por fabor","Geef me er twee, alsjeblieft"],
+["Tin pastechi ainda?","Zijn er nog pastechi's?"],
+["Esei ta muchu karu!","Dat is te duur!"],
+["Sigui stret","Ga rechtdoor"],
+["Bai man drechi","Ga naar rechts"],
+["Masha danki pa bo ayudo","Heel erg bedankt voor je hulp"],
+["Suerte!","Succes!"]]},
+{id:"particles",em:"⚙️",name:"Voornaamwoorden & toverpartikels",desc:"Het hele werkwoordsysteem — echt waar",cards:[
+["mi","ik / mij / mijn"],
+["bo","jij / jouw"],
+["e","hij / zij / het — en 'de/het'"],
+["su","zijn / haar"],
+["nos","wij / ons"],
+["boso","jullie"],
+["nan","zij / hen / hun"],
+["Mi ta kome","Ik eet / ben aan het eten","'ta' = tegenwoordige tijd"],
+["Mi a kome","Ik heb gegeten","'a' = verleden tijd"],
+["Lo mi kome","Ik zal eten","'lo' = toekomst"],
+["Mi tabata kome","Ik was aan het eten","'tabata' = duurde voort in het verleden"],
+["Mi no ta kome","Ik eet niet","'no' komt vóór het partikel"],
+["Mi ke kome","Ik wil eten"],
+["Mi por papia","Ik kan spreken"],
+["Mi mester bai","Ik moet gaan"],
+["Mi tin un kas","Ik heb een huis"],
+["Nos ta bai playa","Wij gaan naar het strand"],
+["Mi ta siña papiamentu","Ik leer Papiamentu"],
+["Ban!","Kom, we gaan!"],
+["Ban kome!","Laten we eten!"]]},
+{id:"questions",em:"❓",name:"Vraagwoorden",desc:"Vraag alles — de woordvolgorde verandert nooit",cards:[
+["Ken?","Wie?"],
+["Kiko?","Wat?"],
+["Unda?","Waar?"],
+["Kuandu?","Wanneer?"],
+["Dikon?","Waarom?"],
+["Kon?","Hoe?"],
+["Kuantu?","Hoeveel?"],
+["Kua?","Welke?"],
+["Kiko esaki ta?","Wat is dit?"],
+["Unda bo ta bai?","Waar ga je naartoe?"],
+["Ken e ta?","Wie is hij/zij?"],
+["Dikon nò?","Waarom niet?"],
+["Kon yama esaki na papiamentu?","Hoe heet dit in het Papiamentu?"]]},
+{id:"numbers",em:"🔢",name:"Getallen",desc:"Tellen, betalen, afdingen",cards:[
+["un","een (1)"],["dos","twee"],["tres","drie"],["kuater","vier"],["sinku","vijf"],
+["seis","zes"],["shete","zeven"],["ocho","acht"],["nuebe","negen"],["dies","tien"],
+["diesun","elf","dies + un"],["diesdos","twaalf"],["diestres","dertien"],
+["binti","twintig"],["bintisinku","vijfentwintig"],
+["trinta","dertig"],["kuarenta","veertig"],["sinkuenta","vijftig"],["sesenta","zestig"],
+["setenta","zeventig"],["ochenta","tachtig"],["nobenta","negentig"],
+["shen","honderd"],["mil","duizend"]]},
+{id:"verbs1",em:"⚡",name:"Krachtwerkwoorden",desc:"22 werkwoorden die 80% van het praten doen",cards:[
+["ta","zijn"],
+["tin","hebben"],
+["bai","gaan"],
+["bin","komen"],
+["ke","willen","ook 'kier'"],
+["por","kunnen / mogen"],
+["mester","moeten / nodig hebben"],
+["kome","eten"],
+["bebe","drinken"],
+["papia","praten / spreken","de taal is ernaar vernoemd!"],
+["hasi","doen / maken"],
+["mira","zien"],
+["tende","horen"],
+["sa","weten"],
+["konosé","kennen"],
+["bisa","zeggen / vertellen"],
+["duna","geven"],
+["traha","werken / maken"],
+["kumpra","kopen"],
+["haña","krijgen / vinden"],
+["yuda","helpen"],
+["siña","leren / onderwijzen"]]},
+{id:"verbs2",em:"🏃",name:"Meer werkwoorden",desc:"Maak je gereedschapskist compleet",cards:[
+["gusta","leuk vinden"],
+["stima","houden van"],
+["biba","wonen / leven"],
+["drumi","slapen"],
+["lanta","opstaan"],
+["kana","lopen / wandelen"],
+["kore","rijden / rennen"],
+["skirbi","schrijven"],
+["lesa","lezen"],
+["puntra","vragen"],
+["kontestá","antwoorden"],
+["warda","wachten / bewaren"],
+["keda","blijven"],
+["habri","openen"],
+["sera","sluiten"],
+["paga","betalen"],
+["buska","zoeken"],
+["kuminsá","beginnen"],
+["kaba","eindigen / af zijn","betekent ook 'al': 'mi a kome kaba'"],
+["pensa","denken"],
+["sinti","voelen"],
+["hunga","spelen"],
+["kanta","zingen"],
+["baila","dansen"]]},
+{id:"glue",em:"🔗",name:"Bindwoorden",desc:"Kleine woorden die zinnen bij elkaar houden",cards:[
+["i","en"],
+["òf","of (keuze)"],
+["pero","maar"],
+["pasobra","omdat / want"],
+["ku","met / dat"],
+["sin","zonder"],
+["pa","voor / om te"],
+["di","van"],
+["na","in / aan / naar"],
+["den","in / binnen"],
+["riba","op / bovenop"],
+["te","tot"],
+["tambe","ook"],
+["so","alleen / slechts"],
+["ainda","nog / nog steeds"],
+["djis","gewoon / net"],
+["mes","zelf / zelfde","'mi mes' = ikzelf"],
+["tur","alle / elke"],
+["otro","ander"],
+["algu","iets"],
+["nada","niets"],
+["tur hende","iedereen"],
+["niun hende","niemand"]]},
+{id:"food",em:"🍽️",name:"Eten & drinken",desc:"Bestel alsof je er geboren bent",cards:[
+["kuminda","eten / voedsel"],
 ["awa","water"],
-["pan","bread"],
-["keshi","cheese"],
-["keshi yená","stuffed cheese","Curaçao's signature dish"],
-["pastechi","fried pastry","the beloved breakfast snack"],
-["funchi","cornmeal side dish"],
-["piská","fish"],
-["karni","meat"],
-["galiña","chicken"],
-["aros","rice"],
-["webu","egg"],
+["pan","brood"],
+["keshi","kaas"],
+["keshi yená","gevulde kaas","hét gerecht van Curaçao"],
+["pastechi","gefrituurd pasteitje","het geliefde ontbijthapje"],
+["funchi","polenta van maïsmeel","standaard bijgerecht"],
+["piská","vis"],
+["karni","vlees"],
+["galiña","kip"],
+["aros","rijst"],
+["webu","ei"],
 ["fruta","fruit"],
-["batata","potato"],
-["lechi","milk"],
-["kòfi","coffee"],
-["te","tea"],
-["suku","sugar"],
-["salu","salt"],
-["pika","hot pepper / spicy"],
-["serbes","beer"],
-["biña","wine"],
-["refresko","soft drink"],
-["Mi tin hamber","I'm hungry","lit. 'I have hunger'"],
-["Mi tin set","I'm thirsty","lit. 'I have thirst'"],
-["E kuminda ta dushi","The food is delicious"],
-["Un serbes friu, por fabor","A cold beer, please"]]},
-{id:"time",em:"🕐",name:"Time & days",desc:"Yesterday, today, mañan",cards:[
-["awe","today"],
-["mañan","tomorrow"],
-["ayera","yesterday"],
-["awor","now"],
-["despues","later / afterwards"],
-["promé","first / before"],
-["semper","always"],
-["nunka","never"],
-["tur dia","every day"],
-["awe nochi","tonight"],
-["dia","day"],
+["batata","aardappel"],
+["lechi","melk"],
+["kòfi","koffie"],
+["te","thee"],
+["suku","suiker"],
+["salu","zout"],
+["pika","hete peper / pittig"],
+["serbes","bier"],
+["biña","wijn"],
+["refresko","frisdrank"],
+["Mi tin hamber","Ik heb honger"],
+["Mi tin set","Ik heb dorst"],
+["E kuminda ta dushi","Het eten is heerlijk"],
+["Un serbes friu, por fabor","Een koud biertje, alsjeblieft"]]},
+{id:"time",em:"🕐",name:"Tijd & dagen",desc:"Gisteren, vandaag, mañan",cards:[
+["awe","vandaag"],
+["mañan","morgen"],
+["ayera","gisteren"],
+["awor","nu"],
+["despues","later / daarna"],
+["promé","eerst / eerder"],
+["semper","altijd"],
+["nunka","nooit"],
+["tur dia","elke dag"],
+["awe nochi","vanavond"],
+["dia","dag"],
 ["siman","week"],
-["luna","month","also 'moon'"],
-["aña","year"],
-["ora","hour / time"],
-["Kuant'or tin?","What time is it?"],
-["mainta","morning"],
-["atardi","afternoon"],
-["anochi","evening / night"],
-["djaluna","Monday"],
-["djamars","Tuesday"],
-["djarason","Wednesday"],
-["djaweps","Thursday"],
-["djabièrnè","Friday"],
-["djasabra","Saturday"],
-["djadumingu","Sunday"]]},
-{id:"places",em:"📍",name:"Places & directions",desc:"Find your way around the island",cards:[
-["kas","house / home"],
-["kaya","street"],
-["kamina","road / way"],
-["stat","town / city"],
-["tienda","shop"],
-["merkado","market"],
+["luna","maand","ook 'maan'"],
+["aña","jaar"],
+["ora","uur / tijd"],
+["Kuant'or tin?","Hoe laat is het?"],
+["mainta","ochtend"],
+["atardi","middag"],
+["anochi","avond / nacht"],
+["djaluna","maandag"],
+["djamars","dinsdag"],
+["djarason","woensdag"],
+["djaweps","donderdag"],
+["djabièrnè","vrijdag"],
+["djasabra","zaterdag"],
+["djadumingu","zondag"]]},
+{id:"places",em:"📍",name:"Plaatsen & de weg",desc:"Vind je weg op het eiland",cards:[
+["kas","huis / thuis"],
+["kaya","straat"],
+["kamina","weg / route"],
+["stat","stad"],
+["tienda","winkel"],
+["merkado","markt"],
 ["banko","bank"],
-["botika","pharmacy"],
-["hòspital","hospital"],
-["skol","school"],
-["misa","church"],
+["botika","apotheek"],
+["hòspital","ziekenhuis"],
+["skol","school","van het Nederlandse 'school'"],
+["misa","kerk"],
 ["restorant","restaurant"],
-["kamber","room","from Dutch 'kamer'"],
-["porta","door"],
-["man drechi","right (side)","lit. 'right hand'"],
-["man robes","left (side)"],
-["stret","straight ahead"],
-["aki","here"],
-["ayá","there"],
-["serka","near / close"],
-["leu","far"],
-["banda di","next to"]]},
-{id:"people",em:"👨‍👩‍👧",name:"People & family",desc:"Talk about who matters",cards:[
-["hende","person / people"],
+["kamber","kamer","van het Nederlandse 'kamer'"],
+["porta","deur"],
+["man drechi","rechts","lett. 'rechterhand'"],
+["man robes","links"],
+["stret","rechtdoor"],
+["aki","hier"],
+["ayá","daar"],
+["serka","dichtbij"],
+["leu","ver"],
+["banda di","naast"]]},
+{id:"people",em:"👨‍👩‍👧",name:"Mensen & familie",desc:"Praat over wie belangrijk is",cards:[
+["hende","mens / mensen"],
 ["homber","man"],
-["muhé","woman"],
-["mucha","child"],
-["mucha homber","boy"],
-["mucha muhé","girl"],
-["yu","child (son/daughter)"],
-["yu homber","son"],
-["yu muhé","daughter"],
-["mama","mother"],
-["tata","father"],
-["ruman","sibling"],
-["ruman homber","brother"],
-["ruman muhé","sister"],
-["wela","grandmother"],
-["welo","grandfather"],
-["amigu","friend (male)"],
-["amiga","friend (female)"],
-["famia","family"],
-["kasá","spouse"],
-["bisiña","neighbor"]]},
-{id:"adj",em:"🎨",name:"Describing things",desc:"Adjectives & colors — no gender, no endings",cards:[
-["bon","good"],
-["malu","bad / sick"],
-["grandi","big"],
-["chikitu","small"],
-["hopi","much / many / very"],
-["poko","little / few"],
-["nobo","new"],
-["bieu","old"],
-["bunita","beautiful"],
-["mahos","ugly"],
-["kayente","hot (temperature)"],
-["friu","cold"],
-["lihé","fast / quick"],
-["largu","long / tall"],
-["kòrtiku","short"],
-["yen","full"],
-["bashí","empty"],
-["kontentu","happy"],
-["tristu","sad"],
-["limpi","clean"],
-["sushi","dirty"],
-["kòrá","red"],
-["blou","blue"],
-["bèrdè","green"],
-["hel","yellow","from Dutch 'geel'"],
-["blanku","white"],
-["pretu","black"]]},
-{id:"beach",em:"🏖️",name:"Beach & weather",desc:"Island life essentials",cards:[
-["solo","sun"],
-["awaseru","rain"],
+["muhé","vrouw"],
+["mucha","kind"],
+["mucha homber","jongen"],
+["mucha muhé","meisje"],
+["yu","kind (zoon/dochter)"],
+["yu homber","zoon"],
+["yu muhé","dochter"],
+["mama","moeder"],
+["tata","vader"],
+["ruman","broer of zus"],
+["ruman homber","broer"],
+["ruman muhé","zus"],
+["wela","oma"],
+["welo","opa"],
+["amigu","vriend"],
+["amiga","vriendin"],
+["famia","familie"],
+["kasá","echtgenoot / echtgenote"],
+["bisiña","buurman / buurvrouw"]]},
+{id:"adj",em:"🎨",name:"Beschrijven",desc:"Bijvoeglijke naamwoorden & kleuren — zonder geslacht of uitgangen",cards:[
+["bon","goed"],
+["malu","slecht / ziek"],
+["grandi","groot"],
+["chikitu","klein"],
+["hopi","veel / heel"],
+["poko","weinig / een beetje"],
+["nobo","nieuw"],
+["bieu","oud"],
+["bunita","mooi"],
+["mahos","lelijk"],
+["kayente","heet / warm"],
+["friu","koud"],
+["lihé","snel"],
+["largu","lang"],
+["kòrtiku","kort"],
+["yen","vol"],
+["bashí","leeg"],
+["kontentu","blij"],
+["tristu","verdrietig"],
+["limpi","schoon"],
+["sushi","vies"],
+["kòrá","rood"],
+["blou","blauw"],
+["bèrdè","groen"],
+["hel","geel","van het Nederlandse 'geel'"],
+["blanku","wit"],
+["pretu","zwart"]]},
+{id:"beach",em:"🏖️",name:"Strand & weer",desc:"De essentie van het eilandleven",cards:[
+["solo","zon"],
+["awaseru","regen"],
 ["bientu","wind"],
-["nubia","cloud"],
-["kalor","heat"],
-["Awe tin hopi kalor","It's very hot today"],
-["laman","sea"],
-["playa","beach"],
-["santu","sand"],
-["landa","to swim"],
-["piská","fish"],
-["tortuga","turtle"],
-["barku","boat"],
-["isla","island"]]},
-{id:"money",em:"💰",name:"Money & shopping",desc:"Pay, bargain, browse",cards:[
-["plaka","money"],
-["florin","guilder","the currency of Curaçao"],
-["karu","expensive"],
-["barata","cheap"],
-["gratis","free (no cost)"],
-["kambio","change (money)"],
-["karchi","card"],
-["Mi por paga ku karchi?","Can I pay by card?"],
-["Esaki ta muchu karu","This is too expensive"],
-["Mi ta djis wak","I'm just looking"],
-["Mi ke kumpra esaki","I want to buy this"],
-["E ta riba seli?","Is it on sale?"]]}
+["nubia","wolk"],
+["kalor","hitte"],
+["Awe tin hopi kalor","Het is erg heet vandaag"],
+["laman","zee"],
+["playa","strand"],
+["santu","zand"],
+["landa","zwemmen"],
+["piská","vis"],
+["tortuga","zeeschildpad"],
+["barku","boot"],
+["isla","eiland"]]},
+{id:"money",em:"💰",name:"Geld & winkelen",desc:"Betalen, afdingen, rondkijken",cards:[
+["plaka","geld"],
+["florin","gulden","de munt van Curaçao"],
+["karu","duur"],
+["barata","goedkoop"],
+["gratis","gratis"],
+["kambio","wisselgeld"],
+["karchi","kaart / pinpas"],
+["Mi por paga ku karchi?","Kan ik pinnen?"],
+["Esaki ta muchu karu","Dit is te duur"],
+["Mi ta djis wak","Ik kijk alleen even"],
+["Mi ke kumpra esaki","Ik wil dit kopen"],
+["E ta riba seli?","Is het in de aanbieding?"]]}
 ];
 
-/* Dialog line: [speaker, papiamentu, english] */
+/* Dialog line: [speaker, papiamentu, dutch] */
 const DIALOGS=[
-{t:"Topa un hende",tr:"Meeting someone",lines:[
-["A","Bon dia! Kon ta bai?","Good morning! How's it going?"],
-["B","Mi ta bon, danki. I abo?","I'm fine, thanks. And you?"],
-["A","Hopi bon. Kon bo yama?","Very well. What's your name?"],
-["B","Mi yama Angela. I bo?","My name is Angela. And you?"],
-["A","Mi nòmber ta Carlos. Kontentu di konosé bo.","My name is Carlos. Nice to meet you."],
-["B","Di unda bo ta?","Where are you from?"],
-["A","Mi ta di Kòrsou. I abo?","I'm from Curaçao. And you?"],
-["B","Mi ta di Hulanda, pero mi ta siña papiamentu.","I'm from the Netherlands, but I'm learning Papiamentu."],
-["A","Masha bon! Bo ta papia dushi kaba!","Very good! You already speak nicely!"]]},
-{t:"Na snèk",tr:"At the snack bar",lines:[
-["A","Bon tardi! Kiko bo ke bebe?","Good afternoon! What would you like to drink?"],
-["B","Un awa friu, por fabor. Kuantu e ta kosta?","A cold water, please. How much does it cost?"],
-["A","Dos florin.","Two guilders."],
-["B","Tin pastechi ainda?","Are there still pastechis?"],
-["A","Sí, tin pastechi di keshi i di piská.","Yes, there are cheese and fish pastechis."],
-["B","Duna mi dos di keshi, por fabor.","Give me two cheese ones, please."],
-["A","Ta bon. Algu mas?","Okay. Anything else?"],
-["B","Nò, danki. Esei ta tur.","No thanks. That's all."],
-["A","Sinku florin, por fabor. … Masha danki!","Five guilders, please. … Thank you very much!"],
-["B","Danki, ayó!","Thanks, bye!"]]},
-{t:"Na merkado",tr:"At the market",lines:[
-["A","Bon dia dushi! Kiko bo ta buska?","Good morning dear! What are you looking for?"],
-["B","Mi ta buska fruta. Kuantu e mango ta kosta?","I'm looking for fruit. How much is the mango?"],
-["A","Tres florin pa un.","Three guilders each."],
-["B","Esei ta muchu karu!","That's too expensive!"],
-["A","Ta bon… dos florin pa bo.","Okay… two guilders for you."],
-["B","Duna mi kuater, por fabor.","Give me four, please."],
-["A","Ocho florin. Bo ke algu mas?","Eight guilders. Would you like anything else?"],
-["B","Nò, danki. Pasa un bon dia!","No thanks. Have a good day!"]]},
-{t:"Pidi direkshon",tr:"Asking for directions",lines:[
-["A","Despensá mi, unda e botika ta?","Excuse me, where is the pharmacy?"],
-["B","E ta den kaya grandi, banda di e banko.","It's on the main street, next to the bank."],
-["A","E ta leu?","Is it far?"],
-["B","Nò, e ta serka. Sigui stret i despues bai man drechi.","No, it's close. Keep going straight, then turn right."],
-["A","Masha danki pa bo ayudo!","Thanks a lot for your help!"],
-["B","Di nada. Suerte!","You're welcome. Good luck!"]]}
+{t:"Topa un hende",tr:"Iemand ontmoeten",lines:[
+["A","Bon dia! Kon ta bai?","Goedemorgen! Hoe gaat het?"],
+["B","Mi ta bon, danki. I abo?","Goed, dank je. En jij?"],
+["A","Hopi bon. Kon bo yama?","Heel goed. Hoe heet je?"],
+["B","Mi yama Angela. I bo?","Ik heet Angela. En jij?"],
+["A","Mi nòmber ta Carlos. Kontentu di konosé bo.","Mijn naam is Carlos. Leuk je te ontmoeten."],
+["B","Di unda bo ta?","Waar kom je vandaan?"],
+["A","Mi ta di Kòrsou. I abo?","Ik kom van Curaçao. En jij?"],
+["B","Mi ta di Hulanda, pero mi ta siña papiamentu.","Ik kom uit Nederland, maar ik leer Papiamentu."],
+["A","Masha bon! Bo ta papia dushi kaba!","Heel goed! Je spreekt het al mooi!"]]},
+{t:"Na snèk",tr:"Bij de snackbar",lines:[
+["A","Bon tardi! Kiko bo ke bebe?","Goedemiddag! Wat wil je drinken?"],
+["B","Un awa friu, por fabor. Kuantu e ta kosta?","Een koud water, alsjeblieft. Hoeveel kost het?"],
+["A","Dos florin.","Twee gulden."],
+["B","Tin pastechi ainda?","Zijn er nog pastechi's?"],
+["A","Sí, tin pastechi di keshi i di piská.","Ja, er zijn pastechi's met kaas en met vis."],
+["B","Duna mi dos di keshi, por fabor.","Geef me er twee met kaas, alsjeblieft."],
+["A","Ta bon. Algu mas?","Prima. Nog iets anders?"],
+["B","Nò, danki. Esei ta tur.","Nee, dank je. Dat is alles."],
+["A","Sinku florin, por fabor. … Masha danki!","Vijf gulden, alsjeblieft. … Dank je wel!"],
+["B","Danki, ayó!","Bedankt, doei!"]]},
+{t:"Na merkado",tr:"Op de markt",lines:[
+["A","Bon dia dushi! Kiko bo ta buska?","Goedemorgen schat! Wat zoek je?"],
+["B","Mi ta buska fruta. Kuantu e mango ta kosta?","Ik zoek fruit. Hoeveel kost de mango?"],
+["A","Tres florin pa un.","Drie gulden per stuk."],
+["B","Esei ta muchu karu!","Dat is te duur!"],
+["A","Ta bon… dos florin pa bo.","Oké… twee gulden voor jou."],
+["B","Duna mi kuater, por fabor.","Geef me er vier, alsjeblieft."],
+["A","Ocho florin. Bo ke algu mas?","Acht gulden. Wil je nog iets?"],
+["B","Nò, danki. Pasa un bon dia!","Nee, dank je. Fijne dag nog!"]]},
+{t:"Pidi direkshon",tr:"De weg vragen",lines:[
+["A","Despensá mi, unda e botika ta?","Pardon, waar is de apotheek?"],
+["B","E ta den kaya grandi, banda di e banko.","Die is in de hoofdstraat, naast de bank."],
+["A","E ta leu?","Is het ver?"],
+["B","Nò, e ta serka. Sigui stret i despues bai man drechi.","Nee, het is dichtbij. Ga rechtdoor en dan naar rechts."],
+["A","Masha danki pa bo ayudo!","Heel erg bedankt voor je hulp!"],
+["B","Di nada. Suerte!","Graag gedaan. Succes!"]]}
 ];
 
 const RESOURCES=[
-["Lora — Learn Papiamentu","https://learnpapiamentu.app/en/","Modern app with native-speaker audio, made for Curaçao/Bonaire Papiamentu. The best complement to this trainer for real pronunciation."],
-["uTalk Papiamento","https://utalk.com/store/papiamento","2,500+ phrases recorded by native speakers, works offline."],
-["Henky's Papiamento","https://henkyspapiamento.com/","Free themed vocabulary lessons (uses Aruban spelling — see chapter 5)."],
-["Papiamentu Language Course","https://learn.papiamentucourse.com/","Self-paced beginner course from Curaçao, with a YouTube channel of free lessons."],
-["PAPIAMENTU ABC on YouTube","https://www.youtube.com/watch?v=_Z7vjb9YPMs","Short conversation-starter lessons — great for training your ear on real voices."],
-["Wikivoyage Papiamento phrasebook","https://en.wikivoyage.org/wiki/Papiamento_phrasebook","Free reference phrasebook with pronunciation notes."],
-["The Moreish Podcast — Papiamentu episode","https://podcasts.apple.com/us/podcast/papiamentu-the-language-of-cura%C3%A7ao-with-sheedia-jansen/id1728305327?i=1000706523265","The story and culture of the language, in English."],
-["Paper dictionaries","","Betty Ratzlaff's 'Dikshonario Papiamentu–Ingles' and Edwin Wernet's 'Curso di Papiamento' are the standard print references."]
+["Lora — Learn Papiamentu","https://learnpapiamentu.app/en/","Moderne app met audio van moedertaalsprekers, gemaakt voor het Papiamentu van Curaçao/Bonaire. De beste aanvulling op deze trainer voor echte uitspraak."],
+["uTalk Papiamento","https://utalk.com/store/papiamento","2500+ zinnen ingesproken door moedertaalsprekers, werkt offline."],
+["Henky's Papiamento","https://henkyspapiamento.com/","Gratis themalessen woordenschat (gebruikt de Arubaanse spelling — zie hoofdstuk 5)."],
+["Papiamentu Language Course","https://learn.papiamentucourse.com/","Beginnerscursus in eigen tempo, vanuit Curaçao, met een YouTube-kanaal vol gratis lessen."],
+["PAPIAMENTU ABC op YouTube","https://www.youtube.com/watch?v=_Z7vjb9YPMs","Korte lessen met gespreksopeners — ideaal om je oor te trainen met echte stemmen."],
+["Wikivoyage Papiamento-taalgids","https://en.wikivoyage.org/wiki/Papiamento_phrasebook","Gratis naslagwerk met uitspraaknotities (Engelstalig)."],
+["The Moreish Podcast — aflevering over Papiamentu","https://podcasts.apple.com/us/podcast/papiamentu-the-language-of-cura%C3%A7ao-with-sheedia-jansen/id1728305327?i=1000706523265","Het verhaal en de cultuur achter de taal (Engelstalig)."],
+["Papieren woordenboeken","","Betty Ratzlaffs 'Dikshonario Papiamentu' en Edwin Wernets 'Curso di Papiamento' zijn de standaard naslagwerken; voor Nederlands–Papiamentu is er het 'Prisma woordenboek Papiaments'."]
 ];
 
 const GRAMMAR=[
-{t:"Why you can learn Papiamentu fast",h:`
-<p>Papiamentu (called <i>Papiamento</i> on Aruba) is a creole of Portuguese, Spanish, Dutch and West-African languages, spoken by ~330,000 people on Curaçao, Bonaire and Aruba. It may be the friendliest grammar in the Western Hemisphere:</p>
+{t:"Waarom je Papiamentu snel kunt leren",h:`
+<p>Papiamentu (op Aruba <i>Papiamento</i>) is een creoolse taal van Portugees, Spaans, Nederlands en West-Afrikaanse talen, gesproken door zo'n 330.000 mensen op Curaçao, Bonaire en Aruba. Het heeft misschien wel de vriendelijkste grammatica van het westelijk halfrond:</p>
 <div class="panel"><ul style="margin:0;padding-left:20px">
-<li><b>Verbs never change.</b> No conjugations at all — <span class="ex">mi kome, bo kome, nan kome</span>.</li>
-<li><b>No grammatical gender.</b> One word for 'the' (<span class="ex">e</span>), one for 'a' (<span class="ex">un</span>).</li>
-<li><b>Tense = one small particle</b> in front of the verb (next chapter).</li>
-<li><b>Possessives are just the pronouns:</b> <span class="ex">mi kas</span> = my house.</li>
-<li><b>Word order is plain English-style:</b> subject – verb – object, even in questions.</li>
+<li><b>Werkwoorden veranderen nooit.</b> Geen vervoegingen — <span class="ex">mi kome, bo kome, nan kome</span>.</li>
+<li><b>Geen grammaticaal geslacht.</b> Eén woord voor 'de/het' (<span class="ex">e</span>), één voor 'een' (<span class="ex">un</span>).</li>
+<li><b>Tijd = één klein partikel</b> vóór het werkwoord (volgend hoofdstuk).</li>
+<li><b>Bezittelijk = gewoon het voornaamwoord:</b> <span class="ex">mi kas</span> = mijn huis.</li>
+<li><b>Woordvolgorde is simpel:</b> onderwerp – werkwoord – lijdend voorwerp, óók in vragen.</li>
 </ul></div>
-<p>So the whole game is <b>vocabulary</b>. That's why this app front-loads the highest-frequency words and drills them with spaced repetition — reviews arrive right before you'd forget.</p>`},
-{t:"The four magic particles",h:`
-<p>Take any verb, put one particle in front, and you have a full tense system:</p>
+<p>Als Nederlander heb je bovendien een voorsprong: honderden woorden komen rechtstreeks uit het Nederlands — <span class="ex">danki</span> (dank je), <span class="ex">hel</span> (geel), <span class="ex">kamber</span> (kamer), <span class="ex">skol</span> (school), <span class="ex">buki</span> (boek)…</p>
+<p>Het spel draait dus vrijwel volledig om <b>woordenschat</b>. Daarom begint deze app met de meest gebruikte woorden en oefent ze met spaced repetition — herhalingen komen precies vóórdat je ze zou vergeten.</p>`},
+{t:"De vier toverpartikels",h:`
+<p>Neem een willekeurig werkwoord, zet er één partikel voor, en je hebt een compleet tijdensysteem:</p>
 <div class="panel tablewrap"><table>
-<tr><th>Particle</th><th>Meaning</th><th>Example</th></tr>
-<tr><td><b>ta</b></td><td>present / right now</td><td class="ex">Mi ta traha — I work / am working</td></tr>
-<tr><td><b>a</b></td><td>past (completed)</td><td class="ex">Mi a traha — I worked</td></tr>
-<tr><td><b>lo</b></td><td>future</td><td class="ex">Lo mi traha — I will work</td></tr>
-<tr><td><b>tabata</b></td><td>past ongoing</td><td class="ex">Mi tabata traha — I was working</td></tr>
+<tr><th>Partikel</th><th>Betekenis</th><th>Voorbeeld</th></tr>
+<tr><td><b>ta</b></td><td>tegenwoordige tijd / nu</td><td class="ex">Mi ta traha — ik werk / ben aan het werken</td></tr>
+<tr><td><b>a</b></td><td>verleden tijd (voltooid)</td><td class="ex">Mi a traha — ik heb gewerkt</td></tr>
+<tr><td><b>lo</b></td><td>toekomst</td><td class="ex">Lo mi traha — ik zal werken</td></tr>
+<tr><td><b>tabata</b></td><td>verleden, voortdurend</td><td class="ex">Mi tabata traha — ik was aan het werken</td></tr>
 </table></div>
-<p><b>Negation:</b> put <span class="ex">no</span> before the particle: <span class="ex">Mi no ta traha</span> — I'm not working. <span class="ex">Mi no a bai</span> — I didn't go.</p>
-<p><b>Exceptions worth knowing:</b> the helper verbs <span class="ex">tin</span> (have), <span class="ex">ke</span> (want), <span class="ex">por</span> (can), <span class="ex">mester</span> (must), <span class="ex">sa</span> (know) usually drop <span class="ex">ta</span>: <span class="ex">Mi tin plaka</span>, <span class="ex">Mi por bai</span>.</p>`},
-{t:"Pronouns, possession & plurals",h:`
+<p><b>Ontkenning:</b> zet <span class="ex">no</span> vóór het partikel: <span class="ex">Mi no ta traha</span> — ik werk niet. <span class="ex">Mi no a bai</span> — ik ben niet gegaan.</p>
+<p><b>Uitzonderingen die je moet kennen:</b> de hulpwerkwoorden <span class="ex">tin</span> (hebben), <span class="ex">ke</span> (willen), <span class="ex">por</span> (kunnen), <span class="ex">mester</span> (moeten) en <span class="ex">sa</span> (weten) laten <span class="ex">ta</span> meestal weg: <span class="ex">Mi tin plaka</span>, <span class="ex">Mi por bai</span>.</p>`},
+{t:"Voornaamwoorden, bezit & meervoud",h:`
 <div class="panel tablewrap"><table>
-<tr><th>Papiamentu</th><th>Subject</th><th>Possessive</th></tr>
-<tr><td class="ex">mi</td><td>I</td><td>my</td></tr>
-<tr><td class="ex">bo</td><td>you</td><td>your</td></tr>
-<tr><td class="ex">e</td><td>he / she / it</td><td>(use <span class="ex">su</span>)</td></tr>
-<tr><td class="ex">nos</td><td>we</td><td>our</td></tr>
-<tr><td class="ex">boso</td><td>you all</td><td>your</td></tr>
-<tr><td class="ex">nan</td><td>they</td><td>their</td></tr>
+<tr><th>Papiamentu</th><th>Onderwerp</th><th>Bezittelijk</th></tr>
+<tr><td class="ex">mi</td><td>ik</td><td>mijn</td></tr>
+<tr><td class="ex">bo</td><td>jij</td><td>jouw</td></tr>
+<tr><td class="ex">e</td><td>hij / zij / het</td><td>(gebruik <span class="ex">su</span>)</td></tr>
+<tr><td class="ex">nos</td><td>wij</td><td>ons / onze</td></tr>
+<tr><td class="ex">boso</td><td>jullie</td><td>jullie</td></tr>
+<tr><td class="ex">nan</td><td>zij (mv.)</td><td>hun</td></tr>
 </table></div>
-<p>The same little words are subject, object <i>and</i> possessive: <span class="ex">mi ta stima bo</span> — I love you; <span class="ex">bo kas</span> — your house.</p>
-<p><b>Plural:</b> add <span class="ex">-nan</span> to the noun — <span class="ex">e buki</span> (the book) → <span class="ex">e bukinan</span> (the books). After a number you don't even need it: <span class="ex">tres buki</span> — three books.</p>`},
-{t:"Questions & handy patterns",h:`
-<p>Questions keep normal word order — just add a question word (or only rising intonation): <span class="ex">Bo tin yu?</span> — Do you have children? <span class="ex">Unda bo ta biba?</span> — Where do you live?</p>
+<p>Dezelfde woordjes zijn onderwerp, lijdend voorwerp <i>én</i> bezittelijk: <span class="ex">mi ta stima bo</span> — ik hou van jou; <span class="ex">bo kas</span> — jouw huis.</p>
+<p><b>Meervoud:</b> plak <span class="ex">-nan</span> achter het zelfstandig naamwoord — <span class="ex">e buki</span> (het boek) → <span class="ex">e bukinan</span> (de boeken). Na een getal is het niet eens nodig: <span class="ex">tres buki</span> — drie boeken.</p>`},
+{t:"Vragen & handige patronen",h:`
+<p>Vragen houden de gewone woordvolgorde — voeg alleen een vraagwoord toe (of enkel een stijgende intonatie): <span class="ex">Bo tin yu?</span> — Heb je kinderen? <span class="ex">Unda bo ta biba?</span> — Waar woon je?</p>
 <div class="panel tablewrap"><table>
-<tr><th>Pattern</th><th>Example</th></tr>
-<tr><td>Mi ke … — I want …</td><td class="ex">Mi ke un kòfi</td></tr>
-<tr><td>Mi tin mester di … — I need …</td><td class="ex">Mi tin mester di awa</td></tr>
-<tr><td>Bo por … ? — Can you …?</td><td class="ex">Bo por yuda mi?</td></tr>
-<tr><td>Unda … ta? — Where is …?</td><td class="ex">Unda e banko ta?</td></tr>
-<tr><td>Mi gusta … — I like …</td><td class="ex">Mi gusta e isla</td></tr>
-<tr><td>Tin … ? — Is/are there …?</td><td class="ex">Tin pastechi?</td></tr>
+<tr><th>Patroon</th><th>Voorbeeld</th></tr>
+<tr><td>Mi ke … — ik wil …</td><td class="ex">Mi ke un kòfi</td></tr>
+<tr><td>Mi tin mester di … — ik heb … nodig</td><td class="ex">Mi tin mester di awa</td></tr>
+<tr><td>Bo por … ? — kun je …?</td><td class="ex">Bo por yuda mi?</td></tr>
+<tr><td>Unda … ta? — waar is …?</td><td class="ex">Unda e banko ta?</td></tr>
+<tr><td>Mi gusta … — ik vind … leuk</td><td class="ex">Mi gusta e isla</td></tr>
+<tr><td>Tin … ? — is/zijn er …?</td><td class="ex">Tin pastechi?</td></tr>
 </table></div>`},
-{t:"Pronunciation & the two spellings",h:`
-<p>Papiamentu reads mostly like Spanish. Every letter is pronounced. Quick keys:</p>
+{t:"Uitspraak & de twee spellingen",h:`
+<p>Papiamentu lees je grotendeels als Spaans. Elke letter wordt uitgesproken. De sleutels:</p>
 <div class="panel tablewrap"><table>
-<tr><th>Letter</th><th>Sound</th></tr>
-<tr><td><b>è / ò / ù</b></td><td>open vowels, like <i>bed</i>, <i>bore</i>, <i>hurt</i> — <span class="ex">kòfi, bèrdè</span></td></tr>
-<tr><td><b>ñ</b></td><td>'ny' as in Spanish — <span class="ex">aña, mañan</span></td></tr>
-<tr><td><b>dj</b></td><td>'j' as in <i>jam</i> — <span class="ex">djaluna</span></td></tr>
-<tr><td><b>sh</b></td><td>as in <i>ship</i> — <span class="ex">shete, shen</span></td></tr>
-<tr><td><b>accent mark (á, é…)</b></td><td>stressed syllable — <span class="ex">kontestá</span></td></tr>
+<tr><th>Letter</th><th>Klank</th></tr>
+<tr><td><b>è / ò / ù</b></td><td>open klinkers, zoals in <i>bed</i>, <i>bod</i>, <i>put</i> — <span class="ex">kòfi, bèrdè</span></td></tr>
+<tr><td><b>ñ</b></td><td>'nj' zoals in 'oranje' — <span class="ex">aña, mañan</span></td></tr>
+<tr><td><b>dj</b></td><td>zoals de 'j' in het Engelse <i>jam</i> — <span class="ex">djaluna</span></td></tr>
+<tr><td><b>sh</b></td><td>'sj' zoals in 'sjaal' — <span class="ex">shete, shen</span></td></tr>
+<tr><td><b>accent (á, é…)</b></td><td>beklemtoonde lettergreep — <span class="ex">kontestá</span></td></tr>
 </table></div>
-<p><b>Two spellings, one language:</b> Curaçao &amp; Bonaire write phonemically (<i>Papiamentu, kas, sinku</i>); Aruba writes etymologically (<i>Papiamento, cas, cinco</i>). Spoken, they're the same language — everything you learn here works on all three islands.</p>
-<p class="subtle">🔊 A note on the audio button: no browser has a Papiamentu voice yet, so this app uses a <b>Spanish voice as an approximation</b>. It gets vowels and rhythm roughly right — but trust your ears with real speakers over the robot.</p>`}
+<p><b>Twee spellingen, één taal:</b> Curaçao &amp; Bonaire schrijven fonetisch (<i>Papiamentu, kas, sinku</i>); Aruba schrijft etymologisch (<i>Papiamento, cas, cinco</i>). Gesproken is het dezelfde taal — alles wat je hier leert werkt op alle drie de eilanden.</p>
+<p class="subtle">🔊 Over de audioknop: geen enkele browser heeft al een Papiamentu-stem, dus deze app gebruikt een <b>Spaanse stem als benadering</b>. De klinkers en het ritme kloppen aardig — maar vertrouw je oren bij echte sprekers meer dan de robot.</p>`}
 ];
 
 /* ================= STATE ================= */
@@ -722,16 +750,30 @@ function facades(){const cs=["var(--sun)","var(--sea)","var(--coral)","var(--sea
 /* ---- home ---- */
 function home(){
   const due=dueIds().length,started=startedCount(),strong=strongCount(),total=IDS.length;
+  const h=new Date().getHours();
+  const greet=h<12?"Bon dia!":h<18?"Bon tardi!":"Bon nochi!";
+  const sub=h<12?"Goedemorgen":h<18?"Goedemiddag":"Goedenavond";
+  const seed=[...today()].reduce((a,c)=>a*31+c.charCodeAt(0),7);
+  const wod=ALL[IDS[seed%IDS.length]];
+  const sky=[[18,"#E8A13D"],[26,"#F2E9D8"],[15,"#D95F43"],[22,"#BFE3E0"],[19,"#E8A13D"],[28,"#F2E9D8"],
+             [16,"#D95F43"],[24,"#BFE3E0"],[20,"#E8A13D"],[14,"#F2E9D8"],[23,"#D95F43"],[18,"#BFE3E0"]];
   $("#view").innerHTML=`
-  <div class="stats">
-    <div class="stat sun"><b>${streakLive()}🔥</b><span>Day streak</span></div>
-    <div class="stat due"><b>${due}</b><span>Due now</span></div>
-    <div class="stat"><b>${started}<small style="font-size:12px;color:var(--muted)">/${total}</small></b><span>Started</span></div>
-    <div class="stat"><b>${strong}</b><span>Strong</span></div>
+  <div class="hero">
+    <div class="hgreet"><span class="pap g">${greet}</span><span class="hsub">${sub} — klaar voor je dagelijkse dosis dushi?</span></div>
+    <div class="wod"><span class="eyebrow">Palabra di dia · woord van de dag</span>
+      <button data-say="${esc(wod.p)}"><b class="pap">${esc(wod.p)}</b> — ${esc(wod.e)} &nbsp;🔊</button></div>
+    <div class="skyline" aria-hidden="true">${sky.map(([ht,c],i)=>
+      `<i style="height:${ht}px;background:${c};${i%3===0?"clip-path:polygon(0 100%,0 28%,50% 0,100% 28%,100% 100%);":""}"></i>`).join("")}</div>
   </div>
-  ${due?`<button class="cta" id="gorev">🌀 Review ${due} due card${due>1?"s":""} — keep them fresh</button>`:
-        `<div class="panel subtle center">No reviews due — learn something new below 👇</div>`}
-  <p class="eyebrow" style="margin:18px 0 2px">Course · highest-frequency first</p>
+  <div class="stats">
+    <div class="stat sun"><b>${streakLive()}🔥</b><span>Dagen op rij</span></div>
+    <div class="stat due"><b>${due}</b><span>Te herhalen</span></div>
+    <div class="stat"><b>${started}<small style="font-size:12px;color:var(--muted)">/${total}</small></b><span>Gestart</span></div>
+    <div class="stat"><b>${strong}</b><span>Sterk</span></div>
+  </div>
+  ${due?`<button class="cta" id="gorev">🌀 Herhaal ${due} kaart${due>1?"en":""} — houd ze vers</button>`:
+        `<div class="panel subtle center">Niets te herhalen — leer hieronder iets nieuws 👇</div>`}
+  <p class="eyebrow" style="margin:18px 0 2px">Cursus · meest gebruikte woorden eerst</p>
   <div class="decks">${DECKS.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
     return `<button class="deck" data-d="${d.id}">
       <span class="em">${d.em}</span>
@@ -739,10 +781,11 @@ function home(){
       <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
       <span class="n">${s}/${n}</span></button>`;}).join("")}
   </div>
-  <p class="subtle" style="margin-top:18px">Curaçao/Bonaire spelling. Progress is saved on this device. <button id="reset" style="color:var(--bad);text-decoration:underline">Reset progress</button></p>`;
-  if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Review");
+  <p class="subtle" style="margin-top:18px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
+  wireSpeak();
+  if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
   $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
-  $("#reset").onclick=()=>{if(confirm("Erase all learning progress on this device?")){localStorage.removeItem(LS);S=load();render();}};
+  $("#reset").onclick=()=>{if(confirm("Alle voortgang op dit apparaat wissen?")){localStorage.removeItem(LS);S=load();render();}};
 }
 
 /* ---- deck ---- */
@@ -750,13 +793,13 @@ function deckView(id){
   const d=DECKS.find(x=>x.id===id);const{s}=deckStats(d);
   const fresh=d.cards.filter(c=>!st(id+":"+c[0]));
   $("#view").innerHTML=`
-  <div class="backrow"><button id="back">← All decks</button></div>
+  <div class="backrow"><button id="back">← Alle decks</button></div>
   <div class="panel">
-    <p class="eyebrow">${d.em} Deck · ${d.cards.length} cards · ${s} started</p>
+    <p class="eyebrow">${d.em} Deck · ${d.cards.length} kaarten · ${s} gestart</p>
     <h2 style="margin:6px 0 4px">${esc(d.name)}</h2>
     <p class="subtle" style="margin:0 0 12px">${esc(d.desc)}</p>
-    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>📚 Learn ${Math.min(8,fresh.length)||""} new cards</button>
-    <button class="cta quiet" id="drill">🌀 Drill this deck (all ${d.cards.length})</button>
+    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>📚 Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
+    <button class="cta quiet" id="drill">🌀 Oefen dit hele deck (alle ${d.cards.length})</button>
   </div>
   <div class="browse">${d.cards.map(c=>`<div class="brow"><span class="pap">${esc(c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
   $("#back").onclick=render;
@@ -772,7 +815,7 @@ function startLearn(d){
   const steps=fresh.map(id=>({id,mode:"intro"}));
   shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_pe"}));
   shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_ep"}));
-  Q={steps,i:0,title:"Learn · "+d.name,right:0,wrong:0,learn:true};step();
+  Q={steps,i:0,title:"Leren · "+d.name,right:0,wrong:0,learn:true};step();
 }
 function startSession(ids,title,drill){
   if(!ids.length)return;
@@ -783,7 +826,7 @@ function startSession(ids,title,drill){
   Q={steps,i:0,title,right:0,wrong:0,drill:!!drill};step();
 }
 function sessTop(){const pct=Math.round(100*Q.i/Q.steps.length);
-  return `<div class="sess-top"><button class="xbtn" id="quit" title="End session">✕</button>
+  return `<div class="sess-top"><button class="xbtn" id="quit" title="Sessie stoppen">✕</button>
   <div class="bar"><i style="width:${pct}%"></i></div>
   <span class="subtle" style="font-variant-numeric:tabular-nums">${Q.i}/${Q.steps.length}</span></div>`;}
 function step(){
@@ -792,37 +835,37 @@ function step(){
   ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c)})[s.mode]?.(s,c);
   $("#quit").onclick=()=>{Q=null;render();};
 }
-function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Hear it (Spanish voice approximation)">🔊</button>`;}
+function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Luister (benadering met Spaanse stem)">🔊</button>`;}
 function wireSpeak(){$("#view").querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));}
 
 function intro(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">New card</p>
+    <p class="eyebrow">Nieuwe kaart</p>
     <div class="big pap">${esc(c.p)}</div>
     <div class="mid">${esc(c.e)}</div>
     ${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}
     ${speakBtn(c.p)}
   </div>
-  <button class="cta contbtn" id="next">Got it →</button>`;
+  <button class="cta contbtn" id="next">Begrepen →</button>`;
   wireSpeak();speak(c.p);
   $("#next").onclick=()=>{Q.i++;step();};
 }
 function flash(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">Remember?</p>
+    <p class="eyebrow">Weet je 'm nog?</p>
     <div class="big pap">${esc(c.p)}</div>
     ${speakBtn(c.p)}
     <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
   </div>
-  <div id="zone"><button class="cta contbtn" id="show">Show answer</button></div>`;
+  <div id="zone"><button class="cta contbtn" id="show">Toon antwoord</button></div>`;
   wireSpeak();
   $("#show").onclick=()=>{$("#ans").hidden=false;
     $("#zone").innerHTML=`<div class="grades">
-      <button class="grade again">Again<small>&lt;1 min</small></button>
-      <button class="grade good">Good<small>${ivlPreview(s.id,1)}</small></button>
-      <button class="grade easy">Easy<small>${ivlPreview(s.id,2)}</small></button></div>`;
+      <button class="grade again">Opnieuw<small>&lt;1 min</small></button>
+      <button class="grade good">Goed<small>${ivlPreview(s.id,1)}</small></button>
+      <button class="grade easy">Makkelijk<small>${ivlPreview(s.id,2)}</small></button></div>`;
     [["again",0],["good",1],["easy",2]].forEach(([k,g])=>
       $(".grade."+k).onclick=()=>{answer(s,g===0?false:true,g);});};
 }
@@ -834,7 +877,7 @@ function mc(s,c,papToEng){
   const q=papToEng?c.p:c.e, side=x=>papToEng?x.e:x.p;
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">${papToEng?"What does it mean?":"How do you say it?"}</p>
+    <p class="eyebrow">${papToEng?"Wat betekent dit?":"Hoe zeg je dit?"}</p>
     <div class="big ${papToEng?"pap":""}">${esc(q)}</div>
     ${papToEng?speakBtn(c.p):""}
   </div>
@@ -852,7 +895,7 @@ function mc(s,c,papToEng){
 function typeEx(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">Type it in Papiamentu</p>
+    <p class="eyebrow">Typ het in het Papiamentu</p>
     <div class="mid">${esc(c.e)}</div>
   </div>
   <div class="typebox"><input id="tin" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…"><button id="chk">Check</button></div>
@@ -862,12 +905,12 @@ function typeEx(s,c){
   $("#view").querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{inp.value+=b.dataset.a;inp.focus();});
   const go=()=>{const ok=answerOk(inp.value,c.p);inp.disabled=true;$("#chk").disabled=true;speak(c.p);
     const exact=norm(inp.value)===norm(c.p);
-    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${ok&&!exact?`<br><small>Close enough — mind the spelling: <b>${esc(c.p)}</b></small>`:""}`);};
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${ok&&!exact?`<br><small>Bijna goed — let op de spelling: <b>${esc(c.p)}</b></small>`:""}`);};
   $("#chk").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter"&&!inp.disabled)go();};
 }
 function fbAndNext(s,ok,detail){
-  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}">${ok?"✅ Bon trabou!":"❌ Not quite."}<br>${detail}</div>
-  <button class="cta contbtn" id="next">Continue →</button>`;
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}">${ok?"✅ Bon trabou! Goed gedaan!":"❌ Net niet."}<br>${detail}</div>
+  <button class="cta contbtn" id="next">Verder →</button>`;
   const n=$("#next");n.focus();
   n.onclick=()=>answer(s,ok);
 }
@@ -890,9 +933,9 @@ function finish(){
   $("#view").innerHTML=`<div class="done">
     <div class="big">${acc>=90?"🏝️":acc>=70?"🌊":"🐢"}</div>
     <h2>${acc>=90?"Masha bon!":acc>=70?"Bon trabou!":"Sigui purba!"}</h2>
-    <p>${right} right · ${wrong} missed · ${acc}% — ${esc(title)}</p>
-    <p class="subtle">Streak: ${streakLive()} day${streakLive()===1?"":"s"} 🔥</p>
-    <button class="cta" id="home2">Continue</button></div>`;
+    <p>${right} goed · ${wrong} gemist · ${acc}% — ${esc(title)}</p>
+    <p class="subtle">${streakLive()} dag${streakLive()===1?"":"en"} op rij 🔥</p>
+    <button class="cta" id="home2">Verder</button></div>`;
   $("#home2").onclick=render;
 }
 
@@ -901,24 +944,24 @@ function reviewHome(){
   const due=dueIds();
   $("#view").innerHTML=`<div style="padding-top:16px">
   <p class="eyebrow">Spaced repetition</p>
-  <h2 style="margin:4px 0 10px">Repasá — review</h2>
+  <h2 style="margin:4px 0 10px">Repasá — herhalen</h2>
   <div class="panel">${due.length?
-    `<p style="margin:0 0 10px"><b>${due.length}</b> card${due.length>1?"s are":" is"} due. Reviews land right before you'd forget — this is where the fast learning happens.</p>
-     <button class="cta" id="go">🌀 Start review</button>`:
-    `<p style="margin:0">Nothing due right now — dushi! 🎉<br><span class="subtle">Learn new cards on Home, or run a deck drill. Come back when the badge lights up.</span></p>`}
+    `<p style="margin:0 0 10px"><b>${due.length}</b> kaart${due.length>1?"en staan":" staat"} klaar. Herhalingen komen precies vóórdat je zou vergeten — hier gebeurt het snelle leren.</p>
+     <button class="cta" id="go">🌀 Start herhaling</button>`:
+    `<p style="margin:0">Niets te herhalen — dushi! 🎉<br><span class="subtle">Leer nieuwe kaarten op Home, of oefen een deck. Kom terug zodra het bolletje oplicht.</span></p>`}
   </div>
-  ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Practice 20 random learned cards</button>`:""}
+  ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Oefen 20 willekeurige geleerde kaarten</button>`:""}
   </div>`;
-  if(due.length)$("#go").onclick=()=>startSession(due,"Review");
-  const a=$("#all");if(a)a.onclick=()=>startSession(shuffle(IDS.filter(id=>st(id))).slice(0,20),"Practice");
+  if(due.length)$("#go").onclick=()=>startSession(due,"Herhaling");
+  const a=$("#all");if(a)a.onclick=()=>startSession(shuffle(IDS.filter(id=>st(id))).slice(0,20),"Oefening");
 }
 function quizHome(){
   const learned=IDS.filter(id=>st(id));
   $("#view").innerHTML=`<div style="padding-top:16px">
-  <p class="eyebrow">Quick quiz</p>
-  <h2 style="margin:4px 0 10px">Tèst bo mes — test yourself</h2>
+  <p class="eyebrow">Snelle quiz</p>
+  <h2 style="margin:4px 0 10px">Tèst bo mes — test jezelf</h2>
   <div class="panel">
-    <p style="margin:0 0 10px">10 rapid questions, mixed formats. ${learned.length>=8?"Pulls from the "+learned.length+" cards you've started.":"Starts with the Survival kit until you've learned more."}</p>
+    <p style="margin:0 0 10px">10 vlotte vragen, gemengde vormen. ${learned.length>=8?"Uit de "+learned.length+" kaarten die je al gestart bent.":"Begint met de Overlevingskit tot je meer geleerd hebt."}</p>
     <button class="cta" id="go">🎯 Start quiz</button>
   </div></div>`;
   $("#go").onclick=()=>{
@@ -928,27 +971,27 @@ function quizHome(){
 }
 function grammar(){
   $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
-  <p class="eyebrow">Read &amp; listen</p>
-  <h2 style="margin-top:4px">Kombersashon — dialogues</h2>
-  <p class="subtle">Real conversations, move by move. Tap any line to hear it (approximate voice). Read one aloud each day — dialogue practice is how phrases become reflexes.</p>
+  <p class="eyebrow">Lezen &amp; luisteren</p>
+  <h2 style="margin-top:4px">Kombersashon — dialogen</h2>
+  <p class="subtle">Echte gesprekken, zin voor zin. Tik op een regel om hem te horen (benaderde stem). Lees er elke dag één hardop — zo worden zinnen reflexen.</p>
   ${DIALOGS.map((d,i)=>`<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(d.t)}</b> <small>· ${esc(d.tr)}</small></summary>
     <div class="dlines">${d.lines.map(l=>`<button class="dline" data-say="${esc(l[1])}">
       <span class="who ${l[0]==="A"?"a":"b"}">${l[0]}</span>
       <span><span class="pap">${esc(l[1])}</span><small>${esc(l[2])}</small></span></button>`).join("")}
     </div></details>`).join("")}
-  <button class="cta quiet" id="prlines">💬 Drill these lines as flashcards</button>
+  <button class="cta quiet" id="prlines">💬 Oefen deze zinnen als flashcards</button>
 
-  <p class="eyebrow" style="margin-top:28px">Crash course</p>
-  <h2 style="margin-top:4px">Gramátika — read this once, speak forever</h2>
+  <p class="eyebrow" style="margin-top:28px">Spoedcursus</p>
+  <h2 style="margin-top:4px">Gramátika — één keer lezen, altijd spreken</h2>
   ${GRAMMAR.map((g,i)=>`<h2>${i+1}. ${g.t}</h2>${g.h}`).join("")}
 
-  <p class="eyebrow" style="margin-top:28px">Go deeper</p>
-  <h2 style="margin-top:4px">Mas rekurso — for real native audio</h2>
-  <p class="subtle">This app builds your vocabulary and grammar; your ear needs real voices. These are the best Papiamentu-specific resources out there:</p>
+  <p class="eyebrow" style="margin-top:28px">Verdieping</p>
+  <h2 style="margin-top:4px">Mas rekurso — voor échte stemmen</h2>
+  <p class="subtle">Deze app bouwt je woordenschat en grammatica op; je oor heeft echte stemmen nodig. Dit zijn de beste Papiamentu-bronnen die er zijn:</p>
   <div class="panel"><ul class="res">
   ${RESOURCES.map(r=>`<li>${r[1]?`<a href="${esc(r[1])}" target="_blank" rel="noopener">${esc(r[0])}</a>`:`<b>${esc(r[0])}</b>`} — ${esc(r[2])}</li>`).join("")}
   </ul></div>
-  <p class="subtle" style="margin:20px 0">And — best of all — any dushi local who'll chat with you. Papia, papia, papia!</p>
+  <p class="subtle" style="margin:20px 0">En — het allerbeste — elke dushi local die met je wil kletsen. Papia, papia, papia!</p>
   </div>`;
   wireSpeak();
   $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
