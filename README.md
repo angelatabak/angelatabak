@@ -1,4 +1,4 @@
-# Siña Papiamentu 🏝️
+# Siña Papiamentu
 
 Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstaligen — één HTML-bestand, geen installatie, werkt offline, voortgang wordt in je browser bewaard.
 
@@ -12,7 +12,7 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 - **Actief ophalen in gemengde vormen**: flashcards, meerkeuze in beide richtingen, en typen met accent-tolerante typefoutcorrectie.
 - **Een spoedcursus grammatica in 5 hoofdstukken** — Papiamentu kent geen vervoegingen en geen geslacht; tijd bestaat uit 4 partikels (`ta`, `a`, `lo`, `tabata`). Je leest de hele grammatica in 10 minuten. Als Nederlander heb je bovendien honderden leenwoorden cadeau (*danki*, *hel*, *kamber*, *skol*…).
 - **Streaks en voortgang** zodat je elke dag terugkomt (hét echte geheim van snel leren).
-- **Benaderde audio** via de Spaanse stem van je browser (er bestaat nog geen Papiamentu-stem) — aan/uit met 🔊.
+- **Benaderde audio** via de Spaanse stem van je browser (er bestaat nog geen Papiamentu-stem) — aan/uit met de audioknop rechtsboven.
 
 Gebruikt de spelling van Curaçao/Bonaire (*Papiamentu*); het grammaticadeel legt de Arubaanse (*Papiamento*) verschillen uit. Licht & donker thema, geschikt voor je telefoon.
 
@@ -23,7 +23,7 @@ De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **
 1. **Open het notebook in Google Colab** (gratis, werkt in je browser, alleen een Google-account nodig): ga naar [colab.research.google.com](https://colab.research.google.com) → tabblad **GitHub** → plak de URL van dit repository → klik op `generate_audio.ipynb`.
 2. Klik bovenin op **Runtime → Alles uitvoeren** en wacht 10–20 minuten. Je hoeft niets aan te passen. Aan het einde hoor je een voorbeeldzin en downloadt je browser automatisch één bestand: **`audio-pap.js`**.
 3. **Upload dat bestand hier op GitHub**: open dit repository → klik op **Add file → Upload files** → sleep `audio-pap.js` erin → klik **Commit changes**. (Het vervangt het lege plaatshouder-bestand.)
-4. Klaar! De app gebruikt vanaf nu automatisch de echte stem — je ziet het aan de tooltip van de 🔊-knop: *"echte Papiamentu-stem ✓"*. Werkt het ergens niet, dan valt de app vanzelf terug op de reservestem.
+4. Klaar! De app gebruikt vanaf nu automatisch de echte stem — je ziet het aan de tooltip van de audioknop: *"echte Papiamentu-stem ✓"*. Werkt het ergens niet, dan valt de app vanzelf terug op de reservestem.
 
 ## Aanbevolen routine (±15 min/dag)
 

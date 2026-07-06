@@ -128,8 +128,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .decks{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .deck{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);
   border-radius:12px;padding:12px 14px;text-align:left;box-shadow:var(--shadow)}
-.deck .em{font-size:20px;width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;
-  background:var(--panel2);border-radius:12px}
+.deck .em{width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--panel2);border-radius:8px;color:var(--lc,var(--sea-deep));
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-style:italic;font-weight:700;font-size:21px}
 .deck .dt{flex:1;min-width:0}
 .deck .dt b{display:block;font-size:15px}
 .deck .dt small{color:var(--muted);font-size:12.5px}
@@ -252,6 +254,9 @@ h1,h2,.deck .dt b,.brand h1{font-family:"Iowan Old Style","Palatino Linotype",Pa
 .cta:active{transform:translate(2px,2px);box-shadow:0 0 0 transparent}
 .stat b{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
 .done .big{font-size:44px}
+.icn{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px}
+.speak .icn{width:17px;height:17px;vertical-align:0}
+.iconbtn .icn,.wod .icn{vertical-align:-2px;opacity:.9}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .lvln,:root:not([data-theme="light"]) .lvlpap{color:color-mix(in srgb,var(--lc) 55%,#F0E3C6)}
 }
@@ -266,7 +271,7 @@ h1,h2,.deck .dt b,.brand h1{font-family:"Iowan Old Style","Palatino Linotype",Pa
       <h1>Siña <span class="pap">Papiamentu</span></h1>
     </div>
     <div class="hbtns">
-      <button class="iconbtn" id="ttsbtn" title="Audio (benadering, Spaanse stem)" aria-pressed="true">🔊</button>
+      <button class="iconbtn" id="ttsbtn" title="Audio (benadering, Spaanse stem)" aria-pressed="true"><svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z" fill="currentColor" stroke="none"/><path d="M15 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 6.8a7.6 7.6 0 0 1 0 10.4"/></svg></button>
       <button class="iconbtn" id="themebtn" title="Licht/donker wisselen">◐</button>
     </div>
   </header>
@@ -279,7 +284,7 @@ h1,h2,.deck .dt b,.brand h1{font-family:"Iowan Old Style","Palatino Linotype",Pa
 /* ================= DATA ================= */
 /* Card: [papiamentu, english, note?]  — Curaçao/Bonaire spelling */
 const DECKS=[
-{id:"survival",em:"🛟",name:"Overlevingskit",desc:"De 26 zinnen voor je eerste dag",cards:[
+{id:"survival",name:"Overlevingskit",desc:"De 26 zinnen voor je eerste dag",cards:[
 ["Bon biní","Welkom","Hoor je overal — vaak geschreven als 'Bon bini'"],
 ["Danki","Dank je","Van het Nederlandse 'dank je'"],
 ["Masha danki","Heel erg bedankt","'masha' = heel, erg"],
@@ -305,7 +310,7 @@ const DECKS=[
 ["Kuantu esaki ta kosta?","Hoeveel kost dit?"],
 ["Ayudo!","Help!"],
 ["Mi ta pèrdí","Ik ben verdwaald"]]},
-{id:"greet",em:"👋",name:"Begroeten & kletsen",desc:"Maak contact als een local",cards:[
+{id:"greet",name:"Begroeten & kletsen",desc:"Maak contact als een local",cards:[
 ["Bon dia","Goedemorgen"],
 ["Bon tardi","Goedemiddag"],
 ["Bon nochi","Goedenavond / goedenacht"],
@@ -324,7 +329,7 @@ const DECKS=[
 ["Dushi","Lekker / lief / schatje","Hét Caribische woord — eten, mensen en het leven kunnen allemaal dushi zijn"],
 ["Hopi dushi!","Heerlijk!"],
 ["Te otro biaha","Tot de volgende keer"]]},
-{id:"dialog",em:"💬",name:"Gesprekszinnen",desc:"Zinnen rechtstreeks uit de dialogen",cards:[
+{id:"dialog",name:"Gesprekszinnen",desc:"Zinnen rechtstreeks uit de dialogen",cards:[
 ["Kon ta?","Hoi — hoe is 't? (informeel)"],
 ["I abo?","En jij?"],
 ["Mi nòmber ta…","Mijn naam is…","alternatief voor 'Mi yama…'"],
@@ -337,7 +342,7 @@ const DECKS=[
 ["Bai man drechi","Ga naar rechts"],
 ["Masha danki pa bo ayudo","Heel erg bedankt voor je hulp"],
 ["Suerte!","Succes!"]]},
-{id:"particles",em:"⚙️",name:"Voornaamwoorden & toverpartikels",desc:"Het hele werkwoordsysteem — echt waar",cards:[
+{id:"particles",name:"Voornaamwoorden & toverpartikels",desc:"Het hele werkwoordsysteem — echt waar",cards:[
 ["mi","ik / mij / mijn"],
 ["bo","jij / jouw"],
 ["e","hij / zij / het — en 'de/het'"],
@@ -358,7 +363,7 @@ const DECKS=[
 ["Mi ta siña papiamentu","Ik leer Papiamentu"],
 ["Ban!","Kom, we gaan!"],
 ["Ban kome!","Laten we eten!"]]},
-{id:"questions",em:"❓",name:"Vraagwoorden",desc:"Vraag alles — de woordvolgorde verandert nooit",cards:[
+{id:"questions",name:"Vraagwoorden",desc:"Vraag alles — de woordvolgorde verandert nooit",cards:[
 ["Ken?","Wie?"],
 ["Kiko?","Wat?"],
 ["Unda?","Waar?"],
@@ -372,7 +377,7 @@ const DECKS=[
 ["Ken e ta?","Wie is hij/zij?"],
 ["Dikon nò?","Waarom niet?"],
 ["Kon yama esaki na papiamentu?","Hoe heet dit in het Papiamentu?"]]},
-{id:"numbers",em:"🔢",name:"Getallen",desc:"Tellen, betalen, afdingen",cards:[
+{id:"numbers",name:"Getallen",desc:"Tellen, betalen, afdingen",cards:[
 ["un","een (1)"],["dos","twee"],["tres","drie"],["kuater","vier"],["sinku","vijf"],
 ["seis","zes"],["shete","zeven"],["ocho","acht"],["nuebe","negen"],["dies","tien"],
 ["diesun","elf","dies + un"],["diesdos","twaalf"],["diestres","dertien"],
@@ -380,7 +385,7 @@ const DECKS=[
 ["trinta","dertig"],["kuarenta","veertig"],["sinkuenta","vijftig"],["sesenta","zestig"],
 ["setenta","zeventig"],["ochenta","tachtig"],["nobenta","negentig"],
 ["shen","honderd"],["mil","duizend"]]},
-{id:"verbs1",em:"⚡",name:"Krachtwerkwoorden",desc:"22 werkwoorden die 80% van het praten doen",cards:[
+{id:"verbs1",name:"Krachtwerkwoorden",desc:"22 werkwoorden die 80% van het praten doen",cards:[
 ["ta","zijn"],
 ["tin","hebben"],
 ["bai","gaan"],
@@ -403,7 +408,7 @@ const DECKS=[
 ["haña","krijgen / vinden"],
 ["yuda","helpen"],
 ["siña","leren / onderwijzen"]]},
-{id:"verbs2",em:"🏃",name:"Meer werkwoorden",desc:"Maak je gereedschapskist compleet",cards:[
+{id:"verbs2",name:"Meer werkwoorden",desc:"Maak je gereedschapskist compleet",cards:[
 ["gusta","leuk vinden"],
 ["stima","houden van"],
 ["biba","wonen / leven"],
@@ -428,7 +433,7 @@ const DECKS=[
 ["hunga","spelen"],
 ["kanta","zingen"],
 ["baila","dansen"]]},
-{id:"glue",em:"🔗",name:"Bindwoorden",desc:"Kleine woorden die zinnen bij elkaar houden",cards:[
+{id:"glue",name:"Bindwoorden",desc:"Kleine woorden die zinnen bij elkaar houden",cards:[
 ["i","en"],
 ["òf","of (keuze)"],
 ["pero","maar"],
@@ -452,7 +457,7 @@ const DECKS=[
 ["nada","niets"],
 ["tur hende","iedereen"],
 ["niun hende","niemand"]]},
-{id:"food",em:"🍽️",name:"Eten & drinken",desc:"Bestel alsof je er geboren bent",cards:[
+{id:"food",name:"Eten & drinken",desc:"Bestel alsof je er geboren bent",cards:[
 ["kuminda","eten / voedsel"],
 ["awa","water"],
 ["pan","brood"],
@@ -480,7 +485,7 @@ const DECKS=[
 ["Mi tin set","Ik heb dorst"],
 ["E kuminda ta dushi","Het eten is heerlijk"],
 ["Un serbes friu, por fabor","Een koud biertje, alsjeblieft"]]},
-{id:"time",em:"🕐",name:"Tijd & dagen",desc:"Gisteren, vandaag, mañan",cards:[
+{id:"time",name:"Tijd & dagen",desc:"Gisteren, vandaag, mañan",cards:[
 ["awe","vandaag"],
 ["mañan","morgen"],
 ["ayera","gisteren"],
@@ -507,7 +512,7 @@ const DECKS=[
 ["djabièrnè","vrijdag"],
 ["djasabra","zaterdag"],
 ["djadumingu","zondag"]]},
-{id:"places",em:"📍",name:"Plaatsen & de weg",desc:"Vind je weg op het eiland",cards:[
+{id:"places",name:"Plaatsen & de weg",desc:"Vind je weg op het eiland",cards:[
 ["kas","huis / thuis"],
 ["kaya","straat"],
 ["kamina","weg / route"],
@@ -530,7 +535,7 @@ const DECKS=[
 ["serka","dichtbij"],
 ["leu","ver"],
 ["banda di","naast"]]},
-{id:"people",em:"👨‍👩‍👧",name:"Mensen & familie",desc:"Praat over wie belangrijk is",cards:[
+{id:"people",name:"Mensen & familie",desc:"Praat over wie belangrijk is",cards:[
 ["hende","mens / mensen"],
 ["homber","man"],
 ["muhé","vrouw"],
@@ -552,7 +557,7 @@ const DECKS=[
 ["famia","familie"],
 ["kasá","echtgenoot / echtgenote"],
 ["bisiña","buurman / buurvrouw"]]},
-{id:"adj",em:"🎨",name:"Beschrijven",desc:"Bijvoeglijke naamwoorden & kleuren — zonder geslacht of uitgangen",cards:[
+{id:"adj",name:"Beschrijven",desc:"Bijvoeglijke naamwoorden & kleuren — zonder geslacht of uitgangen",cards:[
 ["bon","goed"],
 ["malu","slecht / ziek"],
 ["grandi","groot"],
@@ -580,7 +585,7 @@ const DECKS=[
 ["hel","geel","van het Nederlandse 'geel'"],
 ["blanku","wit"],
 ["pretu","zwart"]]},
-{id:"beach",em:"🏖️",name:"Strand & weer",desc:"De essentie van het eilandleven",cards:[
+{id:"beach",name:"Strand & weer",desc:"De essentie van het eilandleven",cards:[
 ["solo","zon"],
 ["awaseru","regen"],
 ["bientu","wind"],
@@ -595,7 +600,7 @@ const DECKS=[
 ["tortuga","zeeschildpad"],
 ["barku","boot"],
 ["isla","eiland"]]},
-{id:"money",em:"💰",name:"Geld & winkelen",desc:"Betalen, afdingen, rondkijken",cards:[
+{id:"money",name:"Geld & winkelen",desc:"Betalen, afdingen, rondkijken",cards:[
 ["plaka","geld"],
 ["florin","gulden","de munt van Curaçao"],
 ["karu","duur"],
@@ -608,7 +613,7 @@ const DECKS=[
 ["Mi ta djis wak","Ik kijk alleen even"],
 ["Mi ke kumpra esaki","Ik wil dit kopen"],
 ["E ta riba seli?","Is het in de aanbieding?"]]},
-{id:"body",em:"🩺",name:"Lichaam & gezondheid",desc:"Van hoofd tot pia — en wat te zeggen bij de dokter",cards:[
+{id:"body",name:"Lichaam & gezondheid",desc:"Van hoofd tot pia — en wat te zeggen bij de dokter",cards:[
 ["kurpa","lichaam"],
 ["kabes","hoofd"],
 ["wowo","oog"],
@@ -625,7 +630,7 @@ const DECKS=[
 ["remedi","medicijn"],
 ["doló","pijn"],
 ["Mi tin doló di kabes","Ik heb hoofdpijn"]]},
-{id:"house",em:"🪑",name:"In huis",desc:"Vol Nederlandse leenwoorden — cadeautjes voor jou",cards:[
+{id:"house",name:"In huis",desc:"Vol Nederlandse leenwoorden — cadeautjes voor jou",cards:[
 ["mesa","tafel"],
 ["stul","stoel","van het Nederlandse 'stoel'"],
 ["kama","bed"],
@@ -644,7 +649,7 @@ const DECKS=[
 ["paña","kleding"],
 ["sapatu","schoen"],
 ["kamisa","hemd / shirt"]]},
-{id:"nature",em:"🦎",name:"Dieren & natuur",desc:"Wat je op het eiland tegenkomt",cards:[
+{id:"nature",name:"Dieren & natuur",desc:"Wat je op het eiland tegenkomt",cards:[
 ["kachó","hond"],
 ["pushi","kat / poes","van het Nederlandse 'poes'"],
 ["para","vogel"],
@@ -659,7 +664,7 @@ const DECKS=[
 ["yerba","gras / kruid"],
 ["piedra","steen"],
 ["mondi","de wilde natuur / het bos","typisch Curaçaos woord voor het cactuslandschap"]]},
-{id:"feel",em:"💭",name:"Gevoel & mening",desc:"Zeg wat je vindt en voelt",cards:[
+{id:"feel",name:"Gevoel & mening",desc:"Zeg wat je vindt en voelt",cards:[
 ["rabiá","boos"],
 ["spantá","bang / geschrokken"],
 ["straño","vreemd / raar"],
@@ -676,7 +681,7 @@ const DECKS=[
 ["Ki bunita!","Wat mooi!"],
 ["Ki lástima!","Wat jammer!"],
 ["Mi ta spera ku sí","Ik hoop van wel"]]},
-{id:"verbs3",em:"🔧",name:"Werkwoorden III",desc:"Nog 18 werkwoorden richting vloeiend",cards:[
+{id:"verbs3",name:"Werkwoorden III",desc:"Nog 18 werkwoorden richting vloeiend",cards:[
 ["kere","geloven"],
 ["spera","hopen / verwachten"],
 ["purba","proberen / proeven"],
@@ -695,7 +700,7 @@ const DECKS=[
 ["kòrda","onthouden / zich herinneren"],
 ["splika","uitleggen"],
 ["sòru","zorgen (voor)","'sòru pa…' — van het Nederlandse 'zorgen'"]]},
-{id:"adv2",em:"✨",name:"Bijwoorden & zinnen II",desc:"De woordjes die je Papiamentu soepel maken",cards:[
+{id:"adv2",name:"Bijwoorden & zinnen II",desc:"De woordjes die je Papiamentu soepel maken",cards:[
 ["atrobe","opnieuw / alweer"],
 ["kasi","bijna"],
 ["basta","genoeg / behoorlijk"],
@@ -712,7 +717,7 @@ const DECKS=[
 ["Mi ta bai kas","Ik ga naar huis"],
 ["Pabien!","Gefeliciteerd!"],
 ["Drumi bon!","Slaap lekker!"]]},
-{id:"work",em:"💼",name:"Werk & dagelijks leven",desc:"Kantoor, school en afspraken",cards:[
+{id:"work",name:"Werk & dagelijks leven",desc:"Kantoor, school en afspraken",cards:[
 ["trabou","werk / baan"],
 ["mener","meneer","van het Nederlandse 'meneer'"],
 ["yùfrou","mevrouw / juf","van het Nederlandse 'juffrouw'"],
@@ -729,7 +734,7 @@ const DECKS=[
 ["studia","studeren"],
 ["Mi tin un sita","Ik heb een afspraak"],
 ["fakansi","vakantie","van het Nederlandse 'vakantie'"]]},
-{id:"travel",em:"✈️",name:"Reizen & vervoer",desc:"Van Hato tot je hotel",cards:[
+{id:"travel",name:"Reizen & vervoer",desc:"Van Hato tot je hotel",cards:[
 ["biaha","reis / keer"],
 ["biahá","reizen"],
 ["bùs","bus"],
@@ -745,7 +750,7 @@ const DECKS=[
 ["drenta","binnengaan / instappen"],
 ["sali","vertrekken / naar buiten gaan"],
 ["Mi ta bai ku outo","Ik ga met de auto"]]},
-{id:"food2",em:"🍳",name:"Eten & koken II",desc:"De keuken in — van lamunchi tot stobá",cards:[
+{id:"food2",name:"Eten & koken II",desc:"De keuken in — van lamunchi tot stobá",cards:[
 ["kushiná","koken (eten maken)"],
 ["hasa","bakken / frituren"],
 ["herebé","koken (in water)"],
@@ -762,7 +767,7 @@ const DECKS=[
 ["lamunchi","limoen","dé smaakmaker van de eilanden"],
 ["sòpi","soep"],
 ["stobá","stoofpot","kabritu stobá — geitenstoof, hét zondagsgerecht"]]},
-{id:"past",em:"📖",name:"Vertellen over vroeger",desc:"De verleden tijd in actie — met 'a' en 'tabata'",cards:[
+{id:"past",name:"Vertellen over vroeger",desc:"De verleden tijd in actie — met 'a' en 'tabata'",cards:[
 ["Ayera mi a bai playa","Gisteren ben ik naar het strand geweest"],
 ["Mi a traha henter dia","Ik heb de hele dag gewerkt"],
 ["henter","heel / de hele"],
@@ -779,7 +784,7 @@ const DECKS=[
 ["regalo","cadeau"],
 ["Kon tabata?","Hoe was het?"],
 ["Tabata hopi dushi","Het was heerlijk"]]},
-{id:"party",em:"🎉",name:"Feest & cultuur",desc:"Fiesta, tambú en pabien — vier het eiland mee",cards:[
+{id:"party",name:"Feest & cultuur",desc:"Fiesta, tambú en pabien — vier het eiland mee",cards:[
 ["fiesta","feest"],
 ["músika","muziek"],
 ["tambú","tambú","traditionele trommelmuziek van Curaçao"],
@@ -792,7 +797,7 @@ const DECKS=[
 ["gosa","genieten"],
 ["Bon suerte!","Veel succes / geluk!"],
 ["invitá","uitnodigen"]]},
-{id:"compare",em:"⚖️",name:"Vergelijken & hoeveelheden",desc:"Meer, minder, beter, hetzelfde",cards:[
+{id:"compare",name:"Vergelijken & hoeveelheden",desc:"Meer, minder, beter, hetzelfde",cards:[
 ["mas","meer / meest"],
 ["ménos","minder"],
 ["mas grandi ku","groter dan"],
@@ -807,7 +812,7 @@ const DECKS=[
 ["demasiado","veel te veel"],
 ["Esaki ta mas bunita","Deze is mooier"],
 ["hopi mas","veel meer"]]},
-{id:"emergency",em:"🚨",name:"Hulp & noodgevallen",desc:"Hopelijk nooit nodig — wel kennen",cards:[
+{id:"emergency",name:"Hulp & noodgevallen",desc:"Hopelijk nooit nodig — wel kennen",cards:[
 ["Yuda mi!","Help mij!"],
 ["polis","politie"],
 ["bombero","brandweerman"],
@@ -820,7 +825,7 @@ const DECKS=[
 ["ladron","dief"],
 ["Yama polis!","Bel de politie!"],
 ["Mi mester di un dòkter","Ik heb een dokter nodig"]]},
-{id:"weather2",em:"🌦️",name:"Weer & lucht",desc:"Van passaatwind tot regenbui",cards:[
+{id:"weather2",name:"Weer & lucht",desc:"Van passaatwind tot regenbui",cards:[
 ["tempu","weer / tijd(perk)"],
 ["Tempu ta bon awe","Het weer is goed vandaag"],
 ["Awaseru ta kai","Het regent","lett. 'regen valt'"],
@@ -831,7 +836,7 @@ const DECKS=[
 ["temporada","seizoen"],
 ["fresku","fris / koel"],
 ["sombra","schaduw"]]},
-{id:"opinion",em:"🗣️",name:"Mening & discussie",desc:"Meepraten, instemmen, tegenspreken",cards:[
+{id:"opinion",name:"Mening & discussie",desc:"Meepraten, instemmen, tegenspreken",cards:[
 ["Kiko bo ta pensa?","Wat vind jij?"],
 ["Den mi opinion","Volgens mij"],
 ["Mi ta kere ku…","Ik geloof dat…"],
@@ -846,7 +851,7 @@ const DECKS=[
 ["Esei no ta bèrdat","Dat is niet waar"],
 ["kombersashon","gesprek"],
 ["palabra","woord"]]},
-{id:"love",em:"❤️",name:"Liefde & vriendschap",desc:"Voor de mensen om wie je geeft",cards:[
+{id:"love",name:"Liefde & vriendschap",desc:"Voor de mensen om wie je geeft",cards:[
 ["Mi stima bo","Ik hou van jou"],
 ["Mi gusta bo","Ik vind je leuk"],
 ["sunchi","kus"],
@@ -859,7 +864,7 @@ const DECKS=[
 ["konfia","vertrouwen"],
 ["felis","gelukkig"],
 ["huntu","samen"]]},
-{id:"city",em:"🌉",name:"Stad & eiland",desc:"Willemstad en het kunuku-leven",cards:[
+{id:"city",name:"Stad & eiland",desc:"Willemstad en het kunuku-leven",cards:[
 ["Punda","Punda","het historische centrum van Willemstad"],
 ["Otrobanda","Otrobanda","lett. 'de andere kant' van de Sint Annabaai"],
 ["brùg","brug","dé brùg = de drijvende Pontjesbrug"],
@@ -1013,7 +1018,7 @@ const GRAMMAR=[
 <tr><td><b>accent (á, é…)</b></td><td>beklemtoonde lettergreep — <span class="ex">kontestá</span></td></tr>
 </table></div>
 <p><b>Twee spellingen, één taal:</b> Curaçao &amp; Bonaire schrijven fonetisch (<i>Papiamentu, kas, sinku</i>); Aruba schrijft etymologisch (<i>Papiamento, cas, cinco</i>). Gesproken is het dezelfde taal — alles wat je hier leert werkt op alle drie de eilanden.</p>
-<p class="subtle">🔊 Over de audioknop: geen enkele browser heeft al een Papiamentu-stem, dus deze app gebruikt een <b>Spaanse stem als benadering</b>. De klinkers en het ritme kloppen aardig — maar vertrouw je oren bij echte sprekers meer dan de robot.</p>`}
+<p class="subtle">Over de audioknop: geen enkele browser heeft al een Papiamentu-stem, dus deze app gebruikt een <b>Spaanse stem als benadering</b>. De klinkers en het ritme kloppen aardig — maar vertrouw je oren bij echte sprekers meer dan de robot.</p>`}
 ];
 
 /* ================= STATE ================= */
@@ -1095,6 +1100,7 @@ function answerOk(guess,target){const g=norm(guess),t=norm(target);if(!g)return 
 
 /* ================= ROUTER / VIEWS ================= */
 let TAB="home";
+const SVG_SPK='<svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z" fill="currentColor" stroke="none"/><path d="M15 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 6.8a7.6 7.6 0 0 1 0 10.4"/></svg>';
 const ICONS={
 home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M5.5 10.5V19h13v-8.5"/></svg>',
 review:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.7 2.8v4.2h-4.2"/></svg>',
@@ -1126,7 +1132,7 @@ function home(){
     <div class="postersun" aria-hidden="true"></div>
     <div class="hgreet"><span class="pap g">${greet}</span><span class="hsub">${sub} — klaar voor je dagelijkse dosis dushi?</span></div>
     <div class="wod"><span class="eyebrow">Palabra di dia · woord van de dag</span>
-      <button data-say="${esc(wod.p)}"><b class="pap">${esc(wod.p)}</b> — ${esc(wod.e)} &nbsp;🔊</button></div>
+      <button data-say="${esc(wod.p)}"><b class="pap">${esc(wod.p)}</b> — ${esc(wod.e)} &nbsp;${SVG_SPK}</button></div>
     <div class="skyline" aria-hidden="true">${sky.map(([ht,c],i)=>
       `<i style="height:${ht}px;background:${c};${i%3===0?"clip-path:polygon(0 100%,0 28%,50% 0,100% 28%,100% 100%);":""}"></i>`).join("")}</div>
     <svg class="waves" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true">
@@ -1156,7 +1162,7 @@ function home(){
       <div class="bar lvlbar"><i style="width:${pct}%"></i></div>
       <div class="decks">${ds.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
         return `<button class="deck" data-d="${d.id}">
-          <span class="em">${d.em}</span>
+          <span class="em">${esc(d.name[0])}</span>
           <span class="dt"><b>${esc(d.name)}</b><small>${esc(d.desc)}</small>
           <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
           <span class="n">${s}/${n}</span></button>`;}).join("")}
@@ -1175,7 +1181,7 @@ function deckView(id){
   $("#view").innerHTML=`
   <div class="backrow"><button id="back">← Alle decks</button></div>
   <div class="panel">
-    <p class="eyebrow">${d.em} Deck · ${d.cards.length} kaarten · ${s} gestart</p>
+    <p class="eyebrow">Deck · ${d.cards.length} kaarten · ${s} gestart</p>
     <h2 style="margin:6px 0 4px">${esc(d.name)}</h2>
     <p class="subtle" style="margin:0 0 12px">${esc(d.desc)}</p>
     <button class="cta" id="learn" ${fresh.length?"":"disabled"}>Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
@@ -1218,7 +1224,7 @@ function step(){
   ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c),speak_ep:()=>speakEx(s,c)})[s.mode]?.(s,c);
   $("#quit").onclick=()=>{Q=null;render();};
 }
-function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Luister (benadering met Spaanse stem)">🔊</button>`;}
+function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Luister (benadering met Spaanse stem)">${SVG_SPK}</button>`;}
 function wireSpeak(){$("#view").querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));}
 
 function intro(s,c){
@@ -1227,7 +1233,7 @@ function intro(s,c){
     <p class="eyebrow">Nieuwe kaart</p>
     <div class="big pap">${esc(c.p)}</div>
     <div class="mid">${esc(c.e)}</div>
-    ${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}
+    ${c.n?`<div class="note">${esc(c.n)}</div>`:""}
     ${speakBtn(c.p)}
     <div class="lit">Zeg het hardop na — spreken vanaf dag één</div>
   </div>
@@ -1241,7 +1247,7 @@ function flash(s,c){
     <p class="eyebrow">${lvlTag(s.id)}Alleen Papiamentu — weet je 'm nog?</p>
     <div class="big pap">${esc(c.p)}</div>
     ${speakBtn(c.p)}
-    <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
+    <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">${esc(c.n)}</div>`:""}</div>
   </div>
   <div id="zone"><button class="cta contbtn" id="show">Toon antwoord</button></div>`;
   wireSpeak();
@@ -1261,7 +1267,7 @@ function speakEx(s,c){
     <p class="eyebrow">${lvlTag(s.id)}Zeg het hardop in het Papiamentu</p>
     <div class="mid">${esc(c.e)}</div>
     <div id="heard" class="lit"></div>
-    <div id="ans" hidden><div class="big pap">${esc(c.p)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
+    <div id="ans" hidden><div class="big pap">${esc(c.p)}</div>${c.n?`<div class="note">${esc(c.n)}</div>`:""}</div>
   </div>
   <div id="zone">
     ${SR?`<button class="cta" id="mic">Spreek nu — ik luister</button>`:""}
@@ -1309,7 +1315,7 @@ function mc(s,c,papToEng){
     $("#view").querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;
       if(opts[j]===c)x.classList.add("right");else if(j===i&&!ok)x.classList.add("wrong");});
     if(!papToEng)speak(c.p);
-    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${c.n?`<br><small>💡 ${esc(c.n)}</small>`:""}`);
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${c.n?`<br><small>${esc(c.n)}</small>`:""}`);
   });
 }
 function typeEx(s,c){
