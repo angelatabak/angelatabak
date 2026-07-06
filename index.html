@@ -214,6 +214,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .dlgbtns{display:flex;gap:8px;margin:2px 10px 12px}
 .dlgbtns .cta{margin:0;padding:11px;font-size:12px}
 
+/* Papia ku Claude */
+.scens{display:flex;flex-wrap:wrap;gap:8px}
+.scens .cta{width:auto;flex:1 1 40%;margin:0;padding:11px;font-size:12px}
+.bub .txt{white-space:pre-wrap}
+
 /* browse list */
 .browse{display:flex;flex-direction:column;gap:6px;margin-top:12px}
 .brow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--panel);
@@ -1428,6 +1433,71 @@ function convStep(){
   }
 }
 
+/* ---- Papia ku Claude: vrij gesprek via de Claude API ---- */
+const SCEN=[
+["Na merkado","een marktverkoper op de drijvende markt van Willemstad"],
+["Den taxi","een taxichauffeur op Curaçao"],
+["Topa un hende","iemand die de leerling op het strand ontmoet"],
+["Na fiesta","een gast op een verjaardagsfeest op Curaçao"],
+["Kombersashon liber","een vriendelijke local die over het dagelijks leven kletst"]];
+function aiPrompt(i){return "Ik leer Papiamentu (Curaçaose spelling, beginnersniveau). Laten we een rollenspel doen: jij bent "+SCEN[i][1]+". Spreek Papiamentu in korte, eenvoudige zinnen en zet achter elke zin de Nederlandse vertaling tussen haakjes. Ik antwoord in het Papiamentu. Verbeter mijn fouten kort en vriendelijk in het Nederlands en stel steeds één vraag terug. Begin het gesprek.";}
+let CHAT=null;
+function aiSys(){return "Je bent "+CHAT.role+" en een geduldige Papiamentu-gesprekspartner voor een Nederlandstalige beginner. Blijf in je rol. Spreek Papiamentu (Curaçaose/Bonaireaanse spelling) in korte, eenvoudige zinnen — maximaal 3 per beurt — en zet direct achter elke Papiamentu-zin de Nederlandse vertaling tussen haakjes. De leerling antwoordt in het Papiamentu. Maakt de leerling een fout, verbeter die dan eerst kort en vriendelijk in het Nederlands en ga daarna in je rol verder. Eindig elke beurt met één vraag zodat het gesprek doorloopt.";}
+function aiStart(i){CHAT={t:SCEN[i][0],role:SCEN[i][1],hist:[],busy:false,err:"",draft:""};aiSend(null);}
+async function aiSend(text){
+  const C=CHAT;if(!C||C.busy)return;
+  C.err="";
+  if(text)C.hist.push({role:"user",content:text});
+  else if(!C.hist.length)C.hist.push({role:"user",content:"Start het gesprek nu met een korte begroeting in je rol."});
+  if(C.hist.length>25)C.hist=[C.hist[0],...C.hist.slice(-20)];
+  C.busy=true;aiRender();
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{
+      "content-type":"application/json",
+      "x-api-key":S.apikey,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-opus-4-8",max_tokens:1024,system:aiSys(),messages:C.hist})});
+    const d=await r.json().catch(()=>null);
+    if(!r.ok){
+      const msg=r.status===401?"Ongeldige API-sleutel — controleer hem op console.anthropic.com.":
+        r.status===429?"Even te veel verzoeken — wacht een paar seconden en probeer opnieuw.":
+        (d&&d.error&&d.error.message)||("Fout "+r.status);
+      throw new Error(msg);
+    }
+    if(d.stop_reason==="refusal")throw new Error("Claude heeft dit verzoek geweigerd. Probeer het anders te formuleren.");
+    const txt=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+    if(!txt)throw new Error("Leeg antwoord ontvangen — probeer opnieuw.");
+    C.hist.push({role:"assistant",content:txt});
+  }catch(e){
+    C.err=(e instanceof TypeError)?
+      "Kan de Claude API niet bereiken. In de artifact-weergave blokkeert de beveiliging dit — gebruik de GitHub Pages-versie of het lokale bestand, of open het gesprek via claude.ai.":
+      (e.message||"Onbekende fout");
+    const last=C.hist[C.hist.length-1];
+    if(last&&last.role==="user"&&C.hist.length>1){C.hist.pop();C.draft=last.content;}
+  }
+  C.busy=false;aiRender();
+}
+function aiRender(){
+  const C=CHAT;if(!C)return;
+  const msgs=C.hist.slice(1);
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div style="flex:1"><span class="eyebrow">Papia ku Claude · rollenspel</span><br><b class="pap" style="font-size:17px">${esc(C.t)}</b></div></div>
+  <div class="chat">${msgs.map(m=>`<div class="bub${m.role==="user"?" me":""}">
+    <span class="who2">${m.role==="user"?"Jij":"Claude"}</span><div class="txt">${esc(m.content)}</div></div>`).join("")}
+  ${C.busy?`<div class="bub"><span class="who2">Claude</span><i class="subtle">ta pensa…</i></div>`:""}</div>
+  ${C.err?`<div class="feedback no"><b>Fout.</b> ${esc(C.err)}</div>`:""}
+  <div class="typebox"><input id="ain" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…" ${C.busy?"disabled":""}><button id="asend" ${C.busy?"disabled":""}>Stuur</button></div>
+  <p class="subtle" style="margin-top:6px">Antwoorden komen van Claude Opus 4.8 via jouw eigen API-sleutel (± 1 cent per antwoord).</p>`;
+  $("#quit").onclick=()=>{CHAT=null;render();};
+  const inp=$("#ain");
+  if(inp&&!C.busy){inp.value=C.draft||"";C.draft="";
+    const go=()=>{const v=inp.value.trim();if(v)aiSend(v);};
+    $("#asend").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter")go();};inp.focus();}
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
 /* ---- review / quiz / grammar tabs ---- */
 function reviewHome(){
   const due=dueIds();
@@ -1473,6 +1543,23 @@ function grammar(){
     <button class="cta quiet convbtn" data-di="${i}" data-role="A">Jij bent A</button></div></details>`).join("")}
   <button class="cta quiet" id="prlines">Oefen deze zinnen als flashcards</button>
 
+  <p class="eyebrow" style="margin-top:28px">Vrij gesprek</p>
+  <h2 style="margin-top:4px">Papia ku Claude — oefen een écht gesprek</h2>
+  <p class="subtle">Kies een scenario. Claude speelt de rol, spreekt Papiamentu op jouw niveau, vertaalt elke zin en verbetert je fouten in het Nederlands.</p>
+  <div class="panel">
+    <div class="scens">${SCEN.map((s,i)=>{
+      const label=`<span class="pap" style="font-size:14px;text-transform:none;letter-spacing:0">${esc(s[0])}</span>`;
+      return S.apikey?`<button class="cta scenbtn" data-i="${i}">${label}</button>`:
+      `<a class="cta quiet scenbtn" style="text-decoration:none" href="https://claude.ai/new?q=${encodeURIComponent(aiPrompt(i))}" target="_blank" rel="noopener">${label}</a>`;}).join("")}</div>
+    ${S.apikey?
+    `<p class="subtle" style="margin:10px 0 0">Het gesprek opent hier in de app. <button id="delkey" style="text-decoration:underline;color:var(--bad)">API-sleutel wissen</button></p>`:
+    `<p class="subtle" style="margin:10px 0 0">De knoppen openen een voorbereid gesprek op claude.ai — gratis account is genoeg.</p>
+    <details style="margin-top:8px"><summary class="subtle" style="cursor:pointer">Liever hier in de app chatten? Plak een eigen API-sleutel</summary>
+      <p class="subtle" style="margin:8px 0">Maak een sleutel op <a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:var(--sea-deep)">console.anthropic.com</a> (API keys). De sleutel wordt alleen op dit apparaat bewaard en een antwoord kost ± 1 cent. Werkt in de GitHub Pages-versie en lokaal — niet in de artifact-weergave.</p>
+      <div class="typebox" style="margin-top:0"><input id="keyin" type="password" autocomplete="off" placeholder="sk-ant-…"><button id="keysave">Bewaar</button></div>
+    </details>`}
+  </div>
+
   <p class="eyebrow" style="margin-top:28px">Spoedcursus</p>
   <h2 style="margin-top:4px">Gramátika — één keer lezen, altijd spreken</h2>
   ${GRAMMAR.map((g,i)=>`<h2>${i+1}. ${g.t}</h2>${g.h}`).join("")}
@@ -1488,6 +1575,10 @@ function grammar(){
   wireSpeak();
   $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
   $("#view").querySelectorAll(".convbtn").forEach(b=>b.onclick=()=>convStart(+b.dataset.di,b.dataset.role));
+  if(S.apikey)$("#view").querySelectorAll("button.scenbtn").forEach(b=>b.onclick=()=>aiStart(+b.dataset.i));
+  const ks=$("#keysave");if(ks)ks.onclick=()=>{const v=$("#keyin").value.trim();
+    if(v){S.apikey=v;save();grammar();window.scrollTo(0,0);}};
+  const dk=$("#delkey");if(dk)dk.onclick=()=>{delete S.apikey;save();grammar();};
 }
 
 /* ================= BOOT ================= */
