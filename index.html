@@ -203,6 +203,17 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .res li{margin:8px 0}
 .res a{color:var(--sea-deep);font-weight:600}
 
+/* gespreksoefening (rollenspel) */
+.chat{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.bub{max-width:86%;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow)}
+.bub.me{align-self:flex-end;background:var(--sea-soft);border-color:var(--sea)}
+.bub .pap{display:block;font-size:16.5px;text-align:left}
+.bub small{color:var(--muted)}
+.bub .who2{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.cue .mid{font-size:20px;margin:6px 0}
+.dlgbtns{display:flex;gap:8px;margin:2px 10px 12px}
+.dlgbtns .cta{margin:0;padding:11px;font-size:12px}
+
 /* browse list */
 .browse{display:flex;flex-direction:column;gap:6px;margin-top:12px}
 .brow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--panel);
@@ -958,7 +969,10 @@ const RESOURCES=[
 ["PAPIAMENTU ABC op YouTube","https://www.youtube.com/watch?v=_Z7vjb9YPMs","Korte lessen met gespreksopeners — ideaal om je oor te trainen met echte stemmen."],
 ["Wikivoyage Papiamento-taalgids","https://en.wikivoyage.org/wiki/Papiamento_phrasebook","Gratis naslagwerk met uitspraaknotities (Engelstalig)."],
 ["The Moreish Podcast — aflevering over Papiamentu","https://podcasts.apple.com/us/podcast/papiamentu-the-language-of-cura%C3%A7ao-with-sheedia-jansen/id1728305327?i=1000706523265","Het verhaal en de cultuur achter de taal (Engelstalig)."],
-["Papieren woordenboeken","","Betty Ratzlaffs 'Dikshonario Papiamentu' en Edwin Wernets 'Curso di Papiamento' zijn de standaard naslagwerken; voor Nederlands–Papiamentu is er het 'Prisma woordenboek Papiaments'."]
+["Papieren woordenboeken","","Betty Ratzlaffs 'Dikshonario Papiamentu' en Edwin Wernets 'Curso di Papiamento' zijn de standaard naslagwerken; voor Nederlands–Papiamentu is er het 'Prisma woordenboek Papiaments'."],
+["Stichting SPLIKA — cursussen in Nederland","https://splika.nl/","Papiamentu-lessen met echte docenten (groeps-, privé- én spreekvaardigheidscursussen), vanuit Den Haag. Dé plek voor echte gesprekken."],
+["MyLanguageExchange — taalmaatjes","https://www.mylanguageexchange.com/Learn/Papiamento_Papiamentu.asp","Vind een moedertaalspreker die Nederlands wil oefenen en ruil: half uur Papiamentu, half uur Nederlands."],
+["Een AI-gesprekspartner","","Chat met Claude (claude.ai): vraag 'Oefen een gesprek in het Papiamentu met mij en verbeter mijn fouten'. Altijd beschikbaar, oneindig geduldig."]
 ];
 
 const GRAMMAR=[
@@ -1364,6 +1378,56 @@ function finish(){
   $("#home2").onclick=render;
 }
 
+/* ---- gespreksoefening: speel één rol in een dialoog ---- */
+let CONV=null;
+function convStart(di,role){CONV={di,role,i:0};convStep();}
+function convStep(){
+  const C=CONV;if(!C)return;
+  const d=DIALOGS[C.di],lines=d.lines;
+  const done=C.i>=lines.length;
+  const cur=done?null:lines[C.i];
+  const mine=cur&&cur[0]===C.role;
+  const bubbles=lines.slice(0,C.i+((cur&&!mine)?1:0)).map(l=>{
+    const me=l[0]===C.role;
+    return `<div class="bub${me?" me":""}"><span class="who2">${me?"Jij":"Gesprekspartner"}</span>
+      <button class="pap" data-say="${esc(l[1])}">${esc(l[1])}</button><small>${esc(l[2])}</small></div>`;}).join("");
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div style="flex:1"><span class="eyebrow">Gesprek · jij bent persoon ${C.role}</span><br><b class="pap" style="font-size:17px">${esc(d.t)}</b></div>
+    <span class="subtle" style="font-variant-numeric:tabular-nums">${Math.min(C.i,lines.length)}/${lines.length}</span></div>
+  <div class="chat">${bubbles}</div>
+  ${done?`<div class="panel center"><p style="margin:0 0 10px"><b class="pap" style="font-size:20px;font-style:italic">Masha bon!</b><br><span class="subtle">Gesprek voltooid.</span></p>
+    <button class="cta" id="again">Nog een keer — nu als persoon ${C.role==="A"?"B":"A"}</button>
+    <button class="cta quiet" id="back2">Terug naar de dialogen</button></div>`
+  :mine?`<div class="panel cue"><p class="eyebrow">Jouw beurt — zeg dit in het Papiamentu</p>
+    <div class="mid">${esc(cur[2])}</div>
+    <div id="ans2" hidden><div class="pap" style="font-size:22px;margin:4px 0 10px">${esc(cur[1])}</div></div>
+    <div id="zone2">
+      ${SR?`<button class="cta" id="mic2">Spreek nu — ik luister</button>`:""}
+      <button class="cta ${SR?"quiet ":""}" id="show2">Toon antwoord</button>
+    </div><div id="heard2" class="subtle"></div></div>`
+  :`<button class="cta" id="next2">Verder</button>`}`;
+  wireSpeak();
+  $("#quit").onclick=()=>{CONV=null;render();};
+  window.scrollTo(0,document.body.scrollHeight);
+  if(done){bumpStreak();
+    $("#again").onclick=()=>convStart(C.di,C.role==="A"?"B":"A");
+    $("#back2").onclick=()=>{CONV=null;render();};return;}
+  if(!mine){speak(cur[1]);$("#next2").onclick=()=>{C.i++;convStep();};}
+  else{
+    const reveal=()=>{$("#ans2").hidden=false;speak(cur[1]);
+      $("#zone2").innerHTML=`<button class="cta" id="next2">Verder</button>`;
+      $("#next2").onclick=()=>{C.i++;convStep();};};
+    $("#show2").onclick=reveal;
+    if(SR)$("#mic2").onclick=()=>{try{
+      const r=new SR();r.lang=VOICE?VOICE.lang:"es-ES";r.maxAlternatives=3;
+      $("#heard2").textContent="Ik luister…";
+      r.onresult=e=>{const t=e.results[0][0].transcript;$("#heard2").textContent=`Ik hoorde: “${t}”`;reveal();};
+      r.onerror=()=>{$("#heard2").textContent="Microfoon niet beschikbaar — zeg het hardop en check jezelf.";};
+      r.start();}catch(e){$("#heard2").textContent="Spraakherkenning niet beschikbaar — zeg het hardop en check jezelf.";}};
+  }
+}
+
 /* ---- review / quiz / grammar tabs ---- */
 function reviewHome(){
   const due=dueIds();
@@ -1397,14 +1461,16 @@ function quizHome(){
 }
 function grammar(){
   $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
-  <p class="eyebrow">Lezen &amp; luisteren</p>
+  <p class="eyebrow">Spreken &amp; luisteren</p>
   <h2 style="margin-top:4px">Kombersashon — dialogen</h2>
-  <p class="subtle">Echte gesprekken, zin voor zin. Tik op een regel om hem te horen (benaderde stem). Lees er elke dag één hardop — zo worden zinnen reflexen.</p>
+  <p class="subtle">Echte gesprekken, zin voor zin. Tik op een regel om hem te horen — of <b>speel zelf een rol</b>: de app zegt de regels van je gesprekspartner, jij moet jouw regels in het Papiamentu zeggen.</p>
   ${DIALOGS.map((d,i)=>`<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(d.t)}</b> <small>· ${esc(d.tr)}</small></summary>
     <div class="dlines">${d.lines.map(l=>`<button class="dline" data-say="${esc(l[1])}">
       <span class="who ${l[0]==="A"?"a":"b"}">${l[0]}</span>
       <span><span class="pap">${esc(l[1])}</span><small>${esc(l[2])}</small></span></button>`).join("")}
-    </div></details>`).join("")}
+    </div>
+    <div class="dlgbtns"><button class="cta convbtn" data-di="${i}" data-role="B">Speel — jij bent B</button>
+    <button class="cta quiet convbtn" data-di="${i}" data-role="A">Jij bent A</button></div></details>`).join("")}
   <button class="cta quiet" id="prlines">Oefen deze zinnen als flashcards</button>
 
   <p class="eyebrow" style="margin-top:28px">Spoedcursus</p>
@@ -1421,6 +1487,7 @@ function grammar(){
   </div>`;
   wireSpeak();
   $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
+  $("#view").querySelectorAll(".convbtn").forEach(b=>b.onclick=()=>convStart(+b.dataset.di,b.dataset.role));
 }
 
 /* ================= BOOT ================= */
