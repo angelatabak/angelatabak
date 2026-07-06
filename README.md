@@ -25,6 +25,13 @@ De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **
 3. **Upload dat bestand hier op GitHub**: open dit repository → klik op **Add file → Upload files** → sleep `audio-pap.js` erin → klik **Commit changes**. (Het vervangt het lege plaatshouder-bestand.)
 4. Klaar! De app gebruikt vanaf nu automatisch de echte stem — je ziet het aan de tooltip van de audioknop: *"echte Papiamentu-stem ✓"*. Werkt het ergens niet, dan valt de app vanzelf terug op de reservestem.
 
+## Papia ku Claude — AI-gesprekspartner
+
+In het **Mas**-tabblad staat "Papia ku Claude": kies een scenario (markt, taxi, feestje…) en oefen een echt gesprek in het Papiamentu, met vertaling en foutcorrectie.
+
+- **Zonder instellen**: de knoppen openen een voorbereid gesprek op claude.ai (gratis account is genoeg).
+- **In de app chatten**: maak een API-sleutel op [console.anthropic.com](https://console.anthropic.com/) en plak hem in de app (klapmenu onder de scenario's). De sleutel blijft alleen op jouw apparaat; een antwoord kost ± 1 cent. Werkt in de GitHub Pages-versie en lokaal.
+
 ## Aanbevolen routine (±15 min/dag)
 
 1. Lees één grammaticahoofdstuk (alleen de eerste vijf dagen).
