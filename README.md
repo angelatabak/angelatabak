@@ -6,7 +6,7 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 
 ## Waarom je hiermee snel leert
 
-- **518 meest gebruikte woorden & zinnen** in 28 themadecks, geordend op bruikbaarheid — overlevingszinnen eerst.
+- **578 meest gebruikte woorden & zinnen** in 33 themadecks, verdeeld over 4 niveaus (Fundeshi → Konstruí → Amplia → Konversá), geordend op bruikbaarheid — overlevingszinnen eerst.
 - **6 praktijkdialogen** (o.a. iemand ontmoeten, de markt, de taxi, een feestje) met tik-om-te-luisteren regels, plus een bijpassend flashcard-deck.
 - **Spaced repetition (SM-2)**: herhalingen komen precies vóórdat je zou vergeten. Onderzoek laat ~85% retentie zien versus ~22% bij stampen.
 - **Actief ophalen in gemengde vormen**: flashcards, meerkeuze in beide richtingen, en typen met accent-tolerante typefoutcorrectie.
@@ -28,8 +28,8 @@ De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **
 ## Aanbevolen routine (±15 min/dag)
 
 1. Lees één grammaticahoofdstuk (alleen de eerste vijf dagen).
-2. Werk je herhalingen weg (🌀-bolletje).
-3. Leer 8 nieuwe kaarten uit het volgende deck.
-4. Sluit af met een snelle 🎯-quiz.
+2. Werk je herhalingen weg (Repasá-tab).
+3. Leer 8 nieuwe kaarten uit het volgende deck van je niveau.
+4. Sluit af met een snelle quiz.
 
-In dat tempo heb je alle 518 kaarten in ongeveer tien weken gestart — genoeg voor echte gesprekken. Combineer het met de bronnen met echte stemmen in het **Mas**-tabblad (Lora, uTalk, YouTube-lessen) om je oor te trainen. *Bon suerte — bo por!*
+In dat tempo heb je alle 578 kaarten in ongeveer twaalf weken gestart — genoeg voor echte gesprekken. Combineer het met de bronnen met echte stemmen in het **Mas**-tabblad (Lora, uTalk, YouTube-lessen) om je oor te trainen. *Bon suerte — bo por!*

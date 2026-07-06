@@ -99,6 +99,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .cta.quiet{background:var(--panel);color:var(--sea-deep);border:1px solid var(--line)}
 .cta:disabled{opacity:.5;cursor:default}
 
+/* levels */
+.lvlsec{margin-top:22px}
+.lvlhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:6px}
+.lvlt small{display:block;color:var(--muted);font-size:12.5px}
+.lvln{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lc)}
+.lvlpap{font-size:19px;font-style:italic;font-weight:400;letter-spacing:0;text-transform:none;color:var(--lc)}
+.lvlpct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.herechip{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--lc);color:#fff;border-radius:9px;padding:3px 9px;white-space:nowrap}
+.lvlbar{height:4px;margin:0 0 10px}
+.lvlbar i{background:var(--lc)}
+.lvlsec .deck{border-left:4px solid var(--lc)}
+
 /* deck list */
 .decks{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .deck{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);
@@ -188,7 +201,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);z-index:5}
 .tabs{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
 .tab{padding:10px 4px 12px;text-align:center;color:var(--muted);font-size:11px;font-weight:600}
-.tab .ti{display:block;font-size:20px;margin-bottom:2px}
+.tab svg{width:22px;height:22px;display:block;margin:0 auto 3px;stroke:currentColor;fill:none;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tab.on{color:var(--sea-deep)}
 .badge{display:inline-block;min-width:17px;padding:1px 5px;border-radius:9px;background:var(--coral);color:#fff;
   font-size:10.5px;font-weight:700;margin-left:3px;font-variant-numeric:tabular-nums}
@@ -758,7 +772,84 @@ const DECKS=[
 ["pió","slechter"],
 ["demasiado","veel te veel"],
 ["Esaki ta mas bunita","Deze is mooier"],
-["hopi mas","veel meer"]]}
+["hopi mas","veel meer"]]},
+{id:"emergency",em:"🚨",name:"Hulp & noodgevallen",desc:"Hopelijk nooit nodig — wel kennen",cards:[
+["Yuda mi!","Help mij!"],
+["polis","politie"],
+["bombero","brandweerman"],
+["ambulans","ambulance"],
+["peliger","gevaar"],
+["Tene kuidou!","Pas op!"],
+["kuidou","voorzichtigheid / zorg"],
+["Mi a pèrdè mi tas","Ik ben mijn tas verloren"],
+["horta","stelen"],
+["ladron","dief"],
+["Yama polis!","Bel de politie!"],
+["Mi mester di un dòkter","Ik heb een dokter nodig"]]},
+{id:"weather2",em:"🌦️",name:"Weer & lucht",desc:"Van passaatwind tot regenbui",cards:[
+["tempu","weer / tijd(perk)"],
+["Tempu ta bon awe","Het weer is goed vandaag"],
+["Awaseru ta kai","Het regent","lett. 'regen valt'"],
+["Solo ta sali","De zon breekt door"],
+["lamper","bliksem"],
+["strena","donder"],
+["orkan","orkaan"],
+["temporada","seizoen"],
+["fresku","fris / koel"],
+["sombra","schaduw"]]},
+{id:"opinion",em:"🗣️",name:"Mening & discussie",desc:"Meepraten, instemmen, tegenspreken",cards:[
+["Kiko bo ta pensa?","Wat vind jij?"],
+["Den mi opinion","Volgens mij"],
+["Mi ta kere ku…","Ik geloof dat…"],
+["Bo tin rason","Je hebt gelijk"],
+["rason","gelijk / reden"],
+["Mi no ta di akuerdo","Ik ben het er niet mee eens"],
+["diskutí","discussiëren / bespreken"],
+["Ta un bon idea","Dat is een goed idee"],
+["idea","idee"],
+["Podisé bo tin rason","Misschien heb je gelijk"],
+["No ta importá mi","Het maakt mij niet uit"],
+["Esei no ta bèrdat","Dat is niet waar"],
+["kombersashon","gesprek"],
+["palabra","woord"]]},
+{id:"love",em:"❤️",name:"Liefde & vriendschap",desc:"Voor de mensen om wie je geeft",cards:[
+["Mi stima bo","Ik hou van jou"],
+["Mi gusta bo","Ik vind je leuk"],
+["sunchi","kus"],
+["brasa","omhelzen / knuffel"],
+["kariño","genegenheid / tederheid"],
+["namorá","verliefd"],
+["Mi dushi","Mijn lief / schatje"],
+["Ku henter mi kurason","Met heel mijn hart"],
+["amistat","vriendschap"],
+["konfia","vertrouwen"],
+["felis","gelukkig"],
+["huntu","samen"]]},
+{id:"city",em:"🌉",name:"Stad & eiland",desc:"Willemstad en het kunuku-leven",cards:[
+["Punda","Punda","het historische centrum van Willemstad"],
+["Otrobanda","Otrobanda","lett. 'de andere kant' van de Sint Annabaai"],
+["brùg","brug","dé brùg = de drijvende Pontjesbrug"],
+["haf","haven","van het Nederlandse 'haven'"],
+["plasa","plein / markt","Plasa Bieu — de oude markthal met lokaal eten"],
+["snèk","snackbar / buurtcafé"],
+["bario","wijk / buurt"],
+["kunuku","het platteland","typisch woord voor het buitengebied"],
+["trankilo","rustig"],
+["drùk","druk","van het Nederlandse 'druk'"],
+["turista","toerist"],
+["historia","geschiedenis / verhaal"]]}
+];
+
+/* Course levels — group decks into a visible learning path */
+const LEVELS=[
+{n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8A13D",
+ ids:["survival","greet","dialog","particles","questions","numbers"]},
+{n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#2296A3",
+ ids:["verbs1","glue","food","time","places","verbs2"]},
+{n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95F43",
+ ids:["people","adj","beach","money","body","house","nature","emergency","weather2"]},
+{n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#4A7FB5",
+ ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","love","city"]}
 ];
 
 /* Dialog line: [speaker, papiamentu, dutch] */
@@ -970,10 +1061,15 @@ function answerOk(guess,target){const g=norm(guess),t=norm(target);if(!g)return 
 
 /* ================= ROUTER / VIEWS ================= */
 let TAB="home";
-const TABS=[["home","🏠","Home"],["review","🌀","Repasá"],["quiz","🎯","Tèst"],["grammar","📖","Mas"]];
+const ICONS={
+home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M5.5 10.5V19h13v-8.5"/></svg>',
+review:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.7 2.8v4.2h-4.2"/></svg>',
+quiz:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></svg>',
+grammar:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7.5 4.5 4.5 4.5v13c3 0 5.5.5 7.5 2 2-1.5 4.5-2 7.5-2v-13c-3 0-5.5.5-7.5 2Z"/><path d="M12 6.5v13"/></svg>'};
+const TABS=[["home","Home"],["review","Repasá"],["quiz","Tèst"],["grammar","Mas"]];
 function renderTabs(){const due=dueIds().length;
-  $("#tabs").innerHTML=TABS.map(([id,ic,lb])=>
-    `<button class="tab${TAB===id?" on":""}" data-tab="${id}"><span class="ti">${ic}</span>${lb}${id==="review"&&due?`<span class="badge">${due}</span>`:""}</button>`).join("");
+  $("#tabs").innerHTML=TABS.map(([id,lb])=>
+    `<button class="tab${TAB===id?" on":""}" data-tab="${id}">${ICONS[id]}${lb}${id==="review"&&due?`<span class="badge">${due}</span>`:""}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{TAB=b.dataset.tab;render();});}
 function render(){renderTabs();
   ({home,review:reviewHome,quiz:quizHome,grammar}[TAB])();window.scrollTo(0,0);}
@@ -1000,21 +1096,33 @@ function home(){
       `<i style="height:${ht}px;background:${c};${i%3===0?"clip-path:polygon(0 100%,0 28%,50% 0,100% 28%,100% 100%);":""}"></i>`).join("")}</div>
   </div>
   <div class="stats">
-    <div class="stat sun"><b>${streakLive()}🔥</b><span>Dagen op rij</span></div>
+    <div class="stat sun"><b>${streakLive()}</b><span>Dagen op rij</span></div>
     <div class="stat due"><b>${due}</b><span>Te herhalen</span></div>
     <div class="stat"><b>${started}<small style="font-size:12px;color:var(--muted)">/${total}</small></b><span>Gestart</span></div>
     <div class="stat"><b>${strong}</b><span>Sterk</span></div>
   </div>
-  ${due?`<button class="cta" id="gorev">🌀 Herhaal ${due} kaart${due>1?"en":""} — houd ze vers</button>`:
-        `<div class="panel subtle center">Niets te herhalen — leer hieronder iets nieuws 👇</div>`}
-  <p class="eyebrow" style="margin:18px 0 2px">Cursus · meest gebruikte woorden eerst</p>
-  <div class="decks">${DECKS.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
-    return `<button class="deck" data-d="${d.id}">
-      <span class="em">${d.em}</span>
-      <span class="dt"><b>${esc(d.name)}</b><small>${esc(d.desc)}</small>
-      <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
-      <span class="n">${s}/${n}</span></button>`;}).join("")}
-  </div>
+  ${due?`<button class="cta" id="gorev">Herhaal ${due} kaart${due>1?"en":""} — houd ze vers</button>`:
+        `<div class="panel subtle center">Niets te herhalen — leer hieronder iets nieuws.</div>`}
+  <p class="eyebrow" style="margin:20px 0 0">Kursus · vier niveaus, meest gebruikte woorden eerst</p>
+  ${(()=>{const curL=LEVELS.findIndex(L=>L.ids.some(id=>{const d=DECKS.find(x=>x.id===id);return deckStats(d).s<d.cards.length;}));
+  return LEVELS.map((L,li)=>{
+    const ds=L.ids.map(id=>DECKS.find(x=>x.id===id));
+    const tot=ds.reduce((a,d)=>a+d.cards.length,0),got=ds.reduce((a,d)=>a+deckStats(d).s,0);
+    const pct=Math.round(100*got/tot);
+    return `<section class="lvlsec" style="--lc:${L.c}">
+      <div class="lvlhead">
+        <div class="lvlt"><span class="lvln">${L.n} · <span class="pap lvlpap">${L.pap}</span></span>
+        <small>${esc(L.nl)}</small></div>
+        ${li===curL?`<span class="herechip">bo ta aki</span>`:`<span class="lvlpct">${pct}%</span>`}
+      </div>
+      <div class="bar lvlbar"><i style="width:${pct}%"></i></div>
+      <div class="decks">${ds.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
+        return `<button class="deck" data-d="${d.id}">
+          <span class="em">${d.em}</span>
+          <span class="dt"><b>${esc(d.name)}</b><small>${esc(d.desc)}</small>
+          <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
+          <span class="n">${s}/${n}</span></button>`;}).join("")}
+      </div></section>`;}).join("");})()}
   <p class="subtle" style="margin-top:18px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
   wireSpeak();
   if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
@@ -1032,8 +1140,8 @@ function deckView(id){
     <p class="eyebrow">${d.em} Deck · ${d.cards.length} kaarten · ${s} gestart</p>
     <h2 style="margin:6px 0 4px">${esc(d.name)}</h2>
     <p class="subtle" style="margin:0 0 12px">${esc(d.desc)}</p>
-    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>📚 Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
-    <button class="cta quiet" id="drill">🌀 Oefen dit hele deck (alle ${d.cards.length})</button>
+    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
+    <button class="cta quiet" id="drill">Oefen dit hele deck (alle ${d.cards.length})</button>
   </div>
   <p class="subtle" style="margin:14px 2px 0">Elke kaart klimt in niveau: <b>1</b> herkennen → <b>2</b> kiezen → <b>3</b> typen &amp; spreken → <b>4</b> alleen Papiamentu, zonder vertaling.</p>
   <div class="browse">${d.cards.map(c=>`<div class="brow"><span><span class="pap">${esc(c[0])}</span> ${lvlDots(id+":"+c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
@@ -1083,7 +1191,7 @@ function intro(s,c){
     <div class="mid">${esc(c.e)}</div>
     ${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}
     ${speakBtn(c.p)}
-    <div class="lit">🗣️ Zeg het hardop na — spreken vanaf dag één</div>
+    <div class="lit">Zeg het hardop na — spreken vanaf dag één</div>
   </div>
   <button class="cta contbtn" id="next">Begrepen →</button>`;
   wireSpeak();speak(c.p);
@@ -1112,13 +1220,13 @@ function ivlPreview(id,g){const c=st(id);if(!c||c.ivl<1)return g===2?"3 d":"1 d"
 function speakEx(s,c){
   $("#view").innerHTML=sessTop()+`
   <div class="qcard">
-    <p class="eyebrow">${lvlTag(s.id)}🗣️ Zeg het hardop in het Papiamentu</p>
+    <p class="eyebrow">${lvlTag(s.id)}Zeg het hardop in het Papiamentu</p>
     <div class="mid">${esc(c.e)}</div>
     <div id="heard" class="lit"></div>
     <div id="ans" hidden><div class="big pap">${esc(c.p)}</div>${c.n?`<div class="note">💡 ${esc(c.n)}</div>`:""}</div>
   </div>
   <div id="zone">
-    ${SR?`<button class="cta" id="mic">🎙️ Spreek nu — ik luister</button>`:""}
+    ${SR?`<button class="cta" id="mic">Spreek nu — ik luister</button>`:""}
     <button class="cta ${SR?"quiet ":""}contbtn" id="show">Toon antwoord</button>
   </div>`;
   let rec=null;
@@ -1135,7 +1243,7 @@ function speakEx(s,c){
   if(SR)$("#mic").onclick=()=>{
     try{
       rec=new SR();rec.lang=VOICE?VOICE.lang:"es-ES";rec.maxAlternatives=3;
-      $("#heard").textContent="🎙️ Ik luister…";
+      $("#heard").textContent="Ik luister…";
       rec.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);
         const hit=alts.find(t=>answerOk(t,c.p));
         $("#heard").textContent=`Ik hoorde: “${alts[0]}” ${hit?"— klinkt goed! ✓":"— vergelijk zelf ↓"}`;
@@ -1183,7 +1291,7 @@ function typeEx(s,c){
   $("#chk").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter"&&!inp.disabled)go();};
 }
 function fbAndNext(s,ok,detail){
-  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}">${ok?"✅ Bon trabou! Goed gedaan!":"❌ Net niet."}<br>${detail}</div>
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}"><b>${ok?"Bon trabou!":"Net niet."}</b><br>${detail}</div>
   <button class="cta contbtn" id="next">Verder →</button>`;
   const n=$("#next");n.focus();
   n.onclick=()=>answer(s,ok);
@@ -1205,10 +1313,9 @@ function finish(){
   if(right+wrong>0)bumpStreak();
   const acc=right+wrong?Math.round(100*right/(right+wrong)):100;
   $("#view").innerHTML=`<div class="done">
-    <div class="big">${acc>=90?"🏝️":acc>=70?"🌊":"🐢"}</div>
-    <h2>${acc>=90?"Masha bon!":acc>=70?"Bon trabou!":"Sigui purba!"}</h2>
-    <p>${right} goed · ${wrong} gemist · ${acc}% — ${esc(title)}</p>
-    <p class="subtle">${streakLive()} dag${streakLive()===1?"":"en"} op rij 🔥</p>
+    <div class="big pap" style="font-style:italic">${acc>=90?"Masha bon!":acc>=70?"Bon trabou!":"Sigui purba!"}</div>
+    <p style="margin-top:10px">${right} goed · ${wrong} gemist · ${acc}% — ${esc(title)}</p>
+    <p class="subtle">${streakLive()} dag${streakLive()===1?"":"en"} op rij</p>
     <button class="cta" id="home2">Verder</button></div>`;
   $("#home2").onclick=render;
 }
@@ -1222,8 +1329,8 @@ function reviewHome(){
   <div class="panel">${due.length?
     `<p style="margin:0 0 10px"><b>${due.length}</b> kaart${due.length>1?"en staan":" staat"} klaar. Herhalingen komen precies vóórdat je zou vergeten — hier gebeurt het snelle leren.</p>
      <p class="subtle" style="margin:0 0 10px">Oefenvorm groeit mee met je niveau: herkennen → kiezen → typen &amp; hardop zeggen → alleen Papiamentu.</p>
-     <button class="cta" id="go">🌀 Start herhaling</button>`:
-    `<p style="margin:0">Niets te herhalen — dushi! 🎉<br><span class="subtle">Leer nieuwe kaarten op Home, of oefen een deck. Kom terug zodra het bolletje oplicht.</span></p>`}
+     <button class="cta" id="go">Start herhaling</button>`:
+    `<p style="margin:0">Niets te herhalen — dushi!<br><span class="subtle">Leer nieuwe kaarten op Home, of oefen een deck. Kom terug zodra het bolletje oplicht.</span></p>`}
   </div>
   ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Oefen 20 willekeurige geleerde kaarten</button>`:""}
   </div>`;
@@ -1237,7 +1344,7 @@ function quizHome(){
   <h2 style="margin:4px 0 10px">Tèst bo mes — test jezelf</h2>
   <div class="panel">
     <p style="margin:0 0 10px">10 vlotte vragen, gemengde vormen. ${learned.length>=8?"Uit de "+learned.length+" kaarten die je al gestart bent.":"Begint met de Overlevingskit tot je meer geleerd hebt."}</p>
-    <button class="cta" id="go">🎯 Start quiz</button>
+    <button class="cta" id="go">Start quiz</button>
   </div></div>`;
   $("#go").onclick=()=>{
     let pool=learned.length>=8?learned:DECKS[0].cards.map(c=>"survival:"+c[0]);
@@ -1254,7 +1361,7 @@ function grammar(){
       <span class="who ${l[0]==="A"?"a":"b"}">${l[0]}</span>
       <span><span class="pap">${esc(l[1])}</span><small>${esc(l[2])}</small></span></button>`).join("")}
     </div></details>`).join("")}
-  <button class="cta quiet" id="prlines">💬 Oefen deze zinnen als flashcards</button>
+  <button class="cta quiet" id="prlines">Oefen deze zinnen als flashcards</button>
 
   <p class="eyebrow" style="margin-top:28px">Spoedcursus</p>
   <h2 style="margin-top:4px">Gramátika — één keer lezen, altijd spreken</h2>
