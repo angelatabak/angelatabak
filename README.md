@@ -16,6 +16,15 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 
 Gebruikt de spelling van Curaçao/Bonaire (*Papiamentu*); het grammaticadeel legt de Arubaanse (*Papiamento*) verschillen uit. Licht & donker thema, geschikt voor je telefoon.
 
+## Echte Papiamentu-stem toevoegen (eenmalig, ±20 min, geen technische kennis nodig)
+
+De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **echte Papiamentu AI-stem** (Meta's gratis `mms-tts-pap`-model):
+
+1. **Open het notebook in Google Colab** (gratis, werkt in je browser, alleen een Google-account nodig): ga naar [colab.research.google.com](https://colab.research.google.com) → tabblad **GitHub** → plak de URL van dit repository → klik op `generate_audio.ipynb`.
+2. Klik bovenin op **Runtime → Alles uitvoeren** en wacht 10–20 minuten. Je hoeft niets aan te passen. Aan het einde hoor je een voorbeeldzin en downloadt je browser automatisch één bestand: **`audio-pap.js`**.
+3. **Upload dat bestand hier op GitHub**: open dit repository → klik op **Add file → Upload files** → sleep `audio-pap.js` erin → klik **Commit changes**. (Het vervangt het lege plaatshouder-bestand.)
+4. Klaar! De app gebruikt vanaf nu automatisch de echte stem — je ziet het aan de tooltip van de 🔊-knop: *"echte Papiamentu-stem ✓"*. Werkt het ergens niet, dan valt de app vanzelf terug op de reservestem.
+
 ## Aanbevolen routine (±15 min/dag)
 
 1. Lees één grammaticahoofdstuk (alleen de eerste vijf dagen).

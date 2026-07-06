@@ -720,10 +720,21 @@ let VOICE=null;
 function pickVoice(){const vs=speechSynthesis.getVoices();
   VOICE=vs.find(v=>/es[-_](419|US|MX|CO)/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null;}
 if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
-function speak(txt){if(!S.tts||!("speechSynthesis" in window))return;
+let CUR_AUD=null;
+function speak(txt){if(!S.tts)return;
+  /* echte Papiamentu-stem (audio-pap.js, gegenereerd met facebook/mms-tts-pap) als die er is */
+  const src=window.PAP_AUDIO&&window.PAP_AUDIO[txt];
+  if(src){try{if(CUR_AUD)CUR_AUD.pause();}catch(e){}
+    CUR_AUD=new Audio(src);CUR_AUD.play().catch(()=>{});return;}
+  if(!("speechSynthesis" in window))return;
   const u=new SpeechSynthesisUtterance(txt.replace(/[èòù]/g,m=>({è:"e",ò:"o",ù:"u"}[m])));
   if(VOICE)u.voice=VOICE;u.lang=VOICE?VOICE.lang:"es-419";u.rate=0.85;
   speechSynthesis.cancel();speechSynthesis.speak(u);}
+/* audio-pap.js dynamisch laden; ontbreekt het bestand, dan blijft de reservestem actief */
+(function(){const sc=document.createElement("script");sc.src="audio-pap.js";
+  sc.onload=()=>{if(window.PAP_AUDIO&&Object.keys(window.PAP_AUDIO).length){
+    const b=document.getElementById("ttsbtn");if(b)b.title="Audio: echte Papiamentu-stem ✓";}};
+  sc.onerror=()=>{};document.head.appendChild(sc);})();
 
 /* ================= HELPERS ================= */
 const $=s=>document.querySelector(s);
