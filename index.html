@@ -8,38 +8,42 @@
 <body>
 <style>
 :root{
-  --bg:#F3F7F6; --panel:#FFFFFF; --panel2:#EAF1EF; --ink:#14323B; --muted:#5E7A80;
-  --line:#D9E5E2; --sea:#0E7C86; --sea-deep:#0A5C64; --sea-soft:#DDEDEE;
-  --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
-  --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
-  --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
-  --hero1:#0F7E88; --hero2:#09515B; --heroink:#F2FAF9;
+  --bg:#F4E7CF; --panel:#FBF2DE; --panel2:#EBDBBB; --ink:#3B2A1D; --muted:#8A7156;
+  --line:#D8C098; --sea:#D95436; --sea-deep:#A23A21; --sea-soft:#F6DDC8;
+  --sun:#E8940A; --sun-soft:#F7E3B4; --sun-ink:#8F5B06;
+  --coral:#C2452C; --good:#2F7D46; --good-soft:#E2EBCF; --bad:#C23B2E; --bad-soft:#F3D6CB;
+  --pap:#155E52; --shadow:3px 3px 0 rgba(59,42,29,.16);
+  --sky1:#FBC968; --sky2:#F1913C; --sky3:#D95436; --sky4:#7E3355; --heroink:#FFF3DC;
+  --sil:#38203A; --wave:#155E52;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#0C1E24; --panel:#122B33; --panel2:#0F252C; --ink:#E6F1EF; --muted:#8FACAE;
-    --line:#1F3F48; --sea:#3FB8C4; --sea-deep:#5ECBD6; --sea-soft:#123A42;
-    --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
-    --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
-    --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
-    --hero1:#134049; --hero2:#0A2930; --heroink:#DFF1EF;
+    --bg:#1B2130; --panel:#252C40; --panel2:#161C2B; --ink:#F0E3C6; --muted:#AC9C7F;
+    --line:#3A4158; --sea:#E7714F; --sea-deep:#F0906C; --sea-soft:#41302F;
+    --sun:#F0A83B; --sun-soft:#3C3220; --sun-ink:#F5C87A;
+    --coral:#E0604A; --good:#5CAD74; --good-soft:#22301F; --bad:#DF6B57; --bad-soft:#3A211C;
+    --pap:#6BC7B2; --shadow:3px 3px 0 rgba(0,0,0,.4);
+    --sky1:#584070; --sky2:#8E4260; --sky3:#C25543; --sky4:#1E2436; --heroink:#F7E9CD;
+    --sil:#12141F; --wave:#2E6B5E;
   }
 }
 :root[data-theme="light"]{
-  --bg:#F3F7F6; --panel:#FFFFFF; --panel2:#EAF1EF; --ink:#14323B; --muted:#5E7A80;
-  --line:#D9E5E2; --sea:#0E7C86; --sea-deep:#0A5C64; --sea-soft:#DDEDEE;
-  --sun:#E8A13D; --sun-soft:#FBEED8; --sun-ink:#8A5A10;
-  --coral:#D95F43; --good:#2E9E5B; --good-soft:#DFF2E6; --bad:#D64545; --bad-soft:#F9E3E3;
-  --pap:#0A5C64; --shadow:0 1px 2px rgba(20,50,59,.06),0 4px 14px rgba(20,50,59,.07);
-  --hero1:#0F7E88; --hero2:#09515B; --heroink:#F2FAF9;
+  --bg:#F4E7CF; --panel:#FBF2DE; --panel2:#EBDBBB; --ink:#3B2A1D; --muted:#8A7156;
+  --line:#D8C098; --sea:#D95436; --sea-deep:#A23A21; --sea-soft:#F6DDC8;
+  --sun:#E8940A; --sun-soft:#F7E3B4; --sun-ink:#8F5B06;
+  --coral:#C2452C; --good:#2F7D46; --good-soft:#E2EBCF; --bad:#C23B2E; --bad-soft:#F3D6CB;
+  --pap:#155E52; --shadow:3px 3px 0 rgba(59,42,29,.16);
+  --sky1:#FBC968; --sky2:#F1913C; --sky3:#D95436; --sky4:#7E3355; --heroink:#FFF3DC;
+  --sil:#38203A; --wave:#155E52;
 }
 :root[data-theme="dark"]{
-  --bg:#0C1E24; --panel:#122B33; --panel2:#0F252C; --ink:#E6F1EF; --muted:#8FACAE;
-  --line:#1F3F48; --sea:#3FB8C4; --sea-deep:#5ECBD6; --sea-soft:#123A42;
-  --sun:#F2B95C; --sun-soft:#3A2E14; --sun-ink:#F2C87E;
-  --coral:#E87A5F; --good:#4CBF7C; --good-soft:#173627; --bad:#E06A6A; --bad-soft:#3B1D1D;
-  --pap:#7FD4DC; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
-  --hero1:#134049; --hero2:#0A2930; --heroink:#DFF1EF;
+  --bg:#1B2130; --panel:#252C40; --panel2:#161C2B; --ink:#F0E3C6; --muted:#AC9C7F;
+  --line:#3A4158; --sea:#E7714F; --sea-deep:#F0906C; --sea-soft:#41302F;
+  --sun:#F0A83B; --sun-soft:#3C3220; --sun-ink:#F5C87A;
+  --coral:#E0604A; --good:#5CAD74; --good-soft:#22301F; --bad:#DF6B57; --bad-soft:#3A211C;
+  --pap:#6BC7B2; --shadow:3px 3px 0 rgba(0,0,0,.4);
+  --sky1:#584070; --sky2:#8E4260; --sky3:#C25543; --sky4:#1E2436; --heroink:#F7E9CD;
+  --sil:#12141F; --wave:#2E6B5E;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -69,18 +73,27 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
   display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:16px}
 .iconbtn[aria-pressed="false"]{opacity:.45}
 
-/* hero */
-.hero{position:relative;background:linear-gradient(165deg,var(--hero1),var(--hero2));border-radius:16px;
-  padding:20px 18px 0;color:var(--heroink);box-shadow:var(--shadow);overflow:hidden;margin-top:6px}
+/* hero — zonsondergang-poster */
+.hero{position:relative;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 38%,var(--sky3) 72%,var(--sky4) 100%);
+  border:2px solid var(--ink);border-radius:10px;padding:22px 18px 0;color:var(--heroink);
+  box-shadow:var(--shadow);overflow:hidden;margin-top:6px}
+.hero::after{content:"";position:absolute;inset:7px;border:1.5px solid rgba(255,246,227,.4);border-radius:5px;pointer-events:none}
+.postersun{position:absolute;top:20px;right:26px;width:70px;height:70px;pointer-events:none}
+.postersun::before{content:"";position:absolute;inset:-24px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,242,200,.32) 0 7deg,transparent 7deg 20deg)}
+.postersun::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#FFF0BC,#F7C548)}
 .hero .pap{color:var(--heroink)}
-.hgreet .g{font-size:32px;font-style:italic}
-.hsub{font-size:13.5px;opacity:.85;display:block;margin-top:2px}
-.wod{margin:14px 0 4px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16)}
-.wod .eyebrow{color:var(--heroink);opacity:.65}
+.hgreet{position:relative;z-index:1}
+.hgreet .g{font-size:36px;font-style:italic;font-weight:700}
+.hsub{font-size:13.5px;opacity:.9;display:block;margin-top:2px;max-width:70%}
+.wod{position:relative;z-index:1;margin:14px 0 2px;padding-top:12px;border-top:1.5px solid rgba(255,246,227,.35)}
+.wod .eyebrow{color:var(--heroink);opacity:.7}
 .wod button{text-align:left;font-size:15.5px;color:var(--heroink);display:block;margin-top:3px}
 .wod .pap{font-size:19px}
-.skyline{display:flex;align-items:flex-end;gap:3px;height:32px;margin-top:12px}
-.skyline i{display:block;flex:1;border-radius:2px 2px 0 0;opacity:.92}
+.skyline{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:12px}
+.skyline i{display:block;flex:1;border-radius:2px 2px 0 0;background:var(--sil) !important;opacity:.9}
+.waves{display:block;width:calc(100% + 36px);margin:-6px -18px 0;height:16px}
 
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
@@ -93,10 +106,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 /* cards / panels */
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
 .cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
-  background:var(--sea);color:#fff;font-weight:700;font-size:16px;border-radius:12px;padding:14px;margin:6px 0}
-:root[data-theme="dark"] .cta{color:#07242a}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cta{color:#07242a} }
-.cta.quiet{background:var(--panel);color:var(--sea-deep);border:1px solid var(--line)}
+  background:var(--sea);color:#FFF6E3;font-weight:800;font-size:13.5px;border-radius:8px;padding:15px;margin:6px 0;
+  text-transform:uppercase;letter-spacing:.09em;box-shadow:var(--shadow)}
+.cta.quiet{background:var(--panel);color:var(--ink);border:1.5px solid var(--ink)}
 .cta:disabled{opacity:.5;cursor:default}
 
 /* levels */
@@ -223,6 +235,28 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1p
 @media (prefers-reduced-motion: reduce){
   *{transition:none !important;animation:none !important}
 }
+
+/* ===== retro-poster afwerking ===== */
+h1,h2,.deck .dt b,.brand h1{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.deck .dt b{font-size:16px}
+.panel,.deck,.qcard,.opt,.stat,.grade,.brow,.dlg,.iconbtn{border-radius:8px;border-width:1.5px}
+.qcard{border-radius:10px;border-width:2px;border-color:var(--ink)}
+.eyebrow{letter-spacing:.18em}
+.bar,.bar i{border-radius:1px}
+.badge,.herechip{border-radius:4px}
+.typebox input,.typebox button{border-radius:8px}
+.typebox button{text-transform:uppercase;letter-spacing:.06em;font-size:13px;color:#FFF6E3}
+.speak{border:1.5px solid var(--sea-deep)}
+.grades .grade{text-transform:uppercase;letter-spacing:.05em;font-size:13px}
+.grade small{text-transform:none;letter-spacing:0}
+.cta:active{transform:translate(2px,2px);box-shadow:0 0 0 transparent}
+.stat b{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.done .big{font-size:44px}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .lvln,:root:not([data-theme="light"]) .lvlpap{color:color-mix(in srgb,var(--lc) 55%,#F0E3C6)}
+}
+:root[data-theme="dark"] .lvln,:root[data-theme="dark"] .lvlpap{color:color-mix(in srgb,var(--lc) 55%,#F0E3C6)}
+:root[data-theme="light"] .lvln,:root[data-theme="light"] .lvlpap{color:var(--lc)}
 </style>
 
 <div id="shell">
@@ -842,13 +876,13 @@ const DECKS=[
 
 /* Course levels — group decks into a visible learning path */
 const LEVELS=[
-{n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8A13D",
+{n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8940A",
  ids:["survival","greet","dialog","particles","questions","numbers"]},
-{n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#2296A3",
+{n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#177E70",
  ids:["verbs1","glue","food","time","places","verbs2"]},
-{n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95F43",
+{n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95436",
  ids:["people","adj","beach","money","body","house","nature","emergency","weather2"]},
-{n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#4A7FB5",
+{n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#2C5B7B",
  ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","love","city"]}
 ];
 
@@ -1089,11 +1123,15 @@ function home(){
              [16,"#D95F43"],[24,"#BFE3E0"],[20,"#E8A13D"],[14,"#F2E9D8"],[23,"#D95F43"],[18,"#BFE3E0"]];
   $("#view").innerHTML=`
   <div class="hero">
+    <div class="postersun" aria-hidden="true"></div>
     <div class="hgreet"><span class="pap g">${greet}</span><span class="hsub">${sub} — klaar voor je dagelijkse dosis dushi?</span></div>
     <div class="wod"><span class="eyebrow">Palabra di dia · woord van de dag</span>
       <button data-say="${esc(wod.p)}"><b class="pap">${esc(wod.p)}</b> — ${esc(wod.e)} &nbsp;🔊</button></div>
     <div class="skyline" aria-hidden="true">${sky.map(([ht,c],i)=>
       `<i style="height:${ht}px;background:${c};${i%3===0?"clip-path:polygon(0 100%,0 28%,50% 0,100% 28%,100% 100%);":""}"></i>`).join("")}</div>
+    <svg class="waves" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 9 Q6 3 12 9 T24 9 T36 9 T48 9 T60 9 T72 9 T84 9 T96 9 T108 9 T120 9 T132 9 T144 9 T156 9 T168 9 T180 9 T192 9 T204 9 T216 9 T228 9 T240 9 T252 9 T264 9 T276 9 T288 9 T300 9 T312 9 T324 9 T336 9 T348 9 T360 9 T372 9 T384 9 T396 9 T400 9 V16 H0 Z" fill="var(--wave)"/>
+    </svg>
   </div>
   <div class="stats">
     <div class="stat sun"><b>${streakLive()}</b><span>Dagen op rij</span></div>
