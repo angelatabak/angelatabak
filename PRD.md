@@ -49,7 +49,8 @@
 - **Rollenspel:** speel rol A of B in elke dialoog; de app spreekt de tegenpartij, jij produceert jouw regels vanuit een Nederlandse cue.
 - **Papia ku Claude:** AI-gesprekspartner met 5 scenario's. Zonder configuratie via voorbereide claude.ai-links; met eigen API-sleutel als chat in de app (Claude Opus 4.8, sleutel alleen in localStorage, ± 1 cent per antwoord).
 - **Streaks, dagstatistieken en quiz** (10 gemengde vragen uit gestarte kaarten).
-- **Voortgang overzetten:** exporteer je voortgang als kopieerbare code (`SINA1.…`) en plak hem op een ander apparaat (telefoon ↔ iPad ↔ laptop); dient tegelijk als back-up.
+- **Automatische synchronisatie (opt-in):** voortgang synchroniseert tussen apparaten via een eigen gratis Supabase-database (installatie in ± 10 min via `SETUP-SYNC.md`). Push binnen ± 2 s na elke wijziging; pull bij openen, bij terugkeren naar de app en elke minuut; koppelen van extra apparaten via één synccode (`SYNC1.…`); conflicten worden per kaart samengevoegd (sterkste versie wint).
+- **Handmatige back-up:** voortgang als kopieerbare code (`SINA1.…`), onafhankelijk van de synchronisatie.
 
 ### 4.3 Audio
 - **Reservestem:** Spaanse browserstem (speechSynthesis) als benadering.
@@ -62,13 +63,13 @@
 
 ### 4.5 Techniek
 - **Eén zelfstandig HTML-bestand** (`index.html`): vanilla JS, geen dependencies, geen build, werkt offline en vanaf `file://`.
-- **Opslag:** localStorage (`sina_pap_v1`): SRS-status per kaart, streak, thema, audio-voorkeur, API-sleutel. Geen backend, geen account, geen dataverzameling.
+- **Opslag:** localStorage (`sina_pap_v1`): SRS-status per kaart, streak, thema, audio-voorkeur, API-sleutel. Geen verplichte backend of account; optionele synchronisatie via een door de gebruiker zelf beheerde Supabase-tabel (`sina_progress`, REST/PostgREST, beveiligd met een 128-bit synccode).
 - **Optionele bestanden:** `audio-pap.js` (echte stem; plaatshouder aanwezig), `generate_audio.ipynb` (generator).
 - **Externe koppelingen:** Claude API (alleen met eigen sleutel), claude.ai-prefill-links, bronlinks in het Mas-tabblad.
 - **Kwaliteitsborging:** Playwright end-to-end smoke-tests (alle oefenvormen, rollenspel, AI-chat met gestubde API, persistentie, beide thema's) — scripts in de ontwikkelsessie, zie §7 verbeterpunt.
 
 ## 5. Non-goals (v1.0)
-- Geen accounts, cloud-sync of leaderboards — voortgang is per apparaat.
+- Geen accounts of wachtwoorden — synchronisatie is opt-in via een eigen Supabase-database met geheime synccode; zonder configuratie blijft alles per apparaat. Geen leaderboards of sociale functies.
 - Geen gamification-zwaargewicht (harten, edelstenen, competitie).
 - Geen Arubaanse spellingvariant als aparte modus (wel uitgelegd in de grammatica).
 - Geen eigen spraakherkenning voor Papiamentu (bestaat nog niet; benadering via Spaanse engine + zelfbeoordeling).
@@ -103,7 +104,8 @@ Productie = **GitHub Pages** op de standaardbranch. Stappen:
 | Risico | Impact | Mitigatie |
 |---|---|---|
 | Taalfouten in de inhoud (AI-samengesteld, geen native review) | Verkeerd aanleren | Review door moedertaalspreker/docent (bijv. via SPLIKA); fouten zijn per kaart te corrigeren |
-| localStorage gewist (browserdata opschonen) | Voortgang kwijt | Voortgangscode (export) dient als back-up; regelmatig kopiëren aanraden |
+| localStorage gewist (browserdata opschonen) | Voortgang kwijt | Synchronisatie herstelt automatisch vanaf de database; anders back-upcode |
+| Gelijktijdig oefenen op twee apparaten | Klein risico dat een net-geleerde kaart terugvalt (last-write-wins-race) | Per-kaart-merge bij conflicten; zelfherstellend via SRS |
 | Browser-TTS/SpeechRecognition-verschillen | Audio/microfoon werkt niet overal | Alles degradeert naar stille of zelfbeoordeel-modus; echte-stem-bestand omzeilt TTS volledig |
 | API-sleutel op gedeeld apparaat | Kostenmisbruik | Sleutel is opt-in, lokaal, wisbaar; documentatie waarschuwt; optie: bestedingslimiet in Anthropic Console |
 | Claude API-wijzigingen | Chat breekt | Foutafhandeling toont duidelijke melding; claude.ai-links als vangnet |

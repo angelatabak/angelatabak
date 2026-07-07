@@ -1045,7 +1045,7 @@ const LS="sina_pap_v1";
 let S=load();
 function load(){try{const s=JSON.parse(localStorage.getItem(LS));if(s&&s.srs)return s;}catch(e){}
   return {srs:{},streak:{last:"",count:0},xp:0,tts:true,theme:""};}
-function save(){localStorage.setItem(LS,JSON.stringify(S));}
+function save(){localStorage.setItem(LS,JSON.stringify(S));syncQueue();}
 function today(){return new Date().toISOString().slice(0,10);}
 function bumpStreak(){const t=today();if(S.streak.last===t)return;
   const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
@@ -1101,6 +1101,61 @@ function speak(txt){if(!S.tts)return;
   sc.onload=()=>{if(window.PAP_AUDIO&&Object.keys(window.PAP_AUDIO).length){
     const b=document.getElementById("ttsbtn");if(b)b.title="Audio: echte Papiamentu-stem ✓";}};
   sc.onerror=()=>{};document.head.appendChild(sc);})();
+
+/* ================= SYNC (Supabase, zie SETUP-SYNC.md) ================= */
+let SYNC_T=null,SYNC_BUSY=false;
+function syncCfg(){const c=S.sync;return (c&&c.u&&c.k&&c.i)?c:null;}
+function syncHdr(c){return {"apikey":c.k,"Authorization":"Bearer "+c.k,"Content-Type":"application/json"};}
+function syncStat(txt,bad){const el=$("#syncstat");if(el){el.textContent=txt;el.style.color=bad?"var(--bad)":"var(--muted)";}}
+function syncQueue(){if(!syncCfg())return;S.dirty=true;clearTimeout(SYNC_T);SYNC_T=setTimeout(syncPush,1500);}
+async function syncPush(){
+  const c=syncCfg();if(!c||SYNC_BUSY)return;SYNC_BUSY=true;
+  const ts=Date.now();
+  try{
+    const r=await fetch(c.u+"/rest/v1/sina_progress?on_conflict=id",{method:"POST",
+      headers:{...syncHdr(c),"Prefer":"resolution=merge-duplicates"},
+      body:JSON.stringify([{id:c.i,data:{srs:S.srs,streak:S.streak,xp:S.xp,updatedAt:ts}}])});
+    if(!r.ok)throw 0;
+    S.dirty=false;S.syncedAt=ts;localStorage.setItem(LS,JSON.stringify(S));
+    syncStat("Gesynchroniseerd · "+new Date(ts).toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}));
+  }catch(e){syncStat("Synchroniseren lukte niet — controleer je verbinding of instellingen.",true);}
+  SYNC_BUSY=false;
+}
+async function syncPull(){
+  const c=syncCfg();if(!c||SYNC_BUSY)return;SYNC_BUSY=true;
+  try{
+    const r=await fetch(c.u+"/rest/v1/sina_progress?id=eq."+encodeURIComponent(c.i)+"&select=data",{headers:syncHdr(c)});
+    if(!r.ok)throw 0;
+    const rows=await r.json();
+    const d=rows[0]&&rows[0].data;
+    if(d&&d.srs&&(d.updatedAt||0)>(S.syncedAt||0)){
+      if(Q||CONV||CHAT){SYNC_BUSY=false;return;} /* niet midden in een oefensessie overschrijven */
+      if(S.dirty){ /* beide kanten gewijzigd: per kaart de sterkste versie houden */
+        for(const id in d.srs){const a=S.srs[id],b=d.srs[id];
+          if(!a||b.reps>a.reps||(b.reps===a.reps&&b.due>a.due))S.srs[id]=b;}
+        if((d.streak.last||"")>(S.streak.last||""))S.streak=d.streak;
+        S.xp=Math.max(S.xp,d.xp||0);
+        S.syncedAt=d.updatedAt;localStorage.setItem(LS,JSON.stringify(S));
+        SYNC_BUSY=false;syncPush();render();return;
+      }
+      S.srs=d.srs;S.streak=d.streak||S.streak;S.xp=d.xp||S.xp;S.syncedAt=d.updatedAt;
+      localStorage.setItem(LS,JSON.stringify(S));render();
+      syncStat("Gesynchroniseerd · "+new Date().toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}));
+    }
+  }catch(e){syncStat("Synchroniseren lukte niet — controleer je verbinding of instellingen.",true);}
+  SYNC_BUSY=false;
+}
+function syncCode(){const c=syncCfg();return c?"SYNC1."+btoa(JSON.stringify(c)):"";}
+function syncEnable(u,k){
+  const bytes=new Uint8Array(16);crypto.getRandomValues(bytes);
+  S.sync={u:u.replace(/\/+$/,""),k,i:[...bytes].map(b=>b.toString(16).padStart(2,"0")).join("")};
+  S.dirty=true;save();syncPush();
+}
+function syncJoin(code){
+  const c=JSON.parse(atob(code.slice(6)));
+  if(!c||!c.u||!c.k||!c.i)throw 0;
+  S.sync=c;S.dirty=false;S.syncedAt=0;save();syncPull();
+}
 
 /* ================= HELPERS ================= */
 const $=s=>document.querySelector(s);
@@ -1187,12 +1242,24 @@ function home(){
           <span class="n">${s}/${n}</span></button>`;}).join("")}
       </div></section>`;}).join("");})()}
   <details class="panel" style="margin-top:16px">
-    <summary class="subtle" style="cursor:pointer">Voortgang overzetten naar een ander apparaat (bijv. je iPad)</summary>
-    <p class="subtle" style="margin:10px 0 6px"><b>Stap 1 — op dit apparaat:</b> kopieer je voortgangscode en stuur hem naar jezelf (mail, WhatsApp, AirDrop…).</p>
+    <summary class="subtle" style="cursor:pointer">Synchronisatie tussen apparaten &amp; back-up</summary>
+    ${syncCfg()?
+    `<p class="subtle" style="margin:10px 0 6px"><b>Synchronisatie staat aan.</b> Je voortgang wordt automatisch gedeeld tussen al je gekoppelde apparaten.</p>
+    <p class="subtle" id="syncstat" style="margin:0 0 8px">${S.syncedAt?"Gesynchroniseerd · "+new Date(S.syncedAt).toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}):"Nog niet gesynchroniseerd"}</p>
+    <button class="cta quiet" id="synccopy" style="margin:0 0 6px">Kopieer synccode voor een nieuw apparaat</button>
+    <textarea id="syncout" readonly hidden style="width:100%;height:60px;font-size:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:8px"></textarea>
+    <p class="subtle" style="margin:8px 0 0"><button id="syncoff" style="text-decoration:underline;color:var(--bad)">Synchronisatie uitzetten op dit apparaat</button></p>`
+    :
+    `<p class="subtle" style="margin:10px 0 6px"><b>Automatisch synchroniseren</b> (telefoon ↔ iPad ↔ laptop) werkt via een gratis eigen database bij Supabase. De installatie duurt ± 10 minuten en staat stap voor stap in <b>SETUP-SYNC.md</b> in de repository. Daarna plak je hier twee gegevens uit je Supabase-dashboard:</p>
+    <div class="typebox" style="margin-top:0"><input id="syncurl" autocomplete="off" spellcheck="false" placeholder="Project-URL (https://…supabase.co)"></div>
+    <div class="typebox"><input id="synckey" type="password" autocomplete="off" placeholder="Anon public key (eyJ…)"><button id="syncon">Zet aan</button></div>
+    <p class="subtle" id="syncstat" style="margin:6px 0 0"></p>
+    <p class="subtle" style="margin:12px 0 6px"><b>Al ingesteld op je andere apparaat?</b> Plak dan hier je synccode:</p>
+    <div class="typebox" style="margin-top:0"><input id="syncjoin" autocomplete="off" spellcheck="false" placeholder="SYNC1.…"><button id="syncjoinbtn">Koppel</button></div>`}
+    <p class="subtle" style="margin:14px 0 6px"><b>Handmatige back-up</b> (werkt altijd, ook zonder synchronisatie):</p>
     <button class="cta quiet" id="expbtn" style="margin:0 0 6px">Kopieer mijn voortgangscode</button>
     <textarea id="expout" readonly hidden style="width:100%;height:72px;font-size:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:8px"></textarea>
-    <p class="subtle" style="margin:12px 0 6px"><b>Stap 2 — op het andere apparaat:</b> open de app daar en plak de code hieronder.</p>
-    <div class="typebox" style="margin-top:0"><input id="impin" autocomplete="off" spellcheck="false" placeholder="SINA1.…"><button id="impbtn">Laad</button></div>
+    <div class="typebox"><input id="impin" autocomplete="off" spellcheck="false" placeholder="SINA1.…"><button id="impbtn">Laad</button></div>
     <p class="subtle" id="impmsg" style="margin:6px 0 0"></p>
   </details>
   <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
@@ -1216,6 +1283,24 @@ function home(){
       S.srs=p.srs;S.streak=p.streak||{last:"",count:0};S.xp=p.xp||0;save();render();
       alert("Gelukt! Je voortgang staat nu ook op dit apparaat.");
     }catch(e){$("#impmsg").textContent="Dat lijkt geen geldige voortgangscode. Kopieer de héle code (hij begint met SINA1.) en probeer het opnieuw.";}
+  };
+  const so=$("#syncon");if(so)so.onclick=()=>{
+    const u=$("#syncurl").value.trim(),k=$("#synckey").value.trim();
+    if(!/^https:\/\/.+/.test(u)||!k){$("#syncstat").textContent="Vul de project-URL (begint met https://) en de anon key in.";return;}
+    syncEnable(u,k);home();
+  };
+  const sj=$("#syncjoinbtn");if(sj)sj.onclick=()=>{
+    const v=$("#syncjoin").value.trim();
+    try{if(!v.startsWith("SYNC1."))throw 0;syncJoin(v);home();}
+    catch(e){$("#syncstat").textContent="Dat lijkt geen geldige synccode (hij begint met SYNC1.).";}
+  };
+  const sc=$("#synccopy");if(sc)sc.onclick=async()=>{
+    const code=syncCode();const out=$("#syncout");out.hidden=false;out.value=code;
+    try{await navigator.clipboard.writeText(code);sc.textContent="Gekopieerd — plak hem op je nieuwe apparaat";}
+    catch(e){out.focus();out.select();sc.textContent="Kopieer de code hieronder zelf";}
+  };
+  const sf=$("#syncoff");if(sf)sf.onclick=()=>{
+    if(confirm("Synchronisatie uitzetten op dit apparaat? Je voortgang blijft lokaal bewaard.")){delete S.sync;S.dirty=false;save();home();}
   };
 }
 
@@ -1617,6 +1702,10 @@ $("#themebtn").onclick=()=>{
   document.documentElement.dataset.theme=next;S.theme=next;save();};
 if(S.theme)document.documentElement.dataset.theme=S.theme;
 facades();render();
+/* sync: bij opstarten, bij terugkeren naar de app, en elke minuut */
+if(syncCfg()){syncPull();}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)syncPull();});
+setInterval(syncPull,60000);
 </script>
 </body>
 </html>
