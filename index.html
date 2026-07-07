@@ -1186,11 +1186,37 @@ function home(){
           <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
           <span class="n">${s}/${n}</span></button>`;}).join("")}
       </div></section>`;}).join("");})()}
-  <p class="subtle" style="margin-top:18px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
+  <details class="panel" style="margin-top:16px">
+    <summary class="subtle" style="cursor:pointer">Voortgang overzetten naar een ander apparaat (bijv. je iPad)</summary>
+    <p class="subtle" style="margin:10px 0 6px"><b>Stap 1 — op dit apparaat:</b> kopieer je voortgangscode en stuur hem naar jezelf (mail, WhatsApp, AirDrop…).</p>
+    <button class="cta quiet" id="expbtn" style="margin:0 0 6px">Kopieer mijn voortgangscode</button>
+    <textarea id="expout" readonly hidden style="width:100%;height:72px;font-size:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:8px"></textarea>
+    <p class="subtle" style="margin:12px 0 6px"><b>Stap 2 — op het andere apparaat:</b> open de app daar en plak de code hieronder.</p>
+    <div class="typebox" style="margin-top:0"><input id="impin" autocomplete="off" spellcheck="false" placeholder="SINA1.…"><button id="impbtn">Laad</button></div>
+    <p class="subtle" id="impmsg" style="margin:6px 0 0"></p>
+  </details>
+  <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
   wireSpeak();
   if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
   $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
   $("#reset").onclick=()=>{if(confirm("Alle voortgang op dit apparaat wissen?")){localStorage.removeItem(LS);S=load();render();}};
+  $("#expbtn").onclick=async()=>{
+    const code="SINA1."+btoa(unescape(encodeURIComponent(JSON.stringify({srs:S.srs,streak:S.streak,xp:S.xp}))));
+    const out=$("#expout");out.hidden=false;out.value=code;
+    try{await navigator.clipboard.writeText(code);$("#expbtn").textContent="Gekopieerd — plak hem op je andere apparaat";}
+    catch(e){out.focus();out.select();$("#expbtn").textContent="Kopieer de code hieronder zelf";}
+  };
+  $("#impbtn").onclick=()=>{
+    const v=$("#impin").value.trim();
+    try{
+      if(!v.startsWith("SINA1."))throw 0;
+      const p=JSON.parse(decodeURIComponent(escape(atob(v.slice(6)))));
+      if(!p||typeof p.srs!=="object"||Array.isArray(p.srs))throw 0;
+      if(startedCount()>0&&!confirm("Dit apparaat heeft al voortgang ("+startedCount()+" kaarten). Vervangen door de geplakte voortgang?"))return;
+      S.srs=p.srs;S.streak=p.streak||{last:"",count:0};S.xp=p.xp||0;save();render();
+      alert("Gelukt! Je voortgang staat nu ook op dit apparaat.");
+    }catch(e){$("#impmsg").textContent="Dat lijkt geen geldige voortgangscode. Kopieer de héle code (hij begint met SINA1.) en probeer het opnieuw.";}
+  };
 }
 
 /* ---- deck ---- */

@@ -49,6 +49,7 @@
 - **Rollenspel:** speel rol A of B in elke dialoog; de app spreekt de tegenpartij, jij produceert jouw regels vanuit een Nederlandse cue.
 - **Papia ku Claude:** AI-gesprekspartner met 5 scenario's. Zonder configuratie via voorbereide claude.ai-links; met eigen API-sleutel als chat in de app (Claude Opus 4.8, sleutel alleen in localStorage, ± 1 cent per antwoord).
 - **Streaks, dagstatistieken en quiz** (10 gemengde vragen uit gestarte kaarten).
+- **Voortgang overzetten:** exporteer je voortgang als kopieerbare code (`SINA1.…`) en plak hem op een ander apparaat (telefoon ↔ iPad ↔ laptop); dient tegelijk als back-up.
 
 ### 4.3 Audio
 - **Reservestem:** Spaanse browserstem (speechSynthesis) als benadering.
@@ -92,7 +93,6 @@ Productie = **GitHub Pages** op de standaardbranch. Stappen:
 | Hoog | Colab-audiorun uitvoeren (`audio-pap.js`) | Grootste kwaliteitssprong: echte Papiamentu-uitspraak |
 | Hoog | PWA-manifest + service worker | Installeerbaar met eigen icoon; expliciet offline-cachen |
 | Middel | Wave 5 woordenschat (richting ~1000 woorden) | Van A2 naar B1-conversatie |
-| Middel | Export/import van voortgang (JSON) | Wisselen van apparaat zonder verlies |
 | Middel | Playwright-tests + CI in de repo (GitHub Actions) | Regressiebescherming bij toekomstige wijzigingen |
 | Laag | Embedded display-font (bijv. Fraunces, als bestand) | Laatste stap in de posteridentiteit |
 | Laag | Arubaanse spellingtoggle | Bredere doelgroep |
@@ -103,7 +103,7 @@ Productie = **GitHub Pages** op de standaardbranch. Stappen:
 | Risico | Impact | Mitigatie |
 |---|---|---|
 | Taalfouten in de inhoud (AI-samengesteld, geen native review) | Verkeerd aanleren | Review door moedertaalspreker/docent (bijv. via SPLIKA); fouten zijn per kaart te corrigeren |
-| localStorage gewist (browserdata opschonen) | Voortgang kwijt | Export/import op roadmap; melding in app overwegen |
+| localStorage gewist (browserdata opschonen) | Voortgang kwijt | Voortgangscode (export) dient als back-up; regelmatig kopiëren aanraden |
 | Browser-TTS/SpeechRecognition-verschillen | Audio/microfoon werkt niet overal | Alles degradeert naar stille of zelfbeoordeel-modus; echte-stem-bestand omzeilt TTS volledig |
 | API-sleutel op gedeeld apparaat | Kostenmisbruik | Sleutel is opt-in, lokaal, wisbaar; documentatie waarschuwt; optie: bestedingslimiet in Anthropic Console |
 | Claude API-wijzigingen | Chat breekt | Foutafhandeling toont duidelijke melding; claude.ai-links als vangnet |

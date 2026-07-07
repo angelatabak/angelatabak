@@ -16,6 +16,8 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 
 Gebruikt de spelling van Curaçao/Bonaire (*Papiamentu*); het grammaticadeel legt de Arubaanse (*Papiamento*) verschillen uit. Licht & donker thema, geschikt voor je telefoon.
 
+**Meerdere apparaten?** Onderaan het Home-scherm staat "Voortgang overzetten": kopieer je voortgangscode op het ene apparaat en plak hem op het andere (bijv. telefoon → iPad). Dezelfde code is ook je back-up.
+
 ## Echte Papiamentu-stem toevoegen (eenmalig, ±20 min, geen technische kennis nodig)
 
 De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **echte Papiamentu AI-stem** (Meta's gratis `mms-tts-pap`-model):
