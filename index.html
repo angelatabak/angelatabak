@@ -1,0 +1,1711 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Siña Papiamentu</title>
+</head>
+<body>
+<style>
+:root{
+  --bg:#F4E7CF; --panel:#FBF2DE; --panel2:#EBDBBB; --ink:#3B2A1D; --muted:#8A7156;
+  --line:#D8C098; --sea:#D95436; --sea-deep:#A23A21; --sea-soft:#F6DDC8;
+  --sun:#E8940A; --sun-soft:#F7E3B4; --sun-ink:#8F5B06;
+  --coral:#C2452C; --good:#2F7D46; --good-soft:#E2EBCF; --bad:#C23B2E; --bad-soft:#F3D6CB;
+  --pap:#155E52; --shadow:3px 3px 0 rgba(59,42,29,.16);
+  --sky1:#FBC968; --sky2:#F1913C; --sky3:#D95436; --sky4:#7E3355; --heroink:#FFF3DC;
+  --sil:#38203A; --wave:#155E52;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1B2130; --panel:#252C40; --panel2:#161C2B; --ink:#F0E3C6; --muted:#AC9C7F;
+    --line:#3A4158; --sea:#E7714F; --sea-deep:#F0906C; --sea-soft:#41302F;
+    --sun:#F0A83B; --sun-soft:#3C3220; --sun-ink:#F5C87A;
+    --coral:#E0604A; --good:#5CAD74; --good-soft:#22301F; --bad:#DF6B57; --bad-soft:#3A211C;
+    --pap:#6BC7B2; --shadow:3px 3px 0 rgba(0,0,0,.4);
+    --sky1:#584070; --sky2:#8E4260; --sky3:#C25543; --sky4:#1E2436; --heroink:#F7E9CD;
+    --sil:#12141F; --wave:#2E6B5E;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F4E7CF; --panel:#FBF2DE; --panel2:#EBDBBB; --ink:#3B2A1D; --muted:#8A7156;
+  --line:#D8C098; --sea:#D95436; --sea-deep:#A23A21; --sea-soft:#F6DDC8;
+  --sun:#E8940A; --sun-soft:#F7E3B4; --sun-ink:#8F5B06;
+  --coral:#C2452C; --good:#2F7D46; --good-soft:#E2EBCF; --bad:#C23B2E; --bad-soft:#F3D6CB;
+  --pap:#155E52; --shadow:3px 3px 0 rgba(59,42,29,.16);
+  --sky1:#FBC968; --sky2:#F1913C; --sky3:#D95436; --sky4:#7E3355; --heroink:#FFF3DC;
+  --sil:#38203A; --wave:#155E52;
+}
+:root[data-theme="dark"]{
+  --bg:#1B2130; --panel:#252C40; --panel2:#161C2B; --ink:#F0E3C6; --muted:#AC9C7F;
+  --line:#3A4158; --sea:#E7714F; --sea-deep:#F0906C; --sea-soft:#41302F;
+  --sun:#F0A83B; --sun-soft:#3C3220; --sun-ink:#F5C87A;
+  --coral:#E0604A; --good:#5CAD74; --good-soft:#22301F; --bad:#DF6B57; --bad-soft:#3A211C;
+  --pap:#6BC7B2; --shadow:3px 3px 0 rgba(0,0,0,.4);
+  --sky1:#584070; --sky2:#8E4260; --sky3:#C25543; --sky4:#1E2436; --heroink:#F7E9CD;
+  --sil:#12141F; --wave:#2E6B5E;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Avenir Next","Segoe UI",Seravek,system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.pap{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; color:var(--pap)}
+#shell{max-width:720px;margin:0 auto;padding:0 16px 96px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:6px}
+input{font:inherit;color:var(--ink)}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 6px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h1{font-size:20px;font-weight:700}
+.brand h1 .pap{font-weight:400;font-style:italic}
+.facades{display:flex;align-items:flex-end;gap:2px;height:26px}
+.facades span{width:9px;border-radius:1px 1px 0 0;display:block}
+.facades span::before{content:""}
+.hbtns{display:flex;gap:6px}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--panel);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:16px}
+.iconbtn[aria-pressed="false"]{opacity:.45}
+
+/* hero — zonsondergang-poster */
+.hero{position:relative;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 38%,var(--sky3) 72%,var(--sky4) 100%);
+  border:2px solid var(--ink);border-radius:10px;padding:22px 18px 0;color:var(--heroink);
+  box-shadow:var(--shadow);overflow:hidden;margin-top:6px}
+.hero::after{content:"";position:absolute;inset:7px;border:1.5px solid rgba(255,246,227,.4);border-radius:5px;pointer-events:none}
+.postersun{position:absolute;top:20px;right:26px;width:70px;height:70px;pointer-events:none}
+.postersun::before{content:"";position:absolute;inset:-24px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,242,200,.32) 0 7deg,transparent 7deg 20deg)}
+.postersun::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#FFF0BC,#F7C548)}
+.hero .pap{color:var(--heroink)}
+.hgreet{position:relative;z-index:1}
+.hgreet .g{font-size:36px;font-style:italic;font-weight:700}
+.hsub{font-size:13.5px;opacity:.9;display:block;margin-top:2px;max-width:70%}
+.wod{position:relative;z-index:1;margin:14px 0 2px;padding-top:12px;border-top:1.5px solid rgba(255,246,227,.35)}
+.wod .eyebrow{color:var(--heroink);opacity:.7}
+.wod button{text-align:left;font-size:15.5px;color:var(--heroink);display:block;margin-top:3px}
+.wod .pap{font-size:19px}
+.skyline{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:12px}
+.skyline i{display:block;flex:1;border-radius:2px 2px 0 0;background:var(--sil) !important;opacity:.9}
+.waves{display:block;width:calc(100% + 36px);margin:-6px -18px 0;height:16px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat.sun b{color:var(--sun-ink)}
+.stat.due b{color:var(--sea-deep)}
+
+/* cards / panels */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  background:var(--sea);color:#FFF6E3;font-weight:800;font-size:13.5px;border-radius:8px;padding:15px;margin:6px 0;
+  text-transform:uppercase;letter-spacing:.09em;box-shadow:var(--shadow)}
+.cta.quiet{background:var(--panel);color:var(--ink);border:1.5px solid var(--ink)}
+.cta:disabled{opacity:.5;cursor:default}
+
+/* levels */
+.lvlsec{margin-top:22px}
+.lvlhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:6px}
+.lvlt small{display:block;color:var(--muted);font-size:12.5px}
+.lvln{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lc)}
+.lvlpap{font-size:19px;font-style:italic;font-weight:400;letter-spacing:0;text-transform:none;color:var(--lc)}
+.lvlpct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.herechip{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--lc);color:#fff;border-radius:9px;padding:3px 9px;white-space:nowrap}
+.lvlbar{height:4px;margin:0 0 10px}
+.lvlbar i{background:var(--lc)}
+.lvlsec .deck{border-left:4px solid var(--lc)}
+
+/* deck list */
+.decks{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.deck{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;text-align:left;box-shadow:var(--shadow)}
+.deck .em{width:42px;height:42px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--panel2);border-radius:8px;color:var(--lc,var(--sea-deep));
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-style:italic;font-weight:700;font-size:21px}
+.deck .dt{flex:1;min-width:0}
+.deck .dt b{display:block;font-size:15px}
+.deck .dt small{color:var(--muted);font-size:12.5px}
+.bar{display:block;height:5px;border-radius:3px;background:var(--panel2);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px;background:var(--sea)}
+.bar i.full{background:var(--sun)}
+.deck .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+
+/* session */
+.sess-top{display:flex;align-items:center;gap:12px;padding:16px 0 10px}
+.sess-top .bar{flex:1;margin:0;height:8px;border-radius:4px}
+.xbtn{font-size:20px;color:var(--muted);width:34px;height:34px}
+.qcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 20px;
+  box-shadow:var(--shadow);text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.qcard .big{font-size:34px;line-height:1.15}
+.qcard .mid{font-size:22px}
+.qcard .lit{color:var(--muted);font-size:14px;font-style:italic}
+.qcard .note{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;margin-top:4px}
+.speak{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;
+  background:var(--sea-soft);color:var(--sea-deep);font-size:15px;margin:0 auto}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;text-align:left;
+  font-size:16px;box-shadow:var(--shadow)}
+.opt.right{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.grade{border-radius:12px;padding:12px 6px;font-weight:700;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}
+.grade small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.grade.again{color:var(--bad)} .grade.good{color:var(--sea-deep)} .grade.easy{color:var(--good)}
+.typebox{display:flex;gap:8px;margin-top:14px}
+.typebox input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px}
+.typebox button{background:var(--sea);color:#fff;border-radius:12px;padding:0 18px;font-weight:700}
+.accents{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.accents button{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:4px 10px;font-size:15px}
+.feedback{margin-top:12px;border-radius:12px;padding:12px 14px;font-size:15px}
+.feedback.ok{background:var(--good-soft);color:var(--ink)}
+.feedback.no{background:var(--bad-soft);color:var(--ink)}
+.contbtn{margin-top:10px}
+
+/* done screen */
+.done{ text-align:center;padding:40px 0}
+.done .big{font-size:40px}
+.done h2{margin:10px 0 4px}
+.done p{color:var(--muted)}
+
+/* grammar */
+.gram h2{font-size:19px;margin:22px 0 8px}
+.gram p{margin:8px 0;max-width:62ch}
+.gram .panel{margin:10px 0}
+.gram table{border-collapse:collapse;width:100%;font-size:15px}
+.gram td,.gram th{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+.gram th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gram .ex{color:var(--pap);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.tablewrap{overflow-x:auto}
+
+/* dialogues & resources */
+.dlg{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:10px 0;box-shadow:var(--shadow)}
+.dlg summary{padding:12px 16px;cursor:pointer;font-size:15px;list-style-position:inside}
+.dlg summary small{color:var(--muted)}
+.dlines{display:flex;flex-direction:column;gap:2px;padding:4px 10px 12px}
+.dline{display:flex;gap:10px;text-align:left;padding:7px 8px;border-radius:8px;align-items:baseline;width:100%}
+.dline:hover{background:var(--panel2)}
+.dline .pap{display:block;font-size:16.5px}
+.dline small{color:var(--muted)}
+.who{flex:none;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.who.a{background:var(--sea-soft);color:var(--sea-deep)}
+.who.b{background:var(--sun-soft);color:var(--sun-ink)}
+.res{margin:0;padding-left:20px}
+.res li{margin:8px 0}
+.res a{color:var(--sea-deep);font-weight:600}
+
+/* gespreksoefening (rollenspel) */
+.chat{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.bub{max-width:86%;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow)}
+.bub.me{align-self:flex-end;background:var(--sea-soft);border-color:var(--sea)}
+.bub .pap{display:block;font-size:16.5px;text-align:left}
+.bub small{color:var(--muted)}
+.bub .who2{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.cue .mid{font-size:20px;margin:6px 0}
+.dlgbtns{display:flex;gap:8px;margin:2px 10px 12px}
+.dlgbtns .cta{margin:0;padding:11px;font-size:12px}
+
+/* Papia ku Claude */
+.scens{display:flex;flex-wrap:wrap;gap:8px}
+.scens .cta{width:auto;flex:1 1 40%;margin:0;padding:11px;font-size:12px}
+.bub .txt{white-space:pre-wrap}
+
+/* browse list */
+.browse{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.brow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+.brow .pap{font-size:17px}
+.brow small{color:var(--muted);text-align:right}
+.lvldots{font-size:9px;color:var(--sea);letter-spacing:2px;vertical-align:2px;white-space:nowrap}
+
+/* tabs */
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);z-index:5}
+.tabs{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{padding:10px 4px 12px;text-align:center;color:var(--muted);font-size:11px;font-weight:600}
+.tab svg{width:22px;height:22px;display:block;margin:0 auto 3px;stroke:currentColor;fill:none;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:var(--sea-deep)}
+.badge{display:inline-block;min-width:17px;padding:1px 5px;border-radius:9px;background:var(--coral);color:#fff;
+  font-size:10.5px;font-weight:700;margin-left:3px;font-variant-numeric:tabular-nums}
+.backrow{padding:16px 0 4px}
+.backrow button{color:var(--sea-deep);font-weight:600;font-size:14px}
+.subtle{color:var(--muted);font-size:13.5px}
+.center{text-align:center}
+/* micro-interactions */
+.deck,.opt,.cta,.grade,.iconbtn{transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,filter .12s ease}
+.deck:hover,.opt:not(:disabled):hover{transform:translateY(-1px);border-color:var(--sea)}
+.cta:hover:not(:disabled){filter:brightness(1.06)}
+.cta:active,.deck:active,.opt:active,.grade:active{transform:scale(.985)}
+.bar i{transition:width .35s ease}
+@media (prefers-reduced-motion: no-preference){
+  .qcard{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+}
+
+/* ===== retro-poster afwerking ===== */
+h1,h2,.deck .dt b,.brand h1{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.deck .dt b{font-size:16px}
+.panel,.deck,.qcard,.opt,.stat,.grade,.brow,.dlg,.iconbtn{border-radius:8px;border-width:1.5px}
+.qcard{border-radius:10px;border-width:2px;border-color:var(--ink)}
+.eyebrow{letter-spacing:.18em}
+.bar,.bar i{border-radius:1px}
+.badge,.herechip{border-radius:4px}
+.typebox input,.typebox button{border-radius:8px}
+.typebox button{text-transform:uppercase;letter-spacing:.06em;font-size:13px;color:#FFF6E3}
+.speak{border:1.5px solid var(--sea-deep)}
+.grades .grade{text-transform:uppercase;letter-spacing:.05em;font-size:13px}
+.grade small{text-transform:none;letter-spacing:0}
+.cta:active{transform:translate(2px,2px);box-shadow:0 0 0 transparent}
+.stat b{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.done .big{font-size:44px}
+.icn{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px}
+.speak .icn{width:17px;height:17px;vertical-align:0}
+.iconbtn .icn,.wod .icn{vertical-align:-2px;opacity:.9}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .lvln,:root:not([data-theme="light"]) .lvlpap{color:color-mix(in srgb,var(--lc) 55%,#F0E3C6)}
+}
+:root[data-theme="dark"] .lvln,:root[data-theme="dark"] .lvlpap{color:color-mix(in srgb,var(--lc) 55%,#F0E3C6)}
+:root[data-theme="light"] .lvln,:root[data-theme="light"] .lvlpap{color:var(--lc)}
+</style>
+
+<div id="shell">
+  <header>
+    <div class="brand">
+      <div class="facades" aria-hidden="true"></div>
+      <h1>Siña <span class="pap">Papiamentu</span></h1>
+    </div>
+    <div class="hbtns">
+      <button class="iconbtn" id="ttsbtn" title="Audio (benadering, Spaanse stem)" aria-pressed="true"><svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z" fill="currentColor" stroke="none"/><path d="M15 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 6.8a7.6 7.6 0 0 1 0 10.4"/></svg></button>
+      <button class="iconbtn" id="themebtn" title="Licht/donker wisselen">◐</button>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+<nav aria-label="Onderdelen"><div class="tabs" id="tabs"></div></nav>
+
+<script>
+"use strict";
+/* ================= DATA ================= */
+/* Card: [papiamentu, english, note?]  — Curaçao/Bonaire spelling */
+const DECKS=[
+{id:"survival",name:"Overlevingskit",desc:"De 26 zinnen voor je eerste dag",cards:[
+["Bon biní","Welkom","Hoor je overal — vaak geschreven als 'Bon bini'"],
+["Danki","Dank je","Van het Nederlandse 'dank je'"],
+["Masha danki","Heel erg bedankt","'masha' = heel, erg"],
+["Por fabor","Alsjeblieft (bij een verzoek)"],
+["Di nada","Graag gedaan"],
+["Si","Ja"],["Nò","Nee"],
+["Ayó","Doei / tot ziens"],
+["Te aworó","Tot straks","lett. 'tot later vandaag'"],
+["Te mañan","Tot morgen"],
+["Kon ta bai?","Hoe gaat het?","DÉ standaardbegroeting"],
+["Mi ta bon","Met mij gaat het goed"],
+["Tur kos ta bon","Alles is goed","lett. 'alle dingen zijn goed'"],
+["Ta bon","Oké / prima"],
+["Klaro","Natuurlijk"],
+["Podisé","Misschien"],
+["Mi no sa","Ik weet het niet"],
+["Mi no ta komprondé","Ik begrijp het niet"],
+["Bo ta papia hulandes?","Spreek je Nederlands?"],
+["Papia poko-poko, por fabor","Praat langzaam, alsjeblieft"],
+["Un biaha mas","Nog een keer","'biaha' = keer/reis"],
+["Despensá mi","Sorry / pardon"],
+["Unda e baño ta?","Waar is het toilet?"],
+["Kuantu esaki ta kosta?","Hoeveel kost dit?"],
+["Ayudo!","Help!"],
+["Mi ta pèrdí","Ik ben verdwaald"]]},
+{id:"greet",name:"Begroeten & kletsen",desc:"Maak contact als een local",cards:[
+["Bon dia","Goedemorgen"],
+["Bon tardi","Goedemiddag"],
+["Bon nochi","Goedenavond / goedenacht"],
+["Kon bo yama?","Hoe heet je?"],
+["Mi yama Angela","Ik heet Angela"],
+["Di unda bo ta?","Waar kom je vandaan?"],
+["Mi ta di Hulanda","Ik kom uit Nederland"],
+["Kontentu di konosé bo","Leuk je te ontmoeten"],
+["Kon ta ku bida?","Hoe is het leven?"],
+["Hopi bon, danki","Heel goed, dank je"],
+["Mas o ménos","Zo-zo / het gaat wel"],
+["Mi ta kansá","Ik ben moe"],
+["Pasa un bon dia","Fijne dag nog"],
+["Bon siman","Fijne week"],
+["Salú!","Proost!"],
+["Dushi","Lekker / lief / schatje","Hét Caribische woord — eten, mensen en het leven kunnen allemaal dushi zijn"],
+["Hopi dushi!","Heerlijk!"],
+["Te otro biaha","Tot de volgende keer"]]},
+{id:"dialog",name:"Gesprekszinnen",desc:"Zinnen rechtstreeks uit de dialogen",cards:[
+["Kon ta?","Hoi — hoe is 't? (informeel)"],
+["I abo?","En jij?"],
+["Mi nòmber ta…","Mijn naam is…","alternatief voor 'Mi yama…'"],
+["Algu mas?","Nog iets anders?"],
+["Esei ta tur","Dat is alles"],
+["Duna mi dos, por fabor","Geef me er twee, alsjeblieft"],
+["Tin pastechi ainda?","Zijn er nog pastechi's?"],
+["Esei ta muchu karu!","Dat is te duur!"],
+["Sigui stret","Ga rechtdoor"],
+["Bai man drechi","Ga naar rechts"],
+["Masha danki pa bo ayudo","Heel erg bedankt voor je hulp"],
+["Suerte!","Succes!"]]},
+{id:"particles",name:"Voornaamwoorden & toverpartikels",desc:"Het hele werkwoordsysteem — echt waar",cards:[
+["mi","ik / mij / mijn"],
+["bo","jij / jouw"],
+["e","hij / zij / het — en 'de/het'"],
+["su","zijn / haar"],
+["nos","wij / ons"],
+["boso","jullie"],
+["nan","zij / hen / hun"],
+["Mi ta kome","Ik eet / ben aan het eten","'ta' = tegenwoordige tijd"],
+["Mi a kome","Ik heb gegeten","'a' = verleden tijd"],
+["Lo mi kome","Ik zal eten","'lo' = toekomst"],
+["Mi tabata kome","Ik was aan het eten","'tabata' = duurde voort in het verleden"],
+["Mi no ta kome","Ik eet niet","'no' komt vóór het partikel"],
+["Mi ke kome","Ik wil eten"],
+["Mi por papia","Ik kan spreken"],
+["Mi mester bai","Ik moet gaan"],
+["Mi tin un kas","Ik heb een huis"],
+["Nos ta bai playa","Wij gaan naar het strand"],
+["Mi ta siña papiamentu","Ik leer Papiamentu"],
+["Ban!","Kom, we gaan!"],
+["Ban kome!","Laten we eten!"]]},
+{id:"questions",name:"Vraagwoorden",desc:"Vraag alles — de woordvolgorde verandert nooit",cards:[
+["Ken?","Wie?"],
+["Kiko?","Wat?"],
+["Unda?","Waar?"],
+["Kuandu?","Wanneer?"],
+["Dikon?","Waarom?"],
+["Kon?","Hoe?"],
+["Kuantu?","Hoeveel?"],
+["Kua?","Welke?"],
+["Kiko esaki ta?","Wat is dit?"],
+["Unda bo ta bai?","Waar ga je naartoe?"],
+["Ken e ta?","Wie is hij/zij?"],
+["Dikon nò?","Waarom niet?"],
+["Kon yama esaki na papiamentu?","Hoe heet dit in het Papiamentu?"]]},
+{id:"numbers",name:"Getallen",desc:"Tellen, betalen, afdingen",cards:[
+["un","een (1)"],["dos","twee"],["tres","drie"],["kuater","vier"],["sinku","vijf"],
+["seis","zes"],["shete","zeven"],["ocho","acht"],["nuebe","negen"],["dies","tien"],
+["diesun","elf","dies + un"],["diesdos","twaalf"],["diestres","dertien"],
+["binti","twintig"],["bintisinku","vijfentwintig"],
+["trinta","dertig"],["kuarenta","veertig"],["sinkuenta","vijftig"],["sesenta","zestig"],
+["setenta","zeventig"],["ochenta","tachtig"],["nobenta","negentig"],
+["shen","honderd"],["mil","duizend"]]},
+{id:"verbs1",name:"Krachtwerkwoorden",desc:"22 werkwoorden die 80% van het praten doen",cards:[
+["ta","zijn"],
+["tin","hebben"],
+["bai","gaan"],
+["bin","komen"],
+["ke","willen","ook 'kier'"],
+["por","kunnen / mogen"],
+["mester","moeten / nodig hebben"],
+["kome","eten"],
+["bebe","drinken"],
+["papia","praten / spreken","de taal is ernaar vernoemd!"],
+["hasi","doen / maken"],
+["mira","zien"],
+["tende","horen"],
+["sa","weten"],
+["konosé","kennen"],
+["bisa","zeggen / vertellen"],
+["duna","geven"],
+["traha","werken / maken"],
+["kumpra","kopen"],
+["haña","krijgen / vinden"],
+["yuda","helpen"],
+["siña","leren / onderwijzen"]]},
+{id:"verbs2",name:"Meer werkwoorden",desc:"Maak je gereedschapskist compleet",cards:[
+["gusta","leuk vinden"],
+["stima","houden van"],
+["biba","wonen / leven"],
+["drumi","slapen"],
+["lanta","opstaan"],
+["kana","lopen / wandelen"],
+["kore","rijden / rennen"],
+["skirbi","schrijven"],
+["lesa","lezen"],
+["puntra","vragen"],
+["kontestá","antwoorden"],
+["warda","wachten / bewaren"],
+["keda","blijven"],
+["habri","openen"],
+["sera","sluiten"],
+["paga","betalen"],
+["buska","zoeken"],
+["kuminsá","beginnen"],
+["kaba","eindigen / af zijn","betekent ook 'al': 'mi a kome kaba'"],
+["pensa","denken"],
+["sinti","voelen"],
+["hunga","spelen"],
+["kanta","zingen"],
+["baila","dansen"]]},
+{id:"glue",name:"Bindwoorden",desc:"Kleine woorden die zinnen bij elkaar houden",cards:[
+["i","en"],
+["òf","of (keuze)"],
+["pero","maar"],
+["pasobra","omdat / want"],
+["ku","met / dat"],
+["sin","zonder"],
+["pa","voor / om te"],
+["di","van"],
+["na","in / aan / naar"],
+["den","in / binnen"],
+["riba","op / bovenop"],
+["te","tot"],
+["tambe","ook"],
+["so","alleen / slechts"],
+["ainda","nog / nog steeds"],
+["djis","gewoon / net"],
+["mes","zelf / zelfde","'mi mes' = ikzelf"],
+["tur","alle / elke"],
+["otro","ander"],
+["algu","iets"],
+["nada","niets"],
+["tur hende","iedereen"],
+["niun hende","niemand"]]},
+{id:"food",name:"Eten & drinken",desc:"Bestel alsof je er geboren bent",cards:[
+["kuminda","eten / voedsel"],
+["awa","water"],
+["pan","brood"],
+["keshi","kaas"],
+["keshi yená","gevulde kaas","hét gerecht van Curaçao"],
+["pastechi","gefrituurd pasteitje","het geliefde ontbijthapje"],
+["funchi","polenta van maïsmeel","standaard bijgerecht"],
+["piská","vis"],
+["karni","vlees"],
+["galiña","kip"],
+["aros","rijst"],
+["webu","ei"],
+["fruta","fruit"],
+["batata","aardappel"],
+["lechi","melk"],
+["kòfi","koffie"],
+["te","thee"],
+["suku","suiker"],
+["salu","zout"],
+["pika","hete peper / pittig"],
+["serbes","bier"],
+["biña","wijn"],
+["refresko","frisdrank"],
+["Mi tin hamber","Ik heb honger"],
+["Mi tin set","Ik heb dorst"],
+["E kuminda ta dushi","Het eten is heerlijk"],
+["Un serbes friu, por fabor","Een koud biertje, alsjeblieft"]]},
+{id:"time",name:"Tijd & dagen",desc:"Gisteren, vandaag, mañan",cards:[
+["awe","vandaag"],
+["mañan","morgen"],
+["ayera","gisteren"],
+["awor","nu"],
+["despues","later / daarna"],
+["promé","eerst / eerder"],
+["semper","altijd"],
+["nunka","nooit"],
+["tur dia","elke dag"],
+["awe nochi","vanavond"],
+["dia","dag"],
+["siman","week"],
+["luna","maand","ook 'maan'"],
+["aña","jaar"],
+["ora","uur / tijd"],
+["Kuant'or tin?","Hoe laat is het?"],
+["mainta","ochtend"],
+["atardi","middag"],
+["anochi","avond / nacht"],
+["djaluna","maandag"],
+["djamars","dinsdag"],
+["djarason","woensdag"],
+["djaweps","donderdag"],
+["djabièrnè","vrijdag"],
+["djasabra","zaterdag"],
+["djadumingu","zondag"]]},
+{id:"places",name:"Plaatsen & de weg",desc:"Vind je weg op het eiland",cards:[
+["kas","huis / thuis"],
+["kaya","straat"],
+["kamina","weg / route"],
+["stat","stad"],
+["tienda","winkel"],
+["merkado","markt"],
+["banko","bank"],
+["botika","apotheek"],
+["hòspital","ziekenhuis"],
+["skol","school","van het Nederlandse 'school'"],
+["misa","kerk"],
+["restorant","restaurant"],
+["kamber","kamer","van het Nederlandse 'kamer'"],
+["porta","deur"],
+["man drechi","rechts","lett. 'rechterhand'"],
+["man robes","links"],
+["stret","rechtdoor"],
+["aki","hier"],
+["ayá","daar"],
+["serka","dichtbij"],
+["leu","ver"],
+["banda di","naast"]]},
+{id:"people",name:"Mensen & familie",desc:"Praat over wie belangrijk is",cards:[
+["hende","mens / mensen"],
+["homber","man"],
+["muhé","vrouw"],
+["mucha","kind"],
+["mucha homber","jongen"],
+["mucha muhé","meisje"],
+["yu","kind (zoon/dochter)"],
+["yu homber","zoon"],
+["yu muhé","dochter"],
+["mama","moeder"],
+["tata","vader"],
+["ruman","broer of zus"],
+["ruman homber","broer"],
+["ruman muhé","zus"],
+["wela","oma"],
+["welo","opa"],
+["amigu","vriend"],
+["amiga","vriendin"],
+["famia","familie"],
+["kasá","echtgenoot / echtgenote"],
+["bisiña","buurman / buurvrouw"]]},
+{id:"adj",name:"Beschrijven",desc:"Bijvoeglijke naamwoorden & kleuren — zonder geslacht of uitgangen",cards:[
+["bon","goed"],
+["malu","slecht / ziek"],
+["grandi","groot"],
+["chikitu","klein"],
+["hopi","veel / heel"],
+["poko","weinig / een beetje"],
+["nobo","nieuw"],
+["bieu","oud"],
+["bunita","mooi"],
+["mahos","lelijk"],
+["kayente","heet / warm"],
+["friu","koud"],
+["lihé","snel"],
+["largu","lang"],
+["kòrtiku","kort"],
+["yen","vol"],
+["bashí","leeg"],
+["kontentu","blij"],
+["tristu","verdrietig"],
+["limpi","schoon"],
+["sushi","vies"],
+["kòrá","rood"],
+["blou","blauw"],
+["bèrdè","groen"],
+["hel","geel","van het Nederlandse 'geel'"],
+["blanku","wit"],
+["pretu","zwart"]]},
+{id:"beach",name:"Strand & weer",desc:"De essentie van het eilandleven",cards:[
+["solo","zon"],
+["awaseru","regen"],
+["bientu","wind"],
+["nubia","wolk"],
+["kalor","hitte"],
+["Awe tin hopi kalor","Het is erg heet vandaag"],
+["laman","zee"],
+["playa","strand"],
+["santu","zand"],
+["landa","zwemmen"],
+["piská","vis"],
+["tortuga","zeeschildpad"],
+["barku","boot"],
+["isla","eiland"]]},
+{id:"money",name:"Geld & winkelen",desc:"Betalen, afdingen, rondkijken",cards:[
+["plaka","geld"],
+["florin","gulden","de munt van Curaçao"],
+["karu","duur"],
+["barata","goedkoop"],
+["gratis","gratis"],
+["kambio","wisselgeld"],
+["karchi","kaart / pinpas"],
+["Mi por paga ku karchi?","Kan ik pinnen?"],
+["Esaki ta muchu karu","Dit is te duur"],
+["Mi ta djis wak","Ik kijk alleen even"],
+["Mi ke kumpra esaki","Ik wil dit kopen"],
+["E ta riba seli?","Is het in de aanbieding?"]]},
+{id:"body",name:"Lichaam & gezondheid",desc:"Van hoofd tot pia — en wat te zeggen bij de dokter",cards:[
+["kurpa","lichaam"],
+["kabes","hoofd"],
+["wowo","oog"],
+["orea","oor"],
+["nanishi","neus"],
+["boka","mond"],
+["djente","tand"],
+["man","hand"],
+["pia","been / voet"],
+["barika","buik"],
+["kurason","hart"],
+["kabei","haar (op je hoofd)"],
+["dòkter","dokter","van het Nederlandse 'dokter'"],
+["remedi","medicijn"],
+["doló","pijn"],
+["Mi tin doló di kabes","Ik heb hoofdpijn"]]},
+{id:"house",name:"In huis",desc:"Vol Nederlandse leenwoorden — cadeautjes voor jou",cards:[
+["mesa","tafel"],
+["stul","stoel","van het Nederlandse 'stoel'"],
+["kama","bed"],
+["kushina","keuken"],
+["lampi","lamp"],
+["yabi","sleutel"],
+["oloshi","klok / horloge","van het Nederlandse 'horloge'"],
+["potrèt","foto","van het Nederlandse 'portret'"],
+["buki","boek","van het Nederlandse 'boek'"],
+["telefòn","telefoon"],
+["outo","auto"],
+["bentana","raam"],
+["muraya","muur"],
+["dak","dak","van het Nederlandse 'dak'"],
+["hòfi","tuin / boomgaard","van het Nederlandse 'hof'"],
+["paña","kleding"],
+["sapatu","schoen"],
+["kamisa","hemd / shirt"]]},
+{id:"nature",name:"Dieren & natuur",desc:"Wat je op het eiland tegenkomt",cards:[
+["kachó","hond"],
+["pushi","kat / poes","van het Nederlandse 'poes'"],
+["para","vogel"],
+["kabritu","geit","het icoon van Curaçao — ook op je bord (stobá di kabritu)"],
+["baka","koe"],
+["porko","varken"],
+["lagadishi","hagedis"],
+["yuana","leguaan"],
+["sangura","mug"],
+["flor","bloem"],
+["palu","boom / hout"],
+["yerba","gras / kruid"],
+["piedra","steen"],
+["mondi","de wilde natuur / het bos","typisch Curaçaos woord voor het cactuslandschap"]]},
+{id:"feel",name:"Gevoel & mening",desc:"Zeg wat je vindt en voelt",cards:[
+["rabiá","boos"],
+["spantá","bang / geschrokken"],
+["straño","vreemd / raar"],
+["importante","belangrijk"],
+["difísil","moeilijk"],
+["fásil","makkelijk"],
+["sigur","zeker"],
+["bèrdat","waarheid / waar"],
+["mentira","leugen"],
+["problema","probleem"],
+["No tin problema","Geen probleem"],
+["Mi ta di akuerdo","Ik ben het ermee eens"],
+["Ta bèrdat?","Echt waar?"],
+["Ki bunita!","Wat mooi!"],
+["Ki lástima!","Wat jammer!"],
+["Mi ta spera ku sí","Ik hoop van wel"]]},
+{id:"verbs3",name:"Werkwoorden III",desc:"Nog 18 werkwoorden richting vloeiend",cards:[
+["kere","geloven"],
+["spera","hopen / verwachten"],
+["purba","proberen / proeven"],
+["usa","gebruiken"],
+["laba","wassen"],
+["skucha","luisteren"],
+["sinta","zitten / gaan zitten"],
+["para","staan / stoppen","ook: vogel!"],
+["kai","vallen"],
+["tira","gooien"],
+["saka","eruit halen / pakken"],
+["yama","heten / roepen"],
+["keiru","wandelen / een rondje doen","'bai keiru' — echt eilands"],
+["kambia","veranderen / wisselen"],
+["lubidá","vergeten"],
+["kòrda","onthouden / zich herinneren"],
+["splika","uitleggen"],
+["sòru","zorgen (voor)","'sòru pa…' — van het Nederlandse 'zorgen'"]]},
+{id:"adv2",name:"Bijwoorden & zinnen II",desc:"De woordjes die je Papiamentu soepel maken",cards:[
+["atrobe","opnieuw / alweer"],
+["kasi","bijna"],
+["basta","genoeg / behoorlijk"],
+["muchu","te veel / te"],
+["mesora","meteen"],
+["tempran","vroeg"],
+["lat","laat","van het Nederlandse 'laat'"],
+["un ratu","een momentje","'Warda un ratu' — wacht even"],
+["Poko-poko!","Rustig aan!"],
+["Ku gustu","Met plezier / graag"],
+["Na bo òrdu","Graag gedaan / tot je dienst"],
+["Otro biaha","Een andere keer"],
+["Ban wak","We zullen zien","lett. 'laten we kijken'"],
+["Mi ta bai kas","Ik ga naar huis"],
+["Pabien!","Gefeliciteerd!"],
+["Drumi bon!","Slaap lekker!"]]},
+{id:"work",name:"Werk & dagelijks leven",desc:"Kantoor, school en afspraken",cards:[
+["trabou","werk / baan"],
+["mener","meneer","van het Nederlandse 'meneer'"],
+["yùfrou","mevrouw / juf","van het Nederlandse 'juffrouw'"],
+["bas","baas","van het Nederlandse 'baas'"],
+["sèn","cent / kleingeld"],
+["sueldo","salaris"],
+["reunion","vergadering"],
+["karta","brief"],
+["papel","papier"],
+["pòtlot","potlood","van het Nederlandse 'potlood'"],
+["pèn","pen"],
+["lès","les","van het Nederlandse 'les'"],
+["klas","klas"],
+["studia","studeren"],
+["Mi tin un sita","Ik heb een afspraak"],
+["fakansi","vakantie","van het Nederlandse 'vakantie'"]]},
+{id:"travel",name:"Reizen & vervoer",desc:"Van Hato tot je hotel",cards:[
+["biaha","reis / keer"],
+["biahá","reizen"],
+["bùs","bus"],
+["abion","vliegtuig"],
+["aeropuerto","vliegveld"],
+["taxi","taxi"],
+["pasashi","ticket / rit(prijs)"],
+["maleta","koffer"],
+["tas","tas","van het Nederlandse 'tas'"],
+["pasaporte","paspoort"],
+["hotèl","hotel"],
+["yega","aankomen"],
+["drenta","binnengaan / instappen"],
+["sali","vertrekken / naar buiten gaan"],
+["Mi ta bai ku outo","Ik ga met de auto"]]},
+{id:"food2",name:"Eten & koken II",desc:"De keuken in — van lamunchi tot stobá",cards:[
+["kushiná","koken (eten maken)"],
+["hasa","bakken / frituren"],
+["herebé","koken (in water)"],
+["kuchara","lepel"],
+["fòrki","vork","van het Nederlandse 'vork'"],
+["kuchú","mes"],
+["tayó","bord"],
+["glas","glas"],
+["manteka","boter"],
+["zeta","olie"],
+["piña","ananas"],
+["mango","mango"],
+["apel","appel","van het Nederlandse 'appel'"],
+["lamunchi","limoen","dé smaakmaker van de eilanden"],
+["sòpi","soep"],
+["stobá","stoofpot","kabritu stobá — geitenstoof, hét zondagsgerecht"]]},
+{id:"past",name:"Vertellen over vroeger",desc:"De verleden tijd in actie — met 'a' en 'tabata'",cards:[
+["Ayera mi a bai playa","Gisteren ben ik naar het strand geweest"],
+["Mi a traha henter dia","Ik heb de hele dag gewerkt"],
+["henter","heel / de hele"],
+["Mi a lubidá","Ik ben het vergeten"],
+["Kiko a pasa?","Wat is er gebeurd?"],
+["pasa","gebeuren / voorbijgaan"],
+["Mi no a mira nada","Ik heb niets gezien","dubbele ontkenning is normaal in het Papiamentu"],
+["antes","vroeger / eerst"],
+["Antes mi tabata biba na Hulanda","Vroeger woonde ik in Nederland"],
+["despues di","na (iets)"],
+["promé ku","voordat"],
+["un dia","op een dag"],
+["Mi a haña un regalo","Ik heb een cadeau gekregen"],
+["regalo","cadeau"],
+["Kon tabata?","Hoe was het?"],
+["Tabata hopi dushi","Het was heerlijk"]]},
+{id:"party",name:"Feest & cultuur",desc:"Fiesta, tambú en pabien — vier het eiland mee",cards:[
+["fiesta","feest"],
+["músika","muziek"],
+["tambú","tambú","traditionele trommelmuziek van Curaçao"],
+["seú","seú","het oogstfeest met optocht"],
+["Karnaval","carnaval"],
+["selebrá","vieren"],
+["kumpleaño","verjaardag"],
+["Masha pabien!","Van harte gefeliciteerd!"],
+["kantika","liedje"],
+["gosa","genieten"],
+["Bon suerte!","Veel succes / geluk!"],
+["invitá","uitnodigen"]]},
+{id:"compare",name:"Vergelijken & hoeveelheden",desc:"Meer, minder, beter, hetzelfde",cards:[
+["mas","meer / meest"],
+["ménos","minder"],
+["mas grandi ku","groter dan"],
+["meskos","hetzelfde","'meskos ku' — net als"],
+["diferente","anders / verschillend"],
+["tur dos","allebei"],
+["niun","geen enkele"],
+["kada","elke / ieder"],
+["un tiki","een beetje","hoor je de hele dag"],
+["mihó","beter / best"],
+["pió","slechter"],
+["demasiado","veel te veel"],
+["Esaki ta mas bunita","Deze is mooier"],
+["hopi mas","veel meer"]]},
+{id:"emergency",name:"Hulp & noodgevallen",desc:"Hopelijk nooit nodig — wel kennen",cards:[
+["Yuda mi!","Help mij!"],
+["polis","politie"],
+["bombero","brandweerman"],
+["ambulans","ambulance"],
+["peliger","gevaar"],
+["Tene kuidou!","Pas op!"],
+["kuidou","voorzichtigheid / zorg"],
+["Mi a pèrdè mi tas","Ik ben mijn tas verloren"],
+["horta","stelen"],
+["ladron","dief"],
+["Yama polis!","Bel de politie!"],
+["Mi mester di un dòkter","Ik heb een dokter nodig"]]},
+{id:"weather2",name:"Weer & lucht",desc:"Van passaatwind tot regenbui",cards:[
+["tempu","weer / tijd(perk)"],
+["Tempu ta bon awe","Het weer is goed vandaag"],
+["Awaseru ta kai","Het regent","lett. 'regen valt'"],
+["Solo ta sali","De zon breekt door"],
+["lamper","bliksem"],
+["strena","donder"],
+["orkan","orkaan"],
+["temporada","seizoen"],
+["fresku","fris / koel"],
+["sombra","schaduw"]]},
+{id:"opinion",name:"Mening & discussie",desc:"Meepraten, instemmen, tegenspreken",cards:[
+["Kiko bo ta pensa?","Wat vind jij?"],
+["Den mi opinion","Volgens mij"],
+["Mi ta kere ku…","Ik geloof dat…"],
+["Bo tin rason","Je hebt gelijk"],
+["rason","gelijk / reden"],
+["Mi no ta di akuerdo","Ik ben het er niet mee eens"],
+["diskutí","discussiëren / bespreken"],
+["Ta un bon idea","Dat is een goed idee"],
+["idea","idee"],
+["Podisé bo tin rason","Misschien heb je gelijk"],
+["No ta importá mi","Het maakt mij niet uit"],
+["Esei no ta bèrdat","Dat is niet waar"],
+["kombersashon","gesprek"],
+["palabra","woord"]]},
+{id:"love",name:"Liefde & vriendschap",desc:"Voor de mensen om wie je geeft",cards:[
+["Mi stima bo","Ik hou van jou"],
+["Mi gusta bo","Ik vind je leuk"],
+["sunchi","kus"],
+["brasa","omhelzen / knuffel"],
+["kariño","genegenheid / tederheid"],
+["namorá","verliefd"],
+["Mi dushi","Mijn lief / schatje"],
+["Ku henter mi kurason","Met heel mijn hart"],
+["amistat","vriendschap"],
+["konfia","vertrouwen"],
+["felis","gelukkig"],
+["huntu","samen"]]},
+{id:"city",name:"Stad & eiland",desc:"Willemstad en het kunuku-leven",cards:[
+["Punda","Punda","het historische centrum van Willemstad"],
+["Otrobanda","Otrobanda","lett. 'de andere kant' van de Sint Annabaai"],
+["brùg","brug","dé brùg = de drijvende Pontjesbrug"],
+["haf","haven","van het Nederlandse 'haven'"],
+["plasa","plein / markt","Plasa Bieu — de oude markthal met lokaal eten"],
+["snèk","snackbar / buurtcafé"],
+["bario","wijk / buurt"],
+["kunuku","het platteland","typisch woord voor het buitengebied"],
+["trankilo","rustig"],
+["drùk","druk","van het Nederlandse 'druk'"],
+["turista","toerist"],
+["historia","geschiedenis / verhaal"]]}
+];
+
+/* Course levels — group decks into a visible learning path */
+const LEVELS=[
+{n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8940A",
+ ids:["survival","greet","dialog","particles","questions","numbers"]},
+{n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#177E70",
+ ids:["verbs1","glue","food","time","places","verbs2"]},
+{n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95436",
+ ids:["people","adj","beach","money","body","house","nature","emergency","weather2"]},
+{n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#2C5B7B",
+ ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","love","city"]}
+];
+
+/* Dialog line: [speaker, papiamentu, dutch] */
+const DIALOGS=[
+{t:"Topa un hende",tr:"Iemand ontmoeten",lines:[
+["A","Bon dia! Kon ta bai?","Goedemorgen! Hoe gaat het?"],
+["B","Mi ta bon, danki. I abo?","Goed, dank je. En jij?"],
+["A","Hopi bon. Kon bo yama?","Heel goed. Hoe heet je?"],
+["B","Mi yama Angela. I bo?","Ik heet Angela. En jij?"],
+["A","Mi nòmber ta Carlos. Kontentu di konosé bo.","Mijn naam is Carlos. Leuk je te ontmoeten."],
+["B","Di unda bo ta?","Waar kom je vandaan?"],
+["A","Mi ta di Kòrsou. I abo?","Ik kom van Curaçao. En jij?"],
+["B","Mi ta di Hulanda, pero mi ta siña papiamentu.","Ik kom uit Nederland, maar ik leer Papiamentu."],
+["A","Masha bon! Bo ta papia dushi kaba!","Heel goed! Je spreekt het al mooi!"]]},
+{t:"Na snèk",tr:"Bij de snackbar",lines:[
+["A","Bon tardi! Kiko bo ke bebe?","Goedemiddag! Wat wil je drinken?"],
+["B","Un awa friu, por fabor. Kuantu e ta kosta?","Een koud water, alsjeblieft. Hoeveel kost het?"],
+["A","Dos florin.","Twee gulden."],
+["B","Tin pastechi ainda?","Zijn er nog pastechi's?"],
+["A","Sí, tin pastechi di keshi i di piská.","Ja, er zijn pastechi's met kaas en met vis."],
+["B","Duna mi dos di keshi, por fabor.","Geef me er twee met kaas, alsjeblieft."],
+["A","Ta bon. Algu mas?","Prima. Nog iets anders?"],
+["B","Nò, danki. Esei ta tur.","Nee, dank je. Dat is alles."],
+["A","Sinku florin, por fabor. … Masha danki!","Vijf gulden, alsjeblieft. … Dank je wel!"],
+["B","Danki, ayó!","Bedankt, doei!"]]},
+{t:"Na merkado",tr:"Op de markt",lines:[
+["A","Bon dia dushi! Kiko bo ta buska?","Goedemorgen schat! Wat zoek je?"],
+["B","Mi ta buska fruta. Kuantu e mango ta kosta?","Ik zoek fruit. Hoeveel kost de mango?"],
+["A","Tres florin pa un.","Drie gulden per stuk."],
+["B","Esei ta muchu karu!","Dat is te duur!"],
+["A","Ta bon… dos florin pa bo.","Oké… twee gulden voor jou."],
+["B","Duna mi kuater, por fabor.","Geef me er vier, alsjeblieft."],
+["A","Ocho florin. Bo ke algu mas?","Acht gulden. Wil je nog iets?"],
+["B","Nò, danki. Pasa un bon dia!","Nee, dank je. Fijne dag nog!"]]},
+{t:"Pidi direkshon",tr:"De weg vragen",lines:[
+["A","Despensá mi, unda e botika ta?","Pardon, waar is de apotheek?"],
+["B","E ta den kaya grandi, banda di e banko.","Die is in de hoofdstraat, naast de bank."],
+["A","E ta leu?","Is het ver?"],
+["B","Nò, e ta serka. Sigui stret i despues bai man drechi.","Nee, het is dichtbij. Ga rechtdoor en dan naar rechts."],
+["A","Masha danki pa bo ayudo!","Heel erg bedankt voor je hulp!"],
+["B","Di nada. Suerte!","Graag gedaan. Succes!"]]},
+{t:"Den taxi",tr:"In de taxi",lines:[
+["A","Bon nochi! Na unda bo ke bai?","Goedenavond! Waar wil je naartoe?"],
+["B","Hotel Avila, por fabor. E ta leu?","Hotel Avila, alsjeblieft. Is het ver?"],
+["A","Nò, kasi dies minüt.","Nee, bijna tien minuten."],
+["B","Kuantu e ta kosta?","Hoeveel kost het?"],
+["A","Diesdos florin.","Twaalf gulden."],
+["B","Ta bon. Mi por paga ku karchi?","Prima. Kan ik pinnen?"],
+["A","Sí, klaro.","Ja, natuurlijk."],
+["B","Masha danki. Poko-poko, por fabor!","Dank je wel. Rustig aan, alsjeblieft!"]]},
+{t:"Un fiesta",tr:"Een feestje",lines:[
+["A","Bon bini! Drenta, drenta!","Welkom! Kom binnen!"],
+["B","Masha danki! Ki kas bunita!","Dank je! Wat een mooi huis!"],
+["A","Bo ke algu di bebe?","Wil je iets drinken?"],
+["B","Un biña, por fabor.","Een wijntje, alsjeblieft."],
+["A","Awe ta kumpleaño di mi kasá.","Vandaag is mijn man jarig."],
+["B","Masha pabien! Kuantu aña e ta hasi?","Van harte! Hoe oud wordt hij?"],
+["A","Kuarenta. Ban kome i gosa!","Veertig. Laten we eten en genieten!"],
+["B","Salú! Pa bo kasá!","Proost! Op je man!"]]}
+];
+
+const RESOURCES=[
+["Lora — Learn Papiamentu","https://learnpapiamentu.app/en/","Moderne app met audio van moedertaalsprekers, gemaakt voor het Papiamentu van Curaçao/Bonaire. De beste aanvulling op deze trainer voor echte uitspraak."],
+["uTalk Papiamento","https://utalk.com/store/papiamento","2500+ zinnen ingesproken door moedertaalsprekers, werkt offline."],
+["Henky's Papiamento","https://henkyspapiamento.com/","Gratis themalessen woordenschat (gebruikt de Arubaanse spelling — zie hoofdstuk 5)."],
+["Papiamentu Language Course","https://learn.papiamentucourse.com/","Beginnerscursus in eigen tempo, vanuit Curaçao, met een YouTube-kanaal vol gratis lessen."],
+["PAPIAMENTU ABC op YouTube","https://www.youtube.com/watch?v=_Z7vjb9YPMs","Korte lessen met gespreksopeners — ideaal om je oor te trainen met echte stemmen."],
+["Wikivoyage Papiamento-taalgids","https://en.wikivoyage.org/wiki/Papiamento_phrasebook","Gratis naslagwerk met uitspraaknotities (Engelstalig)."],
+["The Moreish Podcast — aflevering over Papiamentu","https://podcasts.apple.com/us/podcast/papiamentu-the-language-of-cura%C3%A7ao-with-sheedia-jansen/id1728305327?i=1000706523265","Het verhaal en de cultuur achter de taal (Engelstalig)."],
+["Papieren woordenboeken","","Betty Ratzlaffs 'Dikshonario Papiamentu' en Edwin Wernets 'Curso di Papiamento' zijn de standaard naslagwerken; voor Nederlands–Papiamentu is er het 'Prisma woordenboek Papiaments'."],
+["Stichting SPLIKA — cursussen in Nederland","https://splika.nl/","Papiamentu-lessen met echte docenten (groeps-, privé- én spreekvaardigheidscursussen), vanuit Den Haag. Dé plek voor echte gesprekken."],
+["MyLanguageExchange — taalmaatjes","https://www.mylanguageexchange.com/Learn/Papiamento_Papiamentu.asp","Vind een moedertaalspreker die Nederlands wil oefenen en ruil: half uur Papiamentu, half uur Nederlands."],
+["Een AI-gesprekspartner","","Chat met Claude (claude.ai): vraag 'Oefen een gesprek in het Papiamentu met mij en verbeter mijn fouten'. Altijd beschikbaar, oneindig geduldig."]
+];
+
+const GRAMMAR=[
+{t:"Waarom je Papiamentu snel kunt leren",h:`
+<p>Papiamentu (op Aruba <i>Papiamento</i>) is een creoolse taal van Portugees, Spaans, Nederlands en West-Afrikaanse talen, gesproken door zo'n 330.000 mensen op Curaçao, Bonaire en Aruba. Het heeft misschien wel de vriendelijkste grammatica van het westelijk halfrond:</p>
+<div class="panel"><ul style="margin:0;padding-left:20px">
+<li><b>Werkwoorden veranderen nooit.</b> Geen vervoegingen — <span class="ex">mi kome, bo kome, nan kome</span>.</li>
+<li><b>Geen grammaticaal geslacht.</b> Eén woord voor 'de/het' (<span class="ex">e</span>), één voor 'een' (<span class="ex">un</span>).</li>
+<li><b>Tijd = één klein partikel</b> vóór het werkwoord (volgend hoofdstuk).</li>
+<li><b>Bezittelijk = gewoon het voornaamwoord:</b> <span class="ex">mi kas</span> = mijn huis.</li>
+<li><b>Woordvolgorde is simpel:</b> onderwerp – werkwoord – lijdend voorwerp, óók in vragen.</li>
+</ul></div>
+<p>Als Nederlander heb je bovendien een voorsprong: honderden woorden komen rechtstreeks uit het Nederlands — <span class="ex">danki</span> (dank je), <span class="ex">hel</span> (geel), <span class="ex">kamber</span> (kamer), <span class="ex">skol</span> (school), <span class="ex">buki</span> (boek)…</p>
+<p>Het spel draait dus vrijwel volledig om <b>woordenschat</b>. Daarom begint deze app met de meest gebruikte woorden en oefent ze met spaced repetition — herhalingen komen precies vóórdat je ze zou vergeten.</p>`},
+{t:"De vier toverpartikels",h:`
+<p>Neem een willekeurig werkwoord, zet er één partikel voor, en je hebt een compleet tijdensysteem:</p>
+<div class="panel tablewrap"><table>
+<tr><th>Partikel</th><th>Betekenis</th><th>Voorbeeld</th></tr>
+<tr><td><b>ta</b></td><td>tegenwoordige tijd / nu</td><td class="ex">Mi ta traha — ik werk / ben aan het werken</td></tr>
+<tr><td><b>a</b></td><td>verleden tijd (voltooid)</td><td class="ex">Mi a traha — ik heb gewerkt</td></tr>
+<tr><td><b>lo</b></td><td>toekomst</td><td class="ex">Lo mi traha — ik zal werken</td></tr>
+<tr><td><b>tabata</b></td><td>verleden, voortdurend</td><td class="ex">Mi tabata traha — ik was aan het werken</td></tr>
+</table></div>
+<p><b>Ontkenning:</b> zet <span class="ex">no</span> vóór het partikel: <span class="ex">Mi no ta traha</span> — ik werk niet. <span class="ex">Mi no a bai</span> — ik ben niet gegaan.</p>
+<p><b>Uitzonderingen die je moet kennen:</b> de hulpwerkwoorden <span class="ex">tin</span> (hebben), <span class="ex">ke</span> (willen), <span class="ex">por</span> (kunnen), <span class="ex">mester</span> (moeten) en <span class="ex">sa</span> (weten) laten <span class="ex">ta</span> meestal weg: <span class="ex">Mi tin plaka</span>, <span class="ex">Mi por bai</span>.</p>`},
+{t:"Voornaamwoorden, bezit & meervoud",h:`
+<div class="panel tablewrap"><table>
+<tr><th>Papiamentu</th><th>Onderwerp</th><th>Bezittelijk</th></tr>
+<tr><td class="ex">mi</td><td>ik</td><td>mijn</td></tr>
+<tr><td class="ex">bo</td><td>jij</td><td>jouw</td></tr>
+<tr><td class="ex">e</td><td>hij / zij / het</td><td>(gebruik <span class="ex">su</span>)</td></tr>
+<tr><td class="ex">nos</td><td>wij</td><td>ons / onze</td></tr>
+<tr><td class="ex">boso</td><td>jullie</td><td>jullie</td></tr>
+<tr><td class="ex">nan</td><td>zij (mv.)</td><td>hun</td></tr>
+</table></div>
+<p>Dezelfde woordjes zijn onderwerp, lijdend voorwerp <i>én</i> bezittelijk: <span class="ex">mi ta stima bo</span> — ik hou van jou; <span class="ex">bo kas</span> — jouw huis.</p>
+<p><b>Meervoud:</b> plak <span class="ex">-nan</span> achter het zelfstandig naamwoord — <span class="ex">e buki</span> (het boek) → <span class="ex">e bukinan</span> (de boeken). Na een getal is het niet eens nodig: <span class="ex">tres buki</span> — drie boeken.</p>`},
+{t:"Vragen & handige patronen",h:`
+<p>Vragen houden de gewone woordvolgorde — voeg alleen een vraagwoord toe (of enkel een stijgende intonatie): <span class="ex">Bo tin yu?</span> — Heb je kinderen? <span class="ex">Unda bo ta biba?</span> — Waar woon je?</p>
+<div class="panel tablewrap"><table>
+<tr><th>Patroon</th><th>Voorbeeld</th></tr>
+<tr><td>Mi ke … — ik wil …</td><td class="ex">Mi ke un kòfi</td></tr>
+<tr><td>Mi tin mester di … — ik heb … nodig</td><td class="ex">Mi tin mester di awa</td></tr>
+<tr><td>Bo por … ? — kun je …?</td><td class="ex">Bo por yuda mi?</td></tr>
+<tr><td>Unda … ta? — waar is …?</td><td class="ex">Unda e banko ta?</td></tr>
+<tr><td>Mi gusta … — ik vind … leuk</td><td class="ex">Mi gusta e isla</td></tr>
+<tr><td>Tin … ? — is/zijn er …?</td><td class="ex">Tin pastechi?</td></tr>
+</table></div>`},
+{t:"Uitspraak & de twee spellingen",h:`
+<p>Papiamentu lees je grotendeels als Spaans. Elke letter wordt uitgesproken. De sleutels:</p>
+<div class="panel tablewrap"><table>
+<tr><th>Letter</th><th>Klank</th></tr>
+<tr><td><b>è / ò / ù</b></td><td>open klinkers, zoals in <i>bed</i>, <i>bod</i>, <i>put</i> — <span class="ex">kòfi, bèrdè</span></td></tr>
+<tr><td><b>ñ</b></td><td>'nj' zoals in 'oranje' — <span class="ex">aña, mañan</span></td></tr>
+<tr><td><b>dj</b></td><td>zoals de 'j' in het Engelse <i>jam</i> — <span class="ex">djaluna</span></td></tr>
+<tr><td><b>sh</b></td><td>'sj' zoals in 'sjaal' — <span class="ex">shete, shen</span></td></tr>
+<tr><td><b>accent (á, é…)</b></td><td>beklemtoonde lettergreep — <span class="ex">kontestá</span></td></tr>
+</table></div>
+<p><b>Twee spellingen, één taal:</b> Curaçao &amp; Bonaire schrijven fonetisch (<i>Papiamentu, kas, sinku</i>); Aruba schrijft etymologisch (<i>Papiamento, cas, cinco</i>). Gesproken is het dezelfde taal — alles wat je hier leert werkt op alle drie de eilanden.</p>
+<p class="subtle">Over de audioknop: geen enkele browser heeft al een Papiamentu-stem, dus deze app gebruikt een <b>Spaanse stem als benadering</b>. De klinkers en het ritme kloppen aardig — maar vertrouw je oren bij echte sprekers meer dan de robot.</p>`}
+];
+
+/* ================= STATE ================= */
+const LS="sina_pap_v1";
+let S=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(LS));if(s&&s.srs)return s;}catch(e){}
+  return {srs:{},streak:{last:"",count:0},xp:0,tts:true,theme:""};}
+function save(){localStorage.setItem(LS,JSON.stringify(S));syncQueue();}
+function today(){return new Date().toISOString().slice(0,10);}
+function bumpStreak(){const t=today();if(S.streak.last===t)return;
+  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  S.streak.count=(S.streak.last===y)?S.streak.count+1:1;S.streak.last=t;save();}
+function streakLive(){const t=today(),y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  return (S.streak.last===t||S.streak.last===y)?S.streak.count:0;}
+
+const ALL={}; DECKS.forEach(d=>d.cards.forEach(c=>{ALL[d.id+":"+c[0]]={d:d.id,p:c[0],e:c[1],n:c[2]||""}}));
+const IDS=Object.keys(ALL);
+function st(id){return S.srs[id];}
+const DAY=864e5;
+/* SM-2 lite. grade: 0 again, 1 good, 2 easy */
+function gradeCard(id,g){
+  let c=S.srs[id]||{ivl:0,ease:2.5,due:0,reps:0,lapses:0};
+  if(g===0){c.lapses++;c.reps=Math.max(0,c.reps-1);c.ivl=0;c.due=Date.now()+60e3;c.ease=Math.max(1.3,c.ease-0.2);}
+  else{
+    c.reps++;
+    if(c.ivl===0)c.ivl=g===2?3:(c.reps>1?1:0.007);   /* first pass: ~10 min; easy jumps to 3 d */
+    else if(c.ivl<1)c.ivl=(g===2?3:1);
+    else c.ivl=Math.round(c.ivl*(g===2?c.ease*1.3:c.ease)*10)/10;
+    if(g===2)c.ease=Math.min(3,c.ease+0.05);
+    c.due=Date.now()+c.ivl*DAY;
+  }
+  S.srs[id]=c;S.xp+=g===0?1:2;save();
+}
+function dueIds(){const n=Date.now();return IDS.filter(id=>st(id)&&st(id).due<=n);}
+/* Level per card: 0 new, 1 herkennen, 2 kiezen, 3 typen & spreken, 4 alleen Papiamentu */
+function lvl(id){const c=st(id);if(!c)return 0;return c.reps<=1?1:c.reps===2?2:c.reps===3?3:4;}
+function lvlTag(id){const l=lvl(id);return l?`Niveau ${l}/4 · `:"";}
+function lvlDots(id){const l=lvl(id);return `<span class="lvldots" title="Niveau ${l}/4">${"●".repeat(l)}${"○".repeat(4-l)}</span>`;}
+function startedCount(){return IDS.filter(id=>st(id)).length;}
+function strongCount(){return IDS.filter(id=>st(id)&&st(id).ivl>=7).length;}
+function deckStats(d){let s=0,k=0;d.cards.forEach(c=>{const t=st(d.id+":"+c[0]);if(t){s++;if(t.ivl>=7)k++;}});return{s,k};}
+
+/* ================= AUDIO ================= */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+let VOICE=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();
+  VOICE=vs.find(v=>/es[-_](419|US|MX|CO)/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null;}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+let CUR_AUD=null;
+function speak(txt){if(!S.tts)return;
+  /* echte Papiamentu-stem (audio-pap.js, gegenereerd met facebook/mms-tts-pap) als die er is */
+  const src=window.PAP_AUDIO&&window.PAP_AUDIO[txt];
+  if(src){try{if(CUR_AUD)CUR_AUD.pause();}catch(e){}
+    CUR_AUD=new Audio(src);CUR_AUD.play().catch(()=>{});return;}
+  if(!("speechSynthesis" in window))return;
+  const u=new SpeechSynthesisUtterance(txt.replace(/[èòù]/g,m=>({è:"e",ò:"o",ù:"u"}[m])));
+  if(VOICE)u.voice=VOICE;u.lang=VOICE?VOICE.lang:"es-419";u.rate=0.85;
+  speechSynthesis.cancel();speechSynthesis.speak(u);}
+/* audio-pap.js dynamisch laden; ontbreekt het bestand, dan blijft de reservestem actief */
+(function(){const sc=document.createElement("script");sc.src="audio-pap.js";
+  sc.onload=()=>{if(window.PAP_AUDIO&&Object.keys(window.PAP_AUDIO).length){
+    const b=document.getElementById("ttsbtn");if(b)b.title="Audio: echte Papiamentu-stem ✓";}};
+  sc.onerror=()=>{};document.head.appendChild(sc);})();
+
+/* ================= SYNC (Supabase, zie SETUP-SYNC.md) ================= */
+let SYNC_T=null,SYNC_BUSY=false;
+function syncCfg(){const c=S.sync;return (c&&c.u&&c.k&&c.i)?c:null;}
+function syncHdr(c){return {"apikey":c.k,"Authorization":"Bearer "+c.k,"Content-Type":"application/json"};}
+function syncStat(txt,bad){const el=$("#syncstat");if(el){el.textContent=txt;el.style.color=bad?"var(--bad)":"var(--muted)";}}
+function syncQueue(){if(!syncCfg())return;S.dirty=true;clearTimeout(SYNC_T);SYNC_T=setTimeout(syncPush,1500);}
+async function syncPush(){
+  const c=syncCfg();if(!c||SYNC_BUSY)return;SYNC_BUSY=true;
+  const ts=Date.now();
+  try{
+    const r=await fetch(c.u+"/rest/v1/sina_progress?on_conflict=id",{method:"POST",
+      headers:{...syncHdr(c),"Prefer":"resolution=merge-duplicates"},
+      body:JSON.stringify([{id:c.i,data:{srs:S.srs,streak:S.streak,xp:S.xp,updatedAt:ts}}])});
+    if(!r.ok)throw 0;
+    S.dirty=false;S.syncedAt=ts;localStorage.setItem(LS,JSON.stringify(S));
+    syncStat("Gesynchroniseerd · "+new Date(ts).toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}));
+  }catch(e){syncStat("Synchroniseren lukte niet — controleer je verbinding of instellingen.",true);}
+  SYNC_BUSY=false;
+}
+async function syncPull(){
+  const c=syncCfg();if(!c||SYNC_BUSY)return;SYNC_BUSY=true;
+  try{
+    const r=await fetch(c.u+"/rest/v1/sina_progress?id=eq."+encodeURIComponent(c.i)+"&select=data",{headers:syncHdr(c)});
+    if(!r.ok)throw 0;
+    const rows=await r.json();
+    const d=rows[0]&&rows[0].data;
+    if(d&&d.srs&&(d.updatedAt||0)>(S.syncedAt||0)){
+      if(Q||CONV||CHAT){SYNC_BUSY=false;return;} /* niet midden in een oefensessie overschrijven */
+      if(S.dirty){ /* beide kanten gewijzigd: per kaart de sterkste versie houden */
+        for(const id in d.srs){const a=S.srs[id],b=d.srs[id];
+          if(!a||b.reps>a.reps||(b.reps===a.reps&&b.due>a.due))S.srs[id]=b;}
+        if((d.streak.last||"")>(S.streak.last||""))S.streak=d.streak;
+        S.xp=Math.max(S.xp,d.xp||0);
+        S.syncedAt=d.updatedAt;localStorage.setItem(LS,JSON.stringify(S));
+        SYNC_BUSY=false;syncPush();render();return;
+      }
+      S.srs=d.srs;S.streak=d.streak||S.streak;S.xp=d.xp||S.xp;S.syncedAt=d.updatedAt;
+      localStorage.setItem(LS,JSON.stringify(S));render();
+      syncStat("Gesynchroniseerd · "+new Date().toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}));
+    }
+  }catch(e){syncStat("Synchroniseren lukte niet — controleer je verbinding of instellingen.",true);}
+  SYNC_BUSY=false;
+}
+function syncCode(){const c=syncCfg();return c?"SYNC1."+btoa(JSON.stringify(c)):"";}
+function syncEnable(u,k){
+  const bytes=new Uint8Array(16);crypto.getRandomValues(bytes);
+  S.sync={u:u.replace(/\/+$/,""),k,i:[...bytes].map(b=>b.toString(16).padStart(2,"0")).join("")};
+  S.dirty=true;save();syncPush();
+}
+function syncJoin(code){
+  const c=JSON.parse(atob(code.slice(6)));
+  if(!c||!c.u||!c.k||!c.i)throw 0;
+  S.sync=c;S.dirty=false;S.syncedAt=0;save();syncPull();
+}
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s);
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
+  .replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();}
+function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;
+  const m=[...Array(a.length+1)].map((_,i)=>[i,...Array(b.length).fill(0)]);
+  for(let j=0;j<=b.length;j++)m[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)
+    m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return m[a.length][b.length];}
+function answerOk(guess,target){const g=norm(guess),t=norm(target);if(!g)return false;
+  if(g===t)return true;return t.length>4&&lev(g,t)<=1;}
+
+/* ================= ROUTER / VIEWS ================= */
+let TAB="home";
+const SVG_SPK='<svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z" fill="currentColor" stroke="none"/><path d="M15 9.2a4 4 0 0 1 0 5.6"/><path d="M17.3 6.8a7.6 7.6 0 0 1 0 10.4"/></svg>';
+const ICONS={
+home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4.5l8.5 7"/><path d="M5.5 10.5V19h13v-8.5"/></svg>',
+review:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.7 2.8v4.2h-4.2"/></svg>',
+quiz:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></svg>',
+grammar:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7.5 4.5 4.5 4.5v13c3 0 5.5.5 7.5 2 2-1.5 4.5-2 7.5-2v-13c-3 0-5.5.5-7.5 2Z"/><path d="M12 6.5v13"/></svg>'};
+const TABS=[["home","Home"],["review","Repasá"],["quiz","Tèst"],["grammar","Mas"]];
+function renderTabs(){const due=dueIds().length;
+  $("#tabs").innerHTML=TABS.map(([id,lb])=>
+    `<button class="tab${TAB===id?" on":""}" data-tab="${id}">${ICONS[id]}${lb}${id==="review"&&due?`<span class="badge">${due}</span>`:""}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{TAB=b.dataset.tab;render();});}
+function render(){renderTabs();
+  ({home,review:reviewHome,quiz:quizHome,grammar}[TAB])();window.scrollTo(0,0);}
+
+function facades(){const cs=["var(--sun)","var(--sea)","var(--coral)","var(--sea-deep)","var(--sun)"];
+  $(".facades").innerHTML=cs.map((c,i)=>`<span style="background:${c};height:${[18,24,15,21,17][i]}px"></span>`).join("");}
+
+/* ---- home ---- */
+function home(){
+  const due=dueIds().length,started=startedCount(),strong=strongCount(),total=IDS.length;
+  const h=new Date().getHours();
+  const greet=h<12?"Bon dia!":h<18?"Bon tardi!":"Bon nochi!";
+  const sub=h<12?"Goedemorgen":h<18?"Goedemiddag":"Goedenavond";
+  const seed=[...today()].reduce((a,c)=>a*31+c.charCodeAt(0),7);
+  const wod=ALL[IDS[seed%IDS.length]];
+  const sky=[[18,"#E8A13D"],[26,"#F2E9D8"],[15,"#D95F43"],[22,"#BFE3E0"],[19,"#E8A13D"],[28,"#F2E9D8"],
+             [16,"#D95F43"],[24,"#BFE3E0"],[20,"#E8A13D"],[14,"#F2E9D8"],[23,"#D95F43"],[18,"#BFE3E0"]];
+  $("#view").innerHTML=`
+  <div class="hero">
+    <div class="postersun" aria-hidden="true"></div>
+    <div class="hgreet"><span class="pap g">${greet}</span><span class="hsub">${sub} — klaar voor je dagelijkse dosis dushi?</span></div>
+    <div class="wod"><span class="eyebrow">Palabra di dia · woord van de dag</span>
+      <button data-say="${esc(wod.p)}"><b class="pap">${esc(wod.p)}</b> — ${esc(wod.e)} &nbsp;${SVG_SPK}</button></div>
+    <div class="skyline" aria-hidden="true">${sky.map(([ht,c],i)=>
+      `<i style="height:${ht}px;background:${c};${i%3===0?"clip-path:polygon(0 100%,0 28%,50% 0,100% 28%,100% 100%);":""}"></i>`).join("")}</div>
+    <svg class="waves" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 9 Q6 3 12 9 T24 9 T36 9 T48 9 T60 9 T72 9 T84 9 T96 9 T108 9 T120 9 T132 9 T144 9 T156 9 T168 9 T180 9 T192 9 T204 9 T216 9 T228 9 T240 9 T252 9 T264 9 T276 9 T288 9 T300 9 T312 9 T324 9 T336 9 T348 9 T360 9 T372 9 T384 9 T396 9 T400 9 V16 H0 Z" fill="var(--wave)"/>
+    </svg>
+  </div>
+  <div class="stats">
+    <div class="stat sun"><b>${streakLive()}</b><span>Dagen op rij</span></div>
+    <div class="stat due"><b>${due}</b><span>Te herhalen</span></div>
+    <div class="stat"><b>${started}<small style="font-size:12px;color:var(--muted)">/${total}</small></b><span>Gestart</span></div>
+    <div class="stat"><b>${strong}</b><span>Sterk</span></div>
+  </div>
+  ${due?`<button class="cta" id="gorev">Herhaal ${due} kaart${due>1?"en":""} — houd ze vers</button>`:
+        `<div class="panel subtle center">Niets te herhalen — leer hieronder iets nieuws.</div>`}
+  <p class="eyebrow" style="margin:20px 0 0">Kursus · vier niveaus, meest gebruikte woorden eerst</p>
+  ${(()=>{const curL=LEVELS.findIndex(L=>L.ids.some(id=>{const d=DECKS.find(x=>x.id===id);return deckStats(d).s<d.cards.length;}));
+  return LEVELS.map((L,li)=>{
+    const ds=L.ids.map(id=>DECKS.find(x=>x.id===id));
+    const tot=ds.reduce((a,d)=>a+d.cards.length,0),got=ds.reduce((a,d)=>a+deckStats(d).s,0);
+    const pct=Math.round(100*got/tot);
+    return `<section class="lvlsec" style="--lc:${L.c}">
+      <div class="lvlhead">
+        <div class="lvlt"><span class="lvln">${L.n} · <span class="pap lvlpap">${L.pap}</span></span>
+        <small>${esc(L.nl)}</small></div>
+        ${li===curL?`<span class="herechip">bo ta aki</span>`:`<span class="lvlpct">${pct}%</span>`}
+      </div>
+      <div class="bar lvlbar"><i style="width:${pct}%"></i></div>
+      <div class="decks">${ds.map(d=>{const{s,k}=deckStats(d);const n=d.cards.length;
+        return `<button class="deck" data-d="${d.id}">
+          <span class="em">${esc(d.name[0])}</span>
+          <span class="dt"><b>${esc(d.name)}</b><small>${esc(d.desc)}</small>
+          <span class="bar"><i class="${k===n?"full":""}" style="width:${Math.round(100*s/n)}%"></i></span></span>
+          <span class="n">${s}/${n}</span></button>`;}).join("")}
+      </div></section>`;}).join("");})()}
+  <details class="panel" style="margin-top:16px">
+    <summary class="subtle" style="cursor:pointer">Synchronisatie tussen apparaten &amp; back-up</summary>
+    ${syncCfg()?
+    `<p class="subtle" style="margin:10px 0 6px"><b>Synchronisatie staat aan.</b> Je voortgang wordt automatisch gedeeld tussen al je gekoppelde apparaten.</p>
+    <p class="subtle" id="syncstat" style="margin:0 0 8px">${S.syncedAt?"Gesynchroniseerd · "+new Date(S.syncedAt).toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit"}):"Nog niet gesynchroniseerd"}</p>
+    <button class="cta quiet" id="synccopy" style="margin:0 0 6px">Kopieer synccode voor een nieuw apparaat</button>
+    <textarea id="syncout" readonly hidden style="width:100%;height:60px;font-size:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:8px"></textarea>
+    <p class="subtle" style="margin:8px 0 0"><button id="syncoff" style="text-decoration:underline;color:var(--bad)">Synchronisatie uitzetten op dit apparaat</button></p>`
+    :
+    `<p class="subtle" style="margin:10px 0 6px"><b>Automatisch synchroniseren</b> (telefoon ↔ iPad ↔ laptop) werkt via een gratis eigen database bij Supabase. De installatie duurt ± 10 minuten en staat stap voor stap in <b>SETUP-SYNC.md</b> in de repository. Daarna plak je hier twee gegevens uit je Supabase-dashboard:</p>
+    <div class="typebox" style="margin-top:0"><input id="syncurl" autocomplete="off" spellcheck="false" placeholder="Project-URL (https://…supabase.co)"></div>
+    <div class="typebox"><input id="synckey" type="password" autocomplete="off" placeholder="Anon public key (eyJ…)"><button id="syncon">Zet aan</button></div>
+    <p class="subtle" id="syncstat" style="margin:6px 0 0"></p>
+    <p class="subtle" style="margin:12px 0 6px"><b>Al ingesteld op je andere apparaat?</b> Plak dan hier je synccode:</p>
+    <div class="typebox" style="margin-top:0"><input id="syncjoin" autocomplete="off" spellcheck="false" placeholder="SYNC1.…"><button id="syncjoinbtn">Koppel</button></div>`}
+    <p class="subtle" style="margin:14px 0 6px"><b>Handmatige back-up</b> (werkt altijd, ook zonder synchronisatie):</p>
+    <button class="cta quiet" id="expbtn" style="margin:0 0 6px">Kopieer mijn voortgangscode</button>
+    <textarea id="expout" readonly hidden style="width:100%;height:72px;font-size:11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:8px"></textarea>
+    <div class="typebox"><input id="impin" autocomplete="off" spellcheck="false" placeholder="SINA1.…"><button id="impbtn">Laad</button></div>
+    <p class="subtle" id="impmsg" style="margin:6px 0 0"></p>
+  </details>
+  <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
+  wireSpeak();
+  if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
+  $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
+  $("#reset").onclick=()=>{if(confirm("Alle voortgang op dit apparaat wissen?")){localStorage.removeItem(LS);S=load();render();}};
+  $("#expbtn").onclick=async()=>{
+    const code="SINA1."+btoa(unescape(encodeURIComponent(JSON.stringify({srs:S.srs,streak:S.streak,xp:S.xp}))));
+    const out=$("#expout");out.hidden=false;out.value=code;
+    try{await navigator.clipboard.writeText(code);$("#expbtn").textContent="Gekopieerd — plak hem op je andere apparaat";}
+    catch(e){out.focus();out.select();$("#expbtn").textContent="Kopieer de code hieronder zelf";}
+  };
+  $("#impbtn").onclick=()=>{
+    const v=$("#impin").value.trim();
+    try{
+      if(!v.startsWith("SINA1."))throw 0;
+      const p=JSON.parse(decodeURIComponent(escape(atob(v.slice(6)))));
+      if(!p||typeof p.srs!=="object"||Array.isArray(p.srs))throw 0;
+      if(startedCount()>0&&!confirm("Dit apparaat heeft al voortgang ("+startedCount()+" kaarten). Vervangen door de geplakte voortgang?"))return;
+      S.srs=p.srs;S.streak=p.streak||{last:"",count:0};S.xp=p.xp||0;save();render();
+      alert("Gelukt! Je voortgang staat nu ook op dit apparaat.");
+    }catch(e){$("#impmsg").textContent="Dat lijkt geen geldige voortgangscode. Kopieer de héle code (hij begint met SINA1.) en probeer het opnieuw.";}
+  };
+  const so=$("#syncon");if(so)so.onclick=()=>{
+    const u=$("#syncurl").value.trim(),k=$("#synckey").value.trim();
+    if(!/^https:\/\/.+/.test(u)||!k){$("#syncstat").textContent="Vul de project-URL (begint met https://) en de anon key in.";return;}
+    syncEnable(u,k);home();
+  };
+  const sj=$("#syncjoinbtn");if(sj)sj.onclick=()=>{
+    const v=$("#syncjoin").value.trim();
+    try{if(!v.startsWith("SYNC1."))throw 0;syncJoin(v);home();}
+    catch(e){$("#syncstat").textContent="Dat lijkt geen geldige synccode (hij begint met SYNC1.).";}
+  };
+  const sc=$("#synccopy");if(sc)sc.onclick=async()=>{
+    const code=syncCode();const out=$("#syncout");out.hidden=false;out.value=code;
+    try{await navigator.clipboard.writeText(code);sc.textContent="Gekopieerd — plak hem op je nieuwe apparaat";}
+    catch(e){out.focus();out.select();sc.textContent="Kopieer de code hieronder zelf";}
+  };
+  const sf=$("#syncoff");if(sf)sf.onclick=()=>{
+    if(confirm("Synchronisatie uitzetten op dit apparaat? Je voortgang blijft lokaal bewaard.")){delete S.sync;S.dirty=false;save();home();}
+  };
+}
+
+/* ---- deck ---- */
+function deckView(id){
+  const d=DECKS.find(x=>x.id===id);const{s}=deckStats(d);
+  const fresh=d.cards.filter(c=>!st(id+":"+c[0]));
+  $("#view").innerHTML=`
+  <div class="backrow"><button id="back">← Alle decks</button></div>
+  <div class="panel">
+    <p class="eyebrow">Deck · ${d.cards.length} kaarten · ${s} gestart</p>
+    <h2 style="margin:6px 0 4px">${esc(d.name)}</h2>
+    <p class="subtle" style="margin:0 0 12px">${esc(d.desc)}</p>
+    <button class="cta" id="learn" ${fresh.length?"":"disabled"}>Leer ${Math.min(8,fresh.length)||""} nieuwe kaarten</button>
+    <button class="cta quiet" id="drill">Oefen dit hele deck (alle ${d.cards.length})</button>
+  </div>
+  <p class="subtle" style="margin:14px 2px 0">Elke kaart klimt in niveau: <b>1</b> herkennen → <b>2</b> kiezen → <b>3</b> typen &amp; spreken → <b>4</b> alleen Papiamentu, zonder vertaling.</p>
+  <div class="browse">${d.cards.map(c=>`<div class="brow"><span><span class="pap">${esc(c[0])}</span> ${lvlDots(id+":"+c[0])}</span><small>${esc(c[1])}</small></div>`).join("")}</div>`;
+  $("#back").onclick=render;
+  $("#learn").onclick=()=>startLearn(d);
+  $("#drill").onclick=()=>startSession(d.cards.map(c=>id+":"+c[0]),esc(d.name),true);
+}
+
+/* ---- sessions ---- */
+let Q=null;
+function startLearn(d){
+  const fresh=d.cards.filter(c=>!st(d.id+":"+c[0])).slice(0,8).map(c=>d.id+":"+c[0]);
+  if(!fresh.length)return;
+  const steps=fresh.map(id=>({id,mode:"intro"}));
+  shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_pe"}));
+  shuffle(fresh).forEach(id=>steps.push({id,mode:"mc_ep"}));
+  Q={steps,i:0,title:"Leren · "+d.name,right:0,wrong:0,learn:true};step();
+}
+function startSession(ids,title,drill){
+  if(!ids.length)return;
+  const steps=shuffle(ids).slice(0,drill?ids.length:20).map(id=>{
+    const l=lvl(id);
+    const mode=l<=1?"mc_pe":l===2?"mc_ep":
+      l===3?(Math.random()<0.5?"type_ep":"speak_ep"):
+      ["flash","type_ep","speak_ep"][Math.floor(Math.random()*3)];
+    return {id,mode};});
+  Q={steps,i:0,title,right:0,wrong:0,drill:!!drill};step();
+}
+function sessTop(){const pct=Math.round(100*Q.i/Q.steps.length);
+  return `<div class="sess-top"><button class="xbtn" id="quit" title="Sessie stoppen">✕</button>
+  <div class="bar"><i style="width:${pct}%"></i></div>
+  <span class="subtle" style="font-variant-numeric:tabular-nums">${Q.i}/${Q.steps.length}</span></div>`;}
+function step(){
+  if(!Q||Q.i>=Q.steps.length)return finish();
+  const s=Q.steps[Q.i],c=ALL[s.id];
+  ({intro,mc_pe:()=>mc(s,c,true),mc_ep:()=>mc(s,c,false),type_ep:()=>typeEx(s,c),flash:()=>flash(s,c),speak_ep:()=>speakEx(s,c)})[s.mode]?.(s,c);
+  $("#quit").onclick=()=>{Q=null;render();};
+}
+function speakBtn(t){return `<button class="speak" data-say="${esc(t)}" title="Luister (benadering met Spaanse stem)">${SVG_SPK}</button>`;}
+function wireSpeak(){$("#view").querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));}
+
+function intro(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">Nieuwe kaart</p>
+    <div class="big pap">${esc(c.p)}</div>
+    <div class="mid">${esc(c.e)}</div>
+    ${c.n?`<div class="note">${esc(c.n)}</div>`:""}
+    ${speakBtn(c.p)}
+    <div class="lit">Zeg het hardop na — spreken vanaf dag één</div>
+  </div>
+  <button class="cta contbtn" id="next">Begrepen →</button>`;
+  wireSpeak();speak(c.p);
+  $("#next").onclick=()=>{Q.i++;step();};
+}
+function flash(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${lvlTag(s.id)}Alleen Papiamentu — weet je 'm nog?</p>
+    <div class="big pap">${esc(c.p)}</div>
+    ${speakBtn(c.p)}
+    <div id="ans" hidden><div class="mid">${esc(c.e)}</div>${c.n?`<div class="note">${esc(c.n)}</div>`:""}</div>
+  </div>
+  <div id="zone"><button class="cta contbtn" id="show">Toon antwoord</button></div>`;
+  wireSpeak();
+  $("#show").onclick=()=>{$("#ans").hidden=false;
+    $("#zone").innerHTML=`<div class="grades">
+      <button class="grade again">Opnieuw<small>&lt;1 min</small></button>
+      <button class="grade good">Goed<small>${ivlPreview(s.id,1)}</small></button>
+      <button class="grade easy">Makkelijk<small>${ivlPreview(s.id,2)}</small></button></div>`;
+    [["again",0],["good",1],["easy",2]].forEach(([k,g])=>
+      $(".grade."+k).onclick=()=>{answer(s,g===0?false:true,g);});};
+}
+function ivlPreview(id,g){const c=st(id);if(!c||c.ivl<1)return g===2?"3 d":"1 d";
+  const n=Math.round(c.ivl*(g===2?c.ease*1.3:c.ease));return n+" d";}
+function speakEx(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${lvlTag(s.id)}Zeg het hardop in het Papiamentu</p>
+    <div class="mid">${esc(c.e)}</div>
+    <div id="heard" class="lit"></div>
+    <div id="ans" hidden><div class="big pap">${esc(c.p)}</div>${c.n?`<div class="note">${esc(c.n)}</div>`:""}</div>
+  </div>
+  <div id="zone">
+    ${SR?`<button class="cta" id="mic">Spreek nu — ik luister</button>`:""}
+    <button class="cta ${SR?"quiet ":""}contbtn" id="show">Toon antwoord</button>
+  </div>`;
+  let rec=null;
+  const reveal=()=>{if(rec){try{rec.abort();}catch(e){}rec=null;}
+    $("#ans").hidden=false;speak(c.p);
+    $("#zone").innerHTML=`<div class="grades">
+      <button class="grade again">Opnieuw<small>&lt;1 min</small></button>
+      <button class="grade good">Goed<small>${ivlPreview(s.id,1)}</small></button>
+      <button class="grade easy">Makkelijk<small>${ivlPreview(s.id,2)}</small></button></div>
+    <p class="subtle center" style="margin-top:8px">Zei je het (bijna) goed? Wees eerlijk — dat is het hele spel.</p>`;
+    [["again",0],["good",1],["easy",2]].forEach(([k,g])=>
+      $(".grade."+k).onclick=()=>{answer(s,g!==0,g);});};
+  $("#show").onclick=()=>reveal();
+  if(SR)$("#mic").onclick=()=>{
+    try{
+      rec=new SR();rec.lang=VOICE?VOICE.lang:"es-ES";rec.maxAlternatives=3;
+      $("#heard").textContent="Ik luister…";
+      rec.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);
+        const hit=alts.find(t=>answerOk(t,c.p));
+        $("#heard").textContent=`Ik hoorde: “${alts[0]}” ${hit?"— klinkt goed! ✓":"— vergelijk zelf ↓"}`;
+        reveal();};
+      rec.onerror=()=>{$("#heard").textContent="Microfoon niet beschikbaar hier — zeg het hardop en beoordeel jezelf.";};
+      rec.start();
+    }catch(e){$("#heard").textContent="Spraakherkenning niet beschikbaar — zeg het hardop en beoordeel jezelf.";}
+  };
+}
+function mc(s,c,papToEng){
+  const pool=shuffle(IDS.filter(x=>x!==s.id&&ALL[x].e!==c.e&&ALL[x].p!==c.p)).slice(0,3).map(x=>ALL[x]);
+  const opts=shuffle([c,...pool]);
+  const q=papToEng?c.p:c.e, side=x=>papToEng?x.e:x.p;
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${lvlTag(s.id)}${papToEng?"Wat betekent dit?":"Hoe zeg je dit?"}</p>
+    <div class="big ${papToEng?"pap":""}">${esc(q)}</div>
+    ${papToEng?speakBtn(c.p):""}
+  </div>
+  <div class="opts">${opts.map((o,i)=>`<button class="opt ${papToEng?"":"pap"}" data-i="${i}">${esc(side(o))}</button>`).join("")}</div>
+  <div id="fb"></div>`;
+  wireSpeak();if(papToEng)speak(c.p);
+  $("#view").querySelectorAll(".opt").forEach((b,i)=>b.onclick=()=>{
+    const ok=opts[i]===c;
+    $("#view").querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;
+      if(opts[j]===c)x.classList.add("right");else if(j===i&&!ok)x.classList.add("wrong");});
+    if(!papToEng)speak(c.p);
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${c.n?`<br><small>${esc(c.n)}</small>`:""}`);
+  });
+}
+function typeEx(s,c){
+  $("#view").innerHTML=sessTop()+`
+  <div class="qcard">
+    <p class="eyebrow">${lvlTag(s.id)}Typ het in het Papiamentu</p>
+    <div class="mid">${esc(c.e)}</div>
+  </div>
+  <div class="typebox"><input id="tin" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…"><button id="chk">Check</button></div>
+  <div class="accents">${["è","ò","ù","á","é","í","ó","ú","ñ"].map(a=>`<button data-a="${a}">${a}</button>`).join("")}</div>
+  <div id="fb"></div>`;
+  const inp=$("#tin");inp.focus();
+  $("#view").querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{inp.value+=b.dataset.a;inp.focus();});
+  const go=()=>{const ok=answerOk(inp.value,c.p);inp.disabled=true;$("#chk").disabled=true;speak(c.p);
+    const exact=norm(inp.value)===norm(c.p);
+    fbAndNext(s,ok,`<b class="pap">${esc(c.p)}</b> — ${esc(c.e)}${ok&&!exact?`<br><small>Bijna goed — let op de spelling: <b>${esc(c.p)}</b></small>`:""}`);};
+  $("#chk").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter"&&!inp.disabled)go();};
+}
+function fbAndNext(s,ok,detail){
+  $("#fb").innerHTML=`<div class="feedback ${ok?"ok":"no"}"><b>${ok?"Bon trabou!":"Net niet."}</b><br>${detail}</div>
+  <button class="cta contbtn" id="next">Verder →</button>`;
+  const n=$("#next");n.focus();
+  n.onclick=()=>answer(s,ok);
+}
+function answer(s,ok,flashGrade){
+  if(ok){Q.right++;}else{Q.wrong++;}
+  if(Q.learn){
+    if(s.mode==="mc_ep")gradeCard(s.id,ok?1:0);
+    else if(!ok)Q.steps.push({id:s.id,mode:"mc_pe"});
+  } else if(flashGrade!==undefined){gradeCard(s.id,flashGrade);if(flashGrade===0)requeue(s);}
+  else{gradeCard(s.id,ok?1:0);if(!ok)requeue(s);}
+  Q.i++;step();
+}
+function requeue(s){const pos=Math.min(Q.steps.length,Q.i+3);
+  Q.steps.splice(pos,0,{id:s.id,mode:"mc_pe"});}
+function finish(){
+  if(!Q)return render();
+  const {right,wrong,title}=Q;Q=null;
+  if(right+wrong>0)bumpStreak();
+  const acc=right+wrong?Math.round(100*right/(right+wrong)):100;
+  $("#view").innerHTML=`<div class="done">
+    <div class="big pap" style="font-style:italic">${acc>=90?"Masha bon!":acc>=70?"Bon trabou!":"Sigui purba!"}</div>
+    <p style="margin-top:10px">${right} goed · ${wrong} gemist · ${acc}% — ${esc(title)}</p>
+    <p class="subtle">${streakLive()} dag${streakLive()===1?"":"en"} op rij</p>
+    <button class="cta" id="home2">Verder</button></div>`;
+  $("#home2").onclick=render;
+}
+
+/* ---- gespreksoefening: speel één rol in een dialoog ---- */
+let CONV=null;
+function convStart(di,role){CONV={di,role,i:0};convStep();}
+function convStep(){
+  const C=CONV;if(!C)return;
+  const d=DIALOGS[C.di],lines=d.lines;
+  const done=C.i>=lines.length;
+  const cur=done?null:lines[C.i];
+  const mine=cur&&cur[0]===C.role;
+  const bubbles=lines.slice(0,C.i+((cur&&!mine)?1:0)).map(l=>{
+    const me=l[0]===C.role;
+    return `<div class="bub${me?" me":""}"><span class="who2">${me?"Jij":"Gesprekspartner"}</span>
+      <button class="pap" data-say="${esc(l[1])}">${esc(l[1])}</button><small>${esc(l[2])}</small></div>`;}).join("");
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div style="flex:1"><span class="eyebrow">Gesprek · jij bent persoon ${C.role}</span><br><b class="pap" style="font-size:17px">${esc(d.t)}</b></div>
+    <span class="subtle" style="font-variant-numeric:tabular-nums">${Math.min(C.i,lines.length)}/${lines.length}</span></div>
+  <div class="chat">${bubbles}</div>
+  ${done?`<div class="panel center"><p style="margin:0 0 10px"><b class="pap" style="font-size:20px;font-style:italic">Masha bon!</b><br><span class="subtle">Gesprek voltooid.</span></p>
+    <button class="cta" id="again">Nog een keer — nu als persoon ${C.role==="A"?"B":"A"}</button>
+    <button class="cta quiet" id="back2">Terug naar de dialogen</button></div>`
+  :mine?`<div class="panel cue"><p class="eyebrow">Jouw beurt — zeg dit in het Papiamentu</p>
+    <div class="mid">${esc(cur[2])}</div>
+    <div id="ans2" hidden><div class="pap" style="font-size:22px;margin:4px 0 10px">${esc(cur[1])}</div></div>
+    <div id="zone2">
+      ${SR?`<button class="cta" id="mic2">Spreek nu — ik luister</button>`:""}
+      <button class="cta ${SR?"quiet ":""}" id="show2">Toon antwoord</button>
+    </div><div id="heard2" class="subtle"></div></div>`
+  :`<button class="cta" id="next2">Verder</button>`}`;
+  wireSpeak();
+  $("#quit").onclick=()=>{CONV=null;render();};
+  window.scrollTo(0,document.body.scrollHeight);
+  if(done){bumpStreak();
+    $("#again").onclick=()=>convStart(C.di,C.role==="A"?"B":"A");
+    $("#back2").onclick=()=>{CONV=null;render();};return;}
+  if(!mine){speak(cur[1]);$("#next2").onclick=()=>{C.i++;convStep();};}
+  else{
+    const reveal=()=>{$("#ans2").hidden=false;speak(cur[1]);
+      $("#zone2").innerHTML=`<button class="cta" id="next2">Verder</button>`;
+      $("#next2").onclick=()=>{C.i++;convStep();};};
+    $("#show2").onclick=reveal;
+    if(SR)$("#mic2").onclick=()=>{try{
+      const r=new SR();r.lang=VOICE?VOICE.lang:"es-ES";r.maxAlternatives=3;
+      $("#heard2").textContent="Ik luister…";
+      r.onresult=e=>{const t=e.results[0][0].transcript;$("#heard2").textContent=`Ik hoorde: “${t}”`;reveal();};
+      r.onerror=()=>{$("#heard2").textContent="Microfoon niet beschikbaar — zeg het hardop en check jezelf.";};
+      r.start();}catch(e){$("#heard2").textContent="Spraakherkenning niet beschikbaar — zeg het hardop en check jezelf.";}};
+  }
+}
+
+/* ---- Papia ku Claude: vrij gesprek via de Claude API ---- */
+const SCEN=[
+["Na merkado","een marktverkoper op de drijvende markt van Willemstad"],
+["Den taxi","een taxichauffeur op Curaçao"],
+["Topa un hende","iemand die de leerling op het strand ontmoet"],
+["Na fiesta","een gast op een verjaardagsfeest op Curaçao"],
+["Kombersashon liber","een vriendelijke local die over het dagelijks leven kletst"]];
+function aiPrompt(i){return "Ik leer Papiamentu (Curaçaose spelling, beginnersniveau). Laten we een rollenspel doen: jij bent "+SCEN[i][1]+". Spreek Papiamentu in korte, eenvoudige zinnen en zet achter elke zin de Nederlandse vertaling tussen haakjes. Ik antwoord in het Papiamentu. Verbeter mijn fouten kort en vriendelijk in het Nederlands en stel steeds één vraag terug. Begin het gesprek.";}
+let CHAT=null;
+function aiSys(){return "Je bent "+CHAT.role+" en een geduldige Papiamentu-gesprekspartner voor een Nederlandstalige beginner. Blijf in je rol. Spreek Papiamentu (Curaçaose/Bonaireaanse spelling) in korte, eenvoudige zinnen — maximaal 3 per beurt — en zet direct achter elke Papiamentu-zin de Nederlandse vertaling tussen haakjes. De leerling antwoordt in het Papiamentu. Maakt de leerling een fout, verbeter die dan eerst kort en vriendelijk in het Nederlands en ga daarna in je rol verder. Eindig elke beurt met één vraag zodat het gesprek doorloopt.";}
+function aiStart(i){CHAT={t:SCEN[i][0],role:SCEN[i][1],hist:[],busy:false,err:"",draft:""};aiSend(null);}
+async function aiSend(text){
+  const C=CHAT;if(!C||C.busy)return;
+  C.err="";
+  if(text)C.hist.push({role:"user",content:text});
+  else if(!C.hist.length)C.hist.push({role:"user",content:"Start het gesprek nu met een korte begroeting in je rol."});
+  if(C.hist.length>25)C.hist=[C.hist[0],...C.hist.slice(-20)];
+  C.busy=true;aiRender();
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{
+      "content-type":"application/json",
+      "x-api-key":S.apikey,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-opus-4-8",max_tokens:1024,system:aiSys(),messages:C.hist})});
+    const d=await r.json().catch(()=>null);
+    if(!r.ok){
+      const msg=r.status===401?"Ongeldige API-sleutel — controleer hem op console.anthropic.com.":
+        r.status===429?"Even te veel verzoeken — wacht een paar seconden en probeer opnieuw.":
+        (d&&d.error&&d.error.message)||("Fout "+r.status);
+      throw new Error(msg);
+    }
+    if(d.stop_reason==="refusal")throw new Error("Claude heeft dit verzoek geweigerd. Probeer het anders te formuleren.");
+    const txt=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+    if(!txt)throw new Error("Leeg antwoord ontvangen — probeer opnieuw.");
+    C.hist.push({role:"assistant",content:txt});
+  }catch(e){
+    C.err=(e instanceof TypeError)?
+      "Kan de Claude API niet bereiken. In de artifact-weergave blokkeert de beveiliging dit — gebruik de GitHub Pages-versie of het lokale bestand, of open het gesprek via claude.ai.":
+      (e.message||"Onbekende fout");
+    const last=C.hist[C.hist.length-1];
+    if(last&&last.role==="user"&&C.hist.length>1){C.hist.pop();C.draft=last.content;}
+  }
+  C.busy=false;aiRender();
+}
+function aiRender(){
+  const C=CHAT;if(!C)return;
+  const msgs=C.hist.slice(1);
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div style="flex:1"><span class="eyebrow">Papia ku Claude · rollenspel</span><br><b class="pap" style="font-size:17px">${esc(C.t)}</b></div></div>
+  <div class="chat">${msgs.map(m=>`<div class="bub${m.role==="user"?" me":""}">
+    <span class="who2">${m.role==="user"?"Jij":"Claude"}</span><div class="txt">${esc(m.content)}</div></div>`).join("")}
+  ${C.busy?`<div class="bub"><span class="who2">Claude</span><i class="subtle">ta pensa…</i></div>`:""}</div>
+  ${C.err?`<div class="feedback no"><b>Fout.</b> ${esc(C.err)}</div>`:""}
+  <div class="typebox"><input id="ain" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…" ${C.busy?"disabled":""}><button id="asend" ${C.busy?"disabled":""}>Stuur</button></div>
+  <p class="subtle" style="margin-top:6px">Antwoorden komen van Claude Opus 4.8 via jouw eigen API-sleutel (± 1 cent per antwoord).</p>`;
+  $("#quit").onclick=()=>{CHAT=null;render();};
+  const inp=$("#ain");
+  if(inp&&!C.busy){inp.value=C.draft||"";C.draft="";
+    const go=()=>{const v=inp.value.trim();if(v)aiSend(v);};
+    $("#asend").onclick=go;inp.onkeydown=e=>{if(e.key==="Enter")go();};inp.focus();}
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+/* ---- review / quiz / grammar tabs ---- */
+function reviewHome(){
+  const due=dueIds();
+  $("#view").innerHTML=`<div style="padding-top:16px">
+  <p class="eyebrow">Spaced repetition</p>
+  <h2 style="margin:4px 0 10px">Repasá — herhalen</h2>
+  <div class="panel">${due.length?
+    `<p style="margin:0 0 10px"><b>${due.length}</b> kaart${due.length>1?"en staan":" staat"} klaar. Herhalingen komen precies vóórdat je zou vergeten — hier gebeurt het snelle leren.</p>
+     <p class="subtle" style="margin:0 0 10px">Oefenvorm groeit mee met je niveau: herkennen → kiezen → typen &amp; hardop zeggen → alleen Papiamentu.</p>
+     <button class="cta" id="go">Start herhaling</button>`:
+    `<p style="margin:0">Niets te herhalen — dushi!<br><span class="subtle">Leer nieuwe kaarten op Home, of oefen een deck. Kom terug zodra het bolletje oplicht.</span></p>`}
+  </div>
+  ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Oefen 20 willekeurige geleerde kaarten</button>`:""}
+  </div>`;
+  if(due.length)$("#go").onclick=()=>startSession(due,"Herhaling");
+  const a=$("#all");if(a)a.onclick=()=>startSession(shuffle(IDS.filter(id=>st(id))).slice(0,20),"Oefening");
+}
+function quizHome(){
+  const learned=IDS.filter(id=>st(id));
+  $("#view").innerHTML=`<div style="padding-top:16px">
+  <p class="eyebrow">Snelle quiz</p>
+  <h2 style="margin:4px 0 10px">Tèst bo mes — test jezelf</h2>
+  <div class="panel">
+    <p style="margin:0 0 10px">10 vlotte vragen, gemengde vormen. ${learned.length>=8?"Uit de "+learned.length+" kaarten die je al gestart bent.":"Begint met de Overlevingskit tot je meer geleerd hebt."}</p>
+    <button class="cta" id="go">Start quiz</button>
+  </div></div>`;
+  $("#go").onclick=()=>{
+    let pool=learned.length>=8?learned:DECKS[0].cards.map(c=>"survival:"+c[0]);
+    const steps=shuffle(pool).slice(0,10).map(id=>({id,mode:Math.random()<0.5?"mc_pe":"mc_ep"}));
+    Q={steps,i:0,title:"Quiz",right:0,wrong:0,drill:true};step();};
+}
+function grammar(){
+  $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
+  <p class="eyebrow">Spreken &amp; luisteren</p>
+  <h2 style="margin-top:4px">Kombersashon — dialogen</h2>
+  <p class="subtle">Echte gesprekken, zin voor zin. Tik op een regel om hem te horen — of <b>speel zelf een rol</b>: de app zegt de regels van je gesprekspartner, jij moet jouw regels in het Papiamentu zeggen.</p>
+  ${DIALOGS.map((d,i)=>`<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(d.t)}</b> <small>· ${esc(d.tr)}</small></summary>
+    <div class="dlines">${d.lines.map(l=>`<button class="dline" data-say="${esc(l[1])}">
+      <span class="who ${l[0]==="A"?"a":"b"}">${l[0]}</span>
+      <span><span class="pap">${esc(l[1])}</span><small>${esc(l[2])}</small></span></button>`).join("")}
+    </div>
+    <div class="dlgbtns"><button class="cta convbtn" data-di="${i}" data-role="B">Speel — jij bent B</button>
+    <button class="cta quiet convbtn" data-di="${i}" data-role="A">Jij bent A</button></div></details>`).join("")}
+  <button class="cta quiet" id="prlines">Oefen deze zinnen als flashcards</button>
+
+  <p class="eyebrow" style="margin-top:28px">Vrij gesprek</p>
+  <h2 style="margin-top:4px">Papia ku Claude — oefen een écht gesprek</h2>
+  <p class="subtle">Kies een scenario. Claude speelt de rol, spreekt Papiamentu op jouw niveau, vertaalt elke zin en verbetert je fouten in het Nederlands.</p>
+  <div class="panel">
+    <div class="scens">${SCEN.map((s,i)=>{
+      const label=`<span class="pap" style="font-size:14px;text-transform:none;letter-spacing:0">${esc(s[0])}</span>`;
+      return S.apikey?`<button class="cta scenbtn" data-i="${i}">${label}</button>`:
+      `<a class="cta quiet scenbtn" style="text-decoration:none" href="https://claude.ai/new?q=${encodeURIComponent(aiPrompt(i))}" target="_blank" rel="noopener">${label}</a>`;}).join("")}</div>
+    ${S.apikey?
+    `<p class="subtle" style="margin:10px 0 0">Het gesprek opent hier in de app. <button id="delkey" style="text-decoration:underline;color:var(--bad)">API-sleutel wissen</button></p>`:
+    `<p class="subtle" style="margin:10px 0 0">De knoppen openen een voorbereid gesprek op claude.ai — gratis account is genoeg.</p>
+    <details style="margin-top:8px"><summary class="subtle" style="cursor:pointer">Liever hier in de app chatten? Plak een eigen API-sleutel</summary>
+      <p class="subtle" style="margin:8px 0">Maak een sleutel op <a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:var(--sea-deep)">console.anthropic.com</a> (API keys). De sleutel wordt alleen op dit apparaat bewaard en een antwoord kost ± 1 cent. Werkt in de GitHub Pages-versie en lokaal — niet in de artifact-weergave.</p>
+      <div class="typebox" style="margin-top:0"><input id="keyin" type="password" autocomplete="off" placeholder="sk-ant-…"><button id="keysave">Bewaar</button></div>
+    </details>`}
+  </div>
+
+  <p class="eyebrow" style="margin-top:28px">Spoedcursus</p>
+  <h2 style="margin-top:4px">Gramátika — één keer lezen, altijd spreken</h2>
+  ${GRAMMAR.map((g,i)=>`<h2>${i+1}. ${g.t}</h2>${g.h}`).join("")}
+
+  <p class="eyebrow" style="margin-top:28px">Verdieping</p>
+  <h2 style="margin-top:4px">Mas rekurso — voor échte stemmen</h2>
+  <p class="subtle">Deze app bouwt je woordenschat en grammatica op; je oor heeft echte stemmen nodig. Dit zijn de beste Papiamentu-bronnen die er zijn:</p>
+  <div class="panel"><ul class="res">
+  ${RESOURCES.map(r=>`<li>${r[1]?`<a href="${esc(r[1])}" target="_blank" rel="noopener">${esc(r[0])}</a>`:`<b>${esc(r[0])}</b>`} — ${esc(r[2])}</li>`).join("")}
+  </ul></div>
+  <p class="subtle" style="margin:20px 0">En — het allerbeste — elke dushi local die met je wil kletsen. Papia, papia, papia!</p>
+  </div>`;
+  wireSpeak();
+  $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
+  $("#view").querySelectorAll(".convbtn").forEach(b=>b.onclick=()=>convStart(+b.dataset.di,b.dataset.role));
+  if(S.apikey)$("#view").querySelectorAll("button.scenbtn").forEach(b=>b.onclick=()=>aiStart(+b.dataset.i));
+  const ks=$("#keysave");if(ks)ks.onclick=()=>{const v=$("#keyin").value.trim();
+    if(v){S.apikey=v;save();grammar();window.scrollTo(0,0);}};
+  const dk=$("#delkey");if(dk)dk.onclick=()=>{delete S.apikey;save();grammar();};
+}
+
+/* ================= BOOT ================= */
+$("#ttsbtn").setAttribute("aria-pressed",String(S.tts));
+$("#ttsbtn").onclick=()=>{S.tts=!S.tts;save();$("#ttsbtn").setAttribute("aria-pressed",String(S.tts));};
+$("#themebtn").onclick=()=>{
+  const cur=document.documentElement.dataset.theme||
+    (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";
+  document.documentElement.dataset.theme=next;S.theme=next;save();};
+if(S.theme)document.documentElement.dataset.theme=S.theme;
+facades();render();
+/* sync: bij opstarten, bij terugkeren naar de app, en elke minuut */
+if(syncCfg()){syncPull();}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)syncPull();});
+setInterval(syncPull,60000);
+</script>
+</body>
+</html>
