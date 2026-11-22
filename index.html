@@ -2,8 +2,17 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Siña Papiamentu</title>
+<meta name="description" content="Snel Papiamentu leren voor Nederlandstaligen — spaced repetition, spreken, dialogen en een echte stem.">
+<meta name="theme-color" content="#D95436">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Papiamentu">
 </head>
 <body>
 <style>
@@ -892,7 +901,53 @@ const DECKS=[
 ["trankilo","rustig"],
 ["drùk","druk","van het Nederlandse 'druk'"],
 ["turista","toerist"],
-["historia","geschiedenis / verhaal"]]}
+["historia","geschiedenis / verhaal"]]},
+{id:"konektor",name:"Verbindingswoorden",desc:"De lijm van echte zinnen",cards:[
+["pasobra","omdat / want"],
+["p'esei","daarom"],
+["anto","dan / dus"],
+["pero","maar"],
+["òf","of"],
+["tambe","ook"],
+["mientras","terwijl"],
+["ounke","hoewel"],
+["tòg","toch"],
+["ademas","bovendien"],
+["por ehèmpel","bijvoorbeeld","lett. 'por ehèmpel'"],
+["sinembargo","echter"],
+["promé","eerst / eerder"],
+["despues","daarna / later"],
+["asta","zelfs"],
+["manera","zoals / manier"],
+["komo","aangezien"]]},
+{id:"reakshon",name:"Reageren",desc:"Kort reageren in een gesprek",cards:[
+["Di bèrdat?","Echt waar?"],
+["Klaro ku sí","Natuurlijk wel"],
+["Mi ta kere ku sí","Ik denk van wel"],
+["Mi no ta kere","Ik denk het niet"],
+["Mi ta di akuerdo","Ik ben het ermee eens"],
+["Mi no tin idea","Ik heb geen idee"],
+["Ta depende","Dat hangt ervan af"],
+["Pa mi ta bon","Voor mij is het prima"],
+["Ami tambe","Ik ook"],
+["Ta bèrdat","Dat klopt"],
+["Mi gusta esei","Dat vind ik leuk"],
+["Mi no gusta esei","Dat vind ik niet leuk"],
+["Esei ta interesante","Dat is interessant"],
+["No ta nada","Het is niets / geen probleem"]]},
+{id:"kombersa",name:"Gesprek gaande houden",desc:"Doorvragen en verbinden",cards:[
+["Konta mi mas","Vertel me meer"],
+["Spera un ratu","Wacht even"],
+["un ratu","een momentje"],
+["Mi ta skucha","Ik luister"],
+["Pakiko?","Waarom?"],
+["Kon asina?","Hoezo?"],
+["Kiko a pasa?","Wat is er gebeurd?"],
+["Mi ke bisa…","Ik bedoel…"],
+["Lo mi konta bo","Ik zal het je vertellen"],
+["Nos ta papia despues","We praten later verder"],
+["Te otro biaha","Tot de volgende keer"],
+["biaha","keer / maal"]]}
 ];
 
 /* Course levels — group decks into a visible learning path */
@@ -900,11 +955,11 @@ const LEVELS=[
 {n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8940A",
  ids:["survival","greet","dialog","particles","questions","numbers"]},
 {n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#177E70",
- ids:["verbs1","glue","food","time","places","verbs2"]},
+ ids:["verbs1","glue","konektor","food","time","places","verbs2"]},
 {n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95436",
  ids:["people","adj","beach","money","body","house","nature","emergency","weather2"]},
 {n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#2C5B7B",
- ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","love","city"]}
+ ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","reakshon","kombersa","love","city"]}
 ];
 
 /* Dialog line: [speaker, papiamentu, dutch] */
@@ -964,6 +1019,40 @@ const DIALOGS=[
 ["B","Masha pabien! Kuantu aña e ta hasi?","Van harte! Hoe oud wordt hij?"],
 ["A","Kuarenta. Ban kome i gosa!","Veertig. Laten we eten en genieten!"],
 ["B","Salú! Pa bo kasá!","Proost! Op je man!"]]}
+];
+
+/* Leesteksten (comprehensible input): [papiamentu, nederlands] per regel */
+const READING=[
+{t:"Mi dia",tr:"Mijn dag",lvl:1,lines:[
+["Mi yama Ana.","Ik heet Ana."],
+["Mi ta di Hulanda.","Ik kom uit Nederland."],
+["Awe ta un bon dia.","Vandaag is een goede dag."],
+["Mi ta kontentu.","Ik ben blij."],
+["Mi ta siña papiamentu tur dia.","Ik leer elke dag Papiamentu."]]},
+{t:"Na kas",tr:"Thuis",lvl:1,lines:[
+["Mi kas ta chikitu, pero bunita.","Mijn huis is klein, maar mooi."],
+["Mi tin un kachó.","Ik heb een hond."],
+["E kachó ta yama Max.","De hond heet Max."],
+["Tur dia mi ta kana ku Max.","Elke dag wandel ik met Max."],
+["Nos dos ta gusta e playa.","Wij tweeën houden van het strand."]]},
+{t:"Na merkado",tr:"Op de markt",lvl:2,lines:[
+["Awe mi ta bai merkado.","Vandaag ga ik naar de markt."],
+["Mi ke kumpra fruta i piská.","Ik wil fruit en vis kopen."],
+["E mango ta tres florin pa un.","De mango is drie gulden per stuk."],
+["Mi ta kumpra sinku mango.","Ik koop vijf mango's."],
+["Despues mi ta bai kas pa kushiná.","Daarna ga ik naar huis om te koken."]]},
+{t:"Un dia na playa",tr:"Een dag op het strand",lvl:3,lines:[
+["Djasabra nos a bai playa.","Zaterdag zijn we naar het strand gegaan."],
+["E awa tabata asul i kayente.","Het water was blauw en warm."],
+["Nos a landa i hunga den awa.","We hebben gezwommen en in het water gespeeld."],
+["Mi tabatin hamber, so nos a kome pastechi.","Ik had honger, dus we hebben pastechi gegeten."],
+["Tabata un dia perfekto.","Het was een perfecte dag."]]},
+{t:"Mi famia",tr:"Mijn familie",lvl:4,lines:[
+["Mi famia ta biba na Kòrsou.","Mijn familie woont op Curaçao."],
+["Mi tin dos ruman: un hòmber i un muhé.","Ik heb twee broers/zussen: een broer en een zus."],
+["Mi mama ta traha den un skol.","Mijn moeder werkt op een school."],
+["Riba djadumingu nos tur ta kome huntu.","Op zondag eten we allemaal samen."],
+["Mi ta stima mi famia hopi.","Ik hou heel veel van mijn familie."]]}
 ];
 
 const RESOURCES=[
@@ -1222,6 +1311,9 @@ function home(){
   ${due?`<button class="cta" id="gorev">Herhaal ${due} kaart${due>1?"en":""} — houd ze vers</button>`:
         `<div class="panel subtle center">Niets te herhalen — leer hieronder iets nieuws.</div>`}
   <p class="eyebrow" style="margin:20px 0 0">Kursus · vier niveaus, meest gebruikte woorden eerst</p>
+  ${started===0?
+    `<div class="panel" style="margin-top:8px"><p style="margin:0 0 10px"><b>Niet helemaal nieuw in Papiamentu?</b> Doe de korte niveautest (± 2 min) — dan beginnen we op jouw niveau in plaats van bij nul.</p><button class="cta" id="pttest">Doe de niveautest</button></div>`:
+    `<p class="subtle" style="margin:4px 0 0">Al wat woorden paraat? <button id="pttest" style="text-decoration:underline;color:var(--sea-deep);cursor:pointer">Doe de niveautest</button>.</p>`}
   ${(()=>{const curL=LEVELS.findIndex(L=>L.ids.some(id=>{const d=DECKS.find(x=>x.id===id);return deckStats(d).s<d.cards.length;}));
   return LEVELS.map((L,li)=>{
     const ds=L.ids.map(id=>DECKS.find(x=>x.id===id));
@@ -1265,6 +1357,7 @@ function home(){
   <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
   wireSpeak();
   if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
+  const pt=$("#pttest");if(pt)pt.onclick=ptStart;
   $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
   $("#reset").onclick=()=>{if(confirm("Alle voortgang op dit apparaat wissen?")){localStorage.removeItem(LS);S=load();render();}};
   $("#expbtn").onclick=async()=>{
@@ -1544,6 +1637,107 @@ function convStep(){
   }
 }
 
+/* ---- Shadow-modus: luister en spreek de zin na (echte stem) ---- */
+let SH=null;
+function shadowSet(){
+  const started=shuffle(IDS.filter(id=>st(id))).slice(0,15);
+  return started.length>=5?started:DECKS[0].cards.map(c=>"survival:"+c[0]).slice(0,12);
+}
+function shadowStart(ids){SH={ids,i:0};shadowStep();}
+function shadowStep(){
+  const C=SH;if(!C)return;
+  if(C.i>=C.ids.length){bumpStreak();
+    $("#view").innerHTML=`<div class="done"><div class="big pap" style="font-style:italic">Masha bon!</div>
+      <p style="margin-top:10px">${C.ids.length} zinnen nagesproken · Shadow</p>
+      <p class="subtle">${streakLive()} dag${streakLive()===1?"":"en"} op rij</p>
+      <button class="cta" id="sagain">Nog een ronde</button>
+      <button class="cta quiet" id="sback">Terug</button></div>`;
+    $("#sagain").onclick=()=>shadowStart(shadowSet());
+    $("#sback").onclick=()=>{SH=null;render();};return;}
+  const c=ALL[C.ids[C.i]];
+  const real=!!(window.PAP_AUDIO&&window.PAP_AUDIO[c.p]);
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div style="flex:1"><span class="eyebrow">Shadow · luister &amp; spreek na</span></div>
+    <span class="subtle" style="font-variant-numeric:tabular-nums">${C.i+1}/${C.ids.length}</span></div>
+  <div class="qcard">
+    <p class="eyebrow">Luister en zeg het meteen hardop na${real?"":" · (Spaanse reservestem)"}</p>
+    <div class="big pap">${esc(c.p)}</div>
+    <div class="mid">${esc(c.e)}</div>
+    ${c.n?`<div class="note">${esc(c.n)}</div>`:""}
+    <button class="speak" id="replay" title="Nog eens horen">${SVG_SPK}</button>
+    <div id="heardS" class="lit"></div>
+  </div>
+  <div id="zoneS">
+    ${SR?`<button class="cta" id="micS">Spreek na — ik luister</button>`:""}
+    <button class="cta ${SR?"quiet ":""}contbtn" id="nextS">Volgende →</button>
+  </div>`;
+  $("#quit").onclick=()=>{SH=null;render();};
+  speak(c.p);
+  $("#replay").onclick=()=>speak(c.p);
+  $("#nextS").onclick=()=>{C.i++;shadowStep();};
+  if(SR)$("#micS").onclick=()=>{try{
+    const r=new SR();r.lang=VOICE?VOICE.lang:"es-ES";r.maxAlternatives=3;
+    $("#heardS").textContent="Ik luister…";
+    r.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);
+      const hit=alts.find(t=>answerOk(t,c.p));
+      $("#heardS").textContent=`Ik hoorde: “${alts[0]}” ${hit?"— klinkt goed! ✓":"— vergelijk met de zin hierboven"}`;};
+    r.onerror=()=>{$("#heardS").textContent="Microfoon niet beschikbaar — zeg het gewoon hardop na.";};
+    r.start();}catch(e){$("#heardS").textContent="Spraakherkenning niet beschikbaar — zeg het gewoon hardop na.";}};
+}
+
+/* ---- Niveautest: plaats de leerling op het juiste niveau ---- */
+let PT=null;
+function ptCards(){const out=[];
+  LEVELS.forEach(L=>{const picks=[];
+    L.ids.forEach(did=>{const d=DECKS.find(x=>x.id===did);if(d)d.cards.forEach(c=>picks.push(did+":"+c[0]));});
+    shuffle(picks).slice(0,Math.ceil(10/LEVELS.length)).forEach((id,k)=>out.push({id,lvl:LEVELS.indexOf(L)+1}));});
+  return out.slice(0,10);
+}
+function ptStart(){PT={q:ptCards(),i:0,known:[],miss:[]};ptStep();}
+function ptStep(){
+  const C=PT;if(!C)return;
+  if(C.i>=C.q.length)return ptFinish();
+  const cur=C.q[C.i],c=ALL[cur.id];
+  const pool=shuffle(IDS.filter(x=>x!==cur.id&&ALL[x].e!==c.e)).slice(0,3).map(x=>ALL[x]);
+  const opts=shuffle([c,...pool]);
+  $("#view").innerHTML=`
+  <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
+    <div class="bar"><i style="width:${Math.round(100*C.i/C.q.length)}%"></i></div>
+    <span class="subtle" style="font-variant-numeric:tabular-nums">${C.i+1}/${C.q.length}</span></div>
+  <div class="qcard"><p class="eyebrow">Niveautest · wat betekent dit?</p>
+    <div class="big pap">${esc(c.p)}</div></div>
+  <div class="opts">${opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o.e)}</button>`).join("")}</div>
+  <button class="cta quiet" id="dunno" style="margin-top:4px">Ik weet het niet</button>`;
+  $("#quit").onclick=()=>{PT=null;render();};
+  $("#view").querySelectorAll(".opt").forEach((b,i)=>b.onclick=()=>{
+    const ok=opts[i]===c;
+    if(ok)C.known.push(cur.id);else C.miss.push(cur.lvl);
+    C.i++;ptStep();});
+  $("#dunno").onclick=()=>{C.miss.push(cur.lvl);C.i++;ptStep();};
+}
+function ptFinish(){
+  const C=PT;PT=null;if(!C)return render();
+  const now=Date.now();
+  C.known.forEach(id=>{if(!S.srs[id])S.srs[id]={ivl:3,ease:2.5,due:now+3*DAY,reps:2,lapses:0};});
+  if(C.known.length)save();
+  const recLvl=C.miss.length?Math.min(...C.miss):(LEVELS.length+1);
+  const li=Math.min(recLvl-1,LEVELS.length-1);
+  const L=LEVELS[li];
+  const firstDeck=L.ids.find(did=>{const d=DECKS.find(x=>x.id===did);return deckStats(d).s<d.cards.length;})||L.ids[0];
+  $("#view").innerHTML=`<div class="done">
+    <div class="big pap" style="font-style:italic">${recLvl>LEVELS.length?"Impreshonante!":"Bon!"}</div>
+    <p style="margin-top:10px">Je had <b>${C.known.length}</b> van de ${C.q.length} goed.</p>
+    <p>${recLvl>LEVELS.length?
+      "Je kent de basis al goed — duik gerust in de hogere niveaus.":
+      `We raden je aan te beginnen bij <b>${L.n} · ${esc(L.pap)}</b> <span class="subtle">(${esc(L.nl)})</span>.`}</p>
+    <p class="subtle">De woorden die je goed had, zijn als 'gekend' gemarkeerd — die krijg je niet opnieuw als nieuw.</p>
+    <button class="cta" id="ptgo">${recLvl>LEVELS.length?"Naar de niveaus":"Begin bij "+L.n}</button>
+    <button class="cta quiet" id="pthome">Naar Home</button></div>`;
+  $("#ptgo").onclick=()=>{TAB="home";if(recLvl>LEVELS.length)render();else{renderTabs();deckView(firstDeck);}};
+  $("#pthome").onclick=()=>{TAB="home";render();};
+}
+
 /* ---- Papia ku Claude: vrij gesprek via de Claude API ---- */
 const SCEN=[
 ["Na merkado","een marktverkoper op de drijvende markt van Willemstad"],
@@ -1717,7 +1911,24 @@ function quizHome(){
 }
 function grammar(){
   $("#view").innerHTML=`<div class="gram" style="padding-top:16px">
-  <p class="eyebrow">Spreken &amp; luisteren</p>
+  <p class="eyebrow">Lezen · begrijpen</p>
+  <h2 style="margin-top:4px">Lesa — korte teksten</h2>
+  <p class="subtle">Lees eerst alleen het Papiamentu en probeer het te begrijpen; tik <b>Vertaling</b> aan om te controleren. Tik op een regel om hem te horen. Lezen is de snelste manier om vlot te worden.</p>
+  ${READING.map((t,i)=>{const L=LEVELS[t.lvl-1];
+    return `<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(t.t)}</b> <small>· ${esc(t.tr)}</small>
+      <span class="lvlpct" style="background:${L.c};color:#fff;margin-left:6px">${L.n}</span></summary>
+    <div class="dlines rdoc" data-ti="${i}">${t.lines.map(l=>`<button class="dline" data-say="${esc(l[0])}">
+      <span><span class="pap">${esc(l[0])}</span><small class="rtr" hidden>${esc(l[1])}</small></span></button>`).join("")}
+    </div>
+    <button class="cta quiet rtoggle" data-ti="${i}" style="margin-top:8px">Vertaling tonen</button></details>`;}).join("")}
+
+  <p class="eyebrow" style="margin-top:28px">Uitspraak · naspreken</p>
+  <h2 style="margin-top:4px">Shadow — luister &amp; spreek na</h2>
+  <p class="subtle">Hoor een zin en zeg hem meteen hardop na. Met de echte Papiamentu-stem traint dit je uitspraak en je ritme — de beste manier om natuurlijk te gaan klinken.</p>
+  <div class="panel"><button class="cta" id="shadowbtn">Start shadow-ronde</button>
+    <p class="subtle" style="margin:10px 0 0">Een ronde van maximaal 15 zinnen uit de woorden die je al leert (of de Overlevingskit als je net begint).</p></div>
+
+  <p class="eyebrow" style="margin-top:28px">Spreken &amp; luisteren</p>
   <h2 style="margin-top:4px">Kombersashon — dialogen</h2>
   <p class="subtle">Echte gesprekken, zin voor zin. Tik op een regel om hem te horen — of <b>speel zelf een rol</b>: de app zegt de regels van je gesprekspartner, jij moet jouw regels in het Papiamentu zeggen.</p>
   ${DIALOGS.map((d,i)=>`<details class="dlg"${i===0?" open":""}><summary><b class="pap">${esc(d.t)}</b> <small>· ${esc(d.tr)}</small></summary>
@@ -1759,6 +1970,12 @@ function grammar(){
   <p class="subtle" style="margin:20px 0">En — het allerbeste — elke dushi local die met je wil kletsen. Papia, papia, papia!</p>
   </div>`;
   wireSpeak();
+  $("#view").querySelectorAll(".rtoggle").forEach(b=>b.onclick=()=>{
+    const doc=$("#view").querySelector('.rdoc[data-ti="'+b.dataset.ti+'"]');
+    const hidden=doc.querySelector(".rtr").hidden;
+    doc.querySelectorAll(".rtr").forEach(s=>s.hidden=!hidden);
+    b.textContent=hidden?"Vertaling verbergen":"Vertaling tonen";});
+  const shb=$("#shadowbtn");if(shb)shb.onclick=()=>shadowStart(shadowSet());
   $("#prlines").onclick=()=>{TAB="home";renderTabs();deckView("dialog");};
   $("#view").querySelectorAll(".convbtn").forEach(b=>b.onclick=()=>convStart(+b.dataset.di,b.dataset.role));
   if(S.apikey)$("#view").querySelectorAll("button.scenbtn").forEach(b=>b.onclick=()=>aiStart(+b.dataset.i));
@@ -1781,6 +1998,12 @@ facades();render();
 if(syncCfg()){syncPull();}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)syncPull();});
 setInterval(syncPull,60000);
+</script>
+<script>
+/* PWA: app installeerbaar + offline (alleen op https, dus niet in het lokale bestand) */
+if("serviceWorker" in navigator && location.protocol==="https:"){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});
+}
 </script>
 </body>
 </html>
