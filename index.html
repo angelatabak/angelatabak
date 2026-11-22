@@ -1130,6 +1130,14 @@ const GRAMMAR=[
 ];
 
 /* ================= STATE ================= */
+const APP_VERSION="1.2", APP_DATE="november 2026";
+const WHATSNEW=[
+"Lesa — korte leesteksten op vier niveaus (met vertaal-knop)",
+"Shadow-modus: luister en spreek zinnen na met de echte stem",
+"Feedback op je gesprek met Claude → je fouten komen terug in Repasá",
+"Niveautest om op het juiste niveau te beginnen",
+"43 nieuwe woorden voor echte gesprekken (verbindingswoorden & reageren)",
+"Installeerbaar als app op je beginscherm + offline te gebruiken"];
 const LS="sina_pap_v1";
 let S=load();
 function load(){try{const s=JSON.parse(localStorage.getItem(LS));if(s&&s.srs)return s;}catch(e){}
@@ -1290,7 +1298,13 @@ function home(){
   const wod=ALL[IDS[seed%IDS.length]];
   const sky=[[18,"#E8A13D"],[26,"#F2E9D8"],[15,"#D95F43"],[22,"#BFE3E0"],[19,"#E8A13D"],[28,"#F2E9D8"],
              [16,"#D95F43"],[24,"#BFE3E0"],[20,"#E8A13D"],[14,"#F2E9D8"],[23,"#D95F43"],[18,"#BFE3E0"]];
+  const showNew=S.ver!==APP_VERSION;
   $("#view").innerHTML=`
+  ${showNew?`<div class="panel" id="whatsnew" style="border:2px solid var(--sea);margin-bottom:12px">
+    <p class="eyebrow" style="color:var(--sea)">Nieuw · versie ${APP_VERSION}</p>
+    <p style="margin:4px 0 8px"><b>De app is bijgewerkt!</b> Wat er nieuw is:</p>
+    <ul class="res" style="margin:0 0 10px">${WHATSNEW.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>
+    <button class="cta quiet" id="newok">Begrepen</button></div>`:""}
   <div class="hero">
     <div class="postersun" aria-hidden="true"></div>
     <div class="hgreet"><span class="pap g">${greet}</span><span class="hsub">${sub} — klaar voor je dagelijkse dosis dushi?</span></div>
@@ -1354,8 +1368,10 @@ function home(){
     <div class="typebox"><input id="impin" autocomplete="off" spellcheck="false" placeholder="SINA1.…"><button id="impbtn">Laad</button></div>
     <p class="subtle" id="impmsg" style="margin:6px 0 0"></p>
   </details>
-  <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>`;
+  <p class="subtle" style="margin-top:14px">Spelling van Curaçao/Bonaire. Voortgang wordt op dit apparaat opgeslagen. <button id="reset" style="color:var(--bad);text-decoration:underline">Voortgang wissen</button></p>
+  <p class="subtle center" style="margin-top:10px;opacity:.75">Siña Papiamentu · versie ${APP_VERSION} · ${APP_DATE}</p>`;
   wireSpeak();
+  const nok=$("#newok");if(nok)nok.onclick=()=>{S.ver=APP_VERSION;save();home();};
   if(due)$("#gorev").onclick=()=>startSession(dueIds(),"Herhaling");
   const pt=$("#pttest");if(pt)pt.onclick=ptStart;
   $("#view").querySelectorAll(".deck").forEach(b=>b.onclick=()=>deckView(b.dataset.d));
