@@ -31,6 +31,8 @@ De app gebruikt standaard een Spaanse reservestem. Zo vervang je die door een **
 
 In het **Mas**-tabblad staat "Papia ku Claude": kies een scenario (markt, taxi, feestje…) en oefen een echt gesprek in het Papiamentu, met vertaling en foutcorrectie.
 
+Na een gesprek (in de in-app chat) kun je op **"Vraag Claude om feedback op je Papiamentu"** klikken: je krijgt een lijstje *wat ging goed* en *verbeterpunten* met correcties, en de woorden waar je over struikelde worden automatisch in je herhalingen (Repasá) klaargezet — zo bouwt de app je volgende oefensessie uit je eigen fouten op.
+
 - **Zonder instellen**: de knoppen openen een voorbereid gesprek op claude.ai (gratis account is genoeg).
 - **In de app chatten**: maak een API-sleutel op [console.anthropic.com](https://console.anthropic.com/) en plak hem in de app (klapmenu onder de scenario's). De sleutel blijft alleen op jouw apparaat; een antwoord kost ± 1 cent. Werkt in de GitHub Pages-versie en lokaal.
 
