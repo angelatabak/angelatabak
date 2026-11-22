@@ -8,6 +8,9 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 
 - **578 meest gebruikte woorden & zinnen** in 33 themadecks, verdeeld over 4 niveaus (Fundeshi → Konstruí → Amplia → Konversá), geordend op bruikbaarheid — overlevingszinnen eerst.
 - **6 praktijkdialogen** (o.a. iemand ontmoeten, de markt, de taxi, een feestje) met tik-om-te-luisteren regels, plus een bijpassend flashcard-deck.
+- **Lesa — korte leesteksten** op vier niveaus: lees eerst alleen het Papiamentu, tik dan de vertaling aan om te controleren (begrijpbare input is de snelste weg naar vlotheid).
+- **Shadow-modus**: hoor een zin en zeg hem meteen hardop na — met de echte Papiamentu-stem traint dit je uitspraak en ritme.
+- **Niveautest** aan de start: niet helemaal nieuw? Een korte test plaatst je op het juiste niveau in plaats van bij nul.
 - **Spaced repetition (SM-2)**: herhalingen komen precies vóórdat je zou vergeten. Onderzoek laat ~85% retentie zien versus ~22% bij stampen.
 - **Actief ophalen in gemengde vormen**: flashcards, meerkeuze in beide richtingen, en typen met accent-tolerante typefoutcorrectie.
 - **Een spoedcursus grammatica in 5 hoofdstukken** — Papiamentu kent geen vervoegingen en geen geslacht; tijd bestaat uit 4 partikels (`ta`, `a`, `lo`, `tabata`). Je leest de hele grammatica in 10 minuten. Als Nederlander heb je bovendien honderden leenwoorden cadeau (*danki*, *hel*, *kamber*, *skol*…).
