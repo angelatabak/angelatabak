@@ -6,7 +6,7 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 
 ## Waarom je hiermee snel leert
 
-- **578 meest gebruikte woorden & zinnen** in 33 themadecks, verdeeld over 4 niveaus (Fundeshi → Konstruí → Amplia → Konversá), geordend op bruikbaarheid — overlevingszinnen eerst.
+- **621 meest gebruikte woorden & zinnen** in 36 themadecks, verdeeld over 4 niveaus (Fundeshi → Konstruí → Amplia → Konversá), geordend op bruikbaarheid — overlevingszinnen eerst. Inclusief verbindingswoorden en gespreksuitdrukkingen voor conversatieniveau.
 - **6 praktijkdialogen** (o.a. iemand ontmoeten, de markt, de taxi, een feestje) met tik-om-te-luisteren regels, plus een bijpassend flashcard-deck.
 - **Lesa — korte leesteksten** op vier niveaus: lees eerst alleen het Papiamentu, tik dan de vertaling aan om te controleren (begrijpbare input is de snelste weg naar vlotheid).
 - **Shadow-modus**: hoor een zin en zeg hem meteen hardop na — met de echte Papiamentu-stem traint dit je uitspraak en ritme.
@@ -18,6 +18,8 @@ Een snelle, op leerwetenschap gebaseerde Papiamentu-leerapp voor Nederlandstalig
 - **Benaderde audio** via de Spaanse stem van je browser (er bestaat nog geen Papiamentu-stem) — aan/uit met de audioknop rechtsboven.
 
 Gebruikt de spelling van Curaçao/Bonaire (*Papiamentu*); het grammaticadeel legt de Arubaanse (*Papiamento*) verschillen uit. Licht & donker thema, geschikt voor je telefoon.
+
+**Als app installeren (telefoon & iPad).** Open de GitHub Pages-versie in je browser en zet hem op je beginscherm — op iPhone/iPad via de deelknop → **"Zet op beginscherm"**, op Android via het menu → **"App installeren"**. Je krijgt een echt app-icoon, de app opent schermvullend (zonder browserbalk) en werkt daarna **offline**: alle lessen en de echte stem worden op je apparaat bewaard. (Alleen de Claude-chat en synchronisatie hebben internet nodig.)
 
 **Meerdere apparaten?** De app kan automatisch synchroniseren tussen telefoon, iPad en laptop via een eigen gratis database — de installatie (± 10 min, geen programmeerwerk) staat stap voor stap in **[SETUP-SYNC.md](SETUP-SYNC.md)**. Daarnaast is er altijd een handmatige back-upcode, onderaan het Home-scherm.
 
@@ -46,4 +48,4 @@ Na een gesprek (in de in-app chat) kun je op **"Vraag Claude om feedback op je P
 3. Leer 8 nieuwe kaarten uit het volgende deck van je niveau.
 4. Sluit af met een snelle quiz.
 
-In dat tempo heb je alle 578 kaarten in ongeveer twaalf weken gestart — genoeg voor echte gesprekken. Combineer het met de bronnen met echte stemmen in het **Mas**-tabblad (Lora, uTalk, YouTube-lessen) om je oor te trainen. *Bon suerte — bo por!*
+In dat tempo heb je alle 621 kaarten in ongeveer twaalf weken gestart — genoeg voor echte gesprekken. Combineer het met de bronnen met echte stemmen in het **Mas**-tabblad (Lora, uTalk, YouTube-lessen) om je oor te trainen. *Bon suerte — bo por!*

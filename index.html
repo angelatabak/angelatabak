@@ -2,8 +2,17 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Siña Papiamentu</title>
+<meta name="description" content="Snel Papiamentu leren voor Nederlandstaligen — spaced repetition, spreken, dialogen en een echte stem.">
+<meta name="theme-color" content="#D95436">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Papiamentu">
 </head>
 <body>
 <style>
@@ -892,7 +901,53 @@ const DECKS=[
 ["trankilo","rustig"],
 ["drùk","druk","van het Nederlandse 'druk'"],
 ["turista","toerist"],
-["historia","geschiedenis / verhaal"]]}
+["historia","geschiedenis / verhaal"]]},
+{id:"konektor",name:"Verbindingswoorden",desc:"De lijm van echte zinnen",cards:[
+["pasobra","omdat / want"],
+["p'esei","daarom"],
+["anto","dan / dus"],
+["pero","maar"],
+["òf","of"],
+["tambe","ook"],
+["mientras","terwijl"],
+["ounke","hoewel"],
+["tòg","toch"],
+["ademas","bovendien"],
+["por ehèmpel","bijvoorbeeld","lett. 'por ehèmpel'"],
+["sinembargo","echter"],
+["promé","eerst / eerder"],
+["despues","daarna / later"],
+["asta","zelfs"],
+["manera","zoals / manier"],
+["komo","aangezien"]]},
+{id:"reakshon",name:"Reageren",desc:"Kort reageren in een gesprek",cards:[
+["Di bèrdat?","Echt waar?"],
+["Klaro ku sí","Natuurlijk wel"],
+["Mi ta kere ku sí","Ik denk van wel"],
+["Mi no ta kere","Ik denk het niet"],
+["Mi ta di akuerdo","Ik ben het ermee eens"],
+["Mi no tin idea","Ik heb geen idee"],
+["Ta depende","Dat hangt ervan af"],
+["Pa mi ta bon","Voor mij is het prima"],
+["Ami tambe","Ik ook"],
+["Ta bèrdat","Dat klopt"],
+["Mi gusta esei","Dat vind ik leuk"],
+["Mi no gusta esei","Dat vind ik niet leuk"],
+["Esei ta interesante","Dat is interessant"],
+["No ta nada","Het is niets / geen probleem"]]},
+{id:"kombersa",name:"Gesprek gaande houden",desc:"Doorvragen en verbinden",cards:[
+["Konta mi mas","Vertel me meer"],
+["Spera un ratu","Wacht even"],
+["un ratu","een momentje"],
+["Mi ta skucha","Ik luister"],
+["Pakiko?","Waarom?"],
+["Kon asina?","Hoezo?"],
+["Kiko a pasa?","Wat is er gebeurd?"],
+["Mi ke bisa…","Ik bedoel…"],
+["Lo mi konta bo","Ik zal het je vertellen"],
+["Nos ta papia despues","We praten later verder"],
+["Te otro biaha","Tot de volgende keer"],
+["biaha","keer / maal"]]}
 ];
 
 /* Course levels — group decks into a visible learning path */
@@ -900,11 +955,11 @@ const LEVELS=[
 {n:"Nivel 1",pap:"Fundeshi",nl:"De fundering — je eerste week",c:"#E8940A",
  ids:["survival","greet","dialog","particles","questions","numbers"]},
 {n:"Nivel 2",pap:"Konstruí",nl:"Bouwen — werkwoorden en volle zinnen",c:"#177E70",
- ids:["verbs1","glue","food","time","places","verbs2"]},
+ ids:["verbs1","glue","konektor","food","time","places","verbs2"]},
 {n:"Nivel 3",pap:"Amplia",nl:"Uitbreiden — de wereld om je heen",c:"#D95436",
  ids:["people","adj","beach","money","body","house","nature","emergency","weather2"]},
 {n:"Nivel 4",pap:"Konversá",nl:"Converseren — meepraten en vertellen",c:"#2C5B7B",
- ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","love","city"]}
+ ids:["feel","verbs3","adv2","work","travel","food2","past","party","compare","opinion","reakshon","kombersa","love","city"]}
 ];
 
 /* Dialog line: [speaker, papiamentu, dutch] */
@@ -1943,6 +1998,12 @@ facades();render();
 if(syncCfg()){syncPull();}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)syncPull();});
 setInterval(syncPull,60000);
+</script>
+<script>
+/* PWA: app installeerbaar + offline (alleen op https, dus niet in het lokale bestand) */
+if("serviceWorker" in navigator && location.protocol==="https:"){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});
+}
 </script>
 </body>
 </html>
