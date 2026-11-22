@@ -1557,8 +1557,8 @@ function aiSys(){return "Je bent "+CHAT.role+" en een geduldige Papiamentu-gespr
 function aiStart(i){CHAT={t:SCEN[i][0],role:SCEN[i][1],hist:[],busy:false,err:"",draft:""};aiSend(null);}
 async function aiSend(text){
   const C=CHAT;if(!C||C.busy)return;
-  C.err="";
-  if(text)C.hist.push({role:"user",content:text});
+  C.err="";C.evalerr="";
+  if(text){C.evalText="";C.boosted=null;C.hist.push({role:"user",content:text});}
   else if(!C.hist.length)C.hist.push({role:"user",content:"Start het gesprek nu met een korte begroeting in je rol."});
   if(C.hist.length>25)C.hist=[C.hist[0],...C.hist.slice(-20)];
   C.busy=true;aiRender();
@@ -1589,9 +1589,72 @@ async function aiSend(text){
   }
   C.busy=false;aiRender();
 }
+/* ---- Evaluatie: Claude beoordeelt je Papiamentu en zet je fouten klaar in Repasá ---- */
+async function aiEval(){
+  const C=CHAT;if(!C||C.busy)return;
+  const turns=C.hist.slice(1).filter(m=>m.role==="user").length;
+  if(turns<1){C.evalerr="Schrijf eerst zelf iets in het Papiamentu — dan kan Claude je gesprek beoordelen.";aiRender();return;}
+  C.busy=true;C.err="";C.evalerr="";aiRender();
+  const sys="Je bent een vriendelijke Papiamentu-docent voor een Nederlandstalige beginner. Hieronder staat een oefengesprek. Beoordeel ALLEEN wat de leerling (\"Leerling:\") in het Papiamentu schreef — niet wat de gesprekspartner zei. Schrijf in het Nederlands, kort en bemoedigend, met precies deze twee kopjes op een eigen regel:\n\nWat ging goed\n- (één of twee concrete punten)\n\nVerbeterpunten\n- fout -> correctie (met een heel korte uitleg)\n\nVerzin geen fouten; als er weinig mis was, zeg dat. Sluit af met één laatste regel die begint met \"OEFENWOORDEN:\" gevolgd door de Papiamentu-woorden of korte woordgroepen (grondvorm, Curaçaose/Bonaireaanse spelling) die de leerling nog moet oefenen: woorden die fout gingen, vermeden werden of duidelijk onbekend waren. Scheid ze met het teken |. Hooguit acht. Is er niets te oefenen, schrijf dan: OEFENWOORDEN: -";
+  const convo=C.hist.slice(1).map(m=>(m.role==="user"?"Leerling":"Gesprekspartner")+": "+m.content).join("\n");
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{
+      "content-type":"application/json",
+      "x-api-key":S.apikey,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-opus-4-8",max_tokens:800,system:sys,
+        messages:[{role:"user",content:"Hier is het oefengesprek:\n\n"+convo}]})});
+    const d=await r.json().catch(()=>null);
+    if(!r.ok)throw new Error(r.status===401?"Ongeldige API-sleutel.":r.status===429?"Even te veel verzoeken — wacht een paar seconden.":((d&&d.error&&d.error.message)||("Fout "+r.status)));
+    const txt=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+    if(!txt)throw new Error("Leeg antwoord ontvangen — probeer opnieuw.");
+    applyEval(txt);
+  }catch(e){
+    C.evalerr=(e instanceof TypeError)?
+      "Kan de Claude API niet bereiken (in de artifact-weergave is dit geblokkeerd — gebruik de GitHub Pages-versie).":
+      (e.message||"Onbekende fout");
+  }
+  C.busy=false;aiRender();
+}
+function applyEval(txt){
+  const C=CHAT;let feedback=txt,words=[];
+  const m=txt.match(/OEFENWOORDEN:\s*(.*)$/im);
+  if(m){feedback=txt.slice(0,m.index).trim();
+    const raw=(m[1]||"").trim();
+    if(raw&&raw!=="-")words=raw.split("|").map(s=>s.trim()).filter(Boolean).slice(0,8);}
+  C.evalText=feedback||txt;
+  C.boosted=boostWords(words);
+}
+/* zet de gemarkeerde woorden klaar als herhaling: bekende kaarten naar voren, onbekende als nieuwe kaart */
+function boostWords(words){
+  const now=Date.now(),hit=new Set();
+  words.forEach(w=>{
+    const t=norm(w);if(!t)return;
+    let ids=IDS.filter(id=>norm(ALL[id].p)===t);
+    if(!ids.length&&!t.includes(" "))ids=IDS.filter(id=>st(id)&&norm(ALL[id].p).split(" ").includes(t));
+    ids.slice(0,3).forEach(id=>hit.add(id));
+  });
+  const out=[];
+  hit.forEach(id=>{
+    const c=S.srs[id];
+    if(c)c.due=now; else S.srs[id]={ivl:0,ease:2.5,due:now,reps:0,lapses:0};
+    out.push({id,p:ALL[id].p,e:ALL[id].e,nw:!c});
+  });
+  if(out.length){S.chatwords=out.map(o=>o.id);save();}
+  return out;
+}
 function aiRender(){
   const C=CHAT;if(!C)return;
   const msgs=C.hist.slice(1);
+  const uturns=msgs.filter(m=>m.role==="user").length;
+  const evalHtml=C.evalText?C.evalText.split("\n").map(l=>
+    /^(wat ging goed|verbeterpunten|nog te oefenen)/i.test(l.trim())?`<b>${esc(l.trim())}</b>`:esc(l)
+  ).join("<br>"):"";
+  const bn=(C.boosted||[]).length;
+  const boostLine=C.evalText?(bn?
+    `<p class="subtle" style="margin:12px 0 0"><b>${bn}</b> woord${bn>1?"en staan":" staat"} nu klaar in Repasá — <button id="torev" style="text-decoration:underline;color:var(--sea-deep);cursor:pointer">meteen herhalen</button>.</p>`:
+    `<p class="subtle" style="margin:12px 0 0">Niets extra om terug te zetten — goed bezig!</p>`):"";
   $("#view").innerHTML=`
   <div class="sess-top"><button class="xbtn" id="quit" title="Stoppen">✕</button>
     <div style="flex:1"><span class="eyebrow">Papia ku Claude · rollenspel</span><br><b class="pap" style="font-size:17px">${esc(C.t)}</b></div></div>
@@ -1599,9 +1662,16 @@ function aiRender(){
     <span class="who2">${m.role==="user"?"Jij":"Claude"}</span><div class="txt">${esc(m.content)}</div></div>`).join("")}
   ${C.busy?`<div class="bub"><span class="who2">Claude</span><i class="subtle">ta pensa…</i></div>`:""}</div>
   ${C.err?`<div class="feedback no"><b>Fout.</b> ${esc(C.err)}</div>`:""}
-  <div class="typebox"><input id="ain" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…" ${C.busy?"disabled":""}><button id="asend" ${C.busy?"disabled":""}>Stuur</button></div>
+  ${C.evalText?`<div class="panel" style="margin-top:12px"><span class="eyebrow">Feedback van Claude op jouw Papiamentu</span>
+    <div style="margin-top:8px;line-height:1.55">${evalHtml}</div>${boostLine}</div>`:""}
+  ${C.evalerr?`<div class="feedback no" style="margin-top:10px"><b>Evaluatie lukte niet.</b> ${esc(C.evalerr)}</div>`:""}
+  ${uturns>=1&&!C.busy?`<button class="cta quiet" id="evalbtn" style="margin-top:12px">${C.evalText?"Nieuwe feedback vragen":"Vraag Claude om feedback op je Papiamentu"}</button>
+    <p class="subtle" style="margin:6px 0 0">Claude benoemt wat goed ging en wat beter kan, en zet je struikelwoorden klaar in Repasá (± 1 cent).</p>`:""}
+  <div class="typebox" style="margin-top:12px"><input id="ain" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Skirbi na papiamentu…" ${C.busy?"disabled":""}><button id="asend" ${C.busy?"disabled":""}>Stuur</button></div>
   <p class="subtle" style="margin-top:6px">Antwoorden komen van Claude Opus 4.8 via jouw eigen API-sleutel (± 1 cent per antwoord).</p>`;
   $("#quit").onclick=()=>{CHAT=null;render();};
+  const eb=$("#evalbtn");if(eb)eb.onclick=aiEval;
+  const tr=$("#torev");if(tr)tr.onclick=()=>{CHAT=null;TAB="review";render();};
   const inp=$("#ain");
   if(inp&&!C.busy){inp.value=C.draft||"";C.draft="";
     const go=()=>{const v=inp.value.trim();if(v)aiSend(v);};
@@ -1623,6 +1693,11 @@ function reviewHome(){
   </div>
   ${startedCount()?`<button class="cta quiet" id="all" style="margin-top:10px">Oefen 20 willekeurige geleerde kaarten</button>`:""}
   </div>`;
+  if(due.length&&S.chatwords&&S.chatwords.length){
+    const n=due.filter(id=>S.chatwords.includes(id)).length;
+    if(n){const p=document.createElement("p");p.className="subtle";p.style.margin="10px 0 0";
+      p.innerHTML=`Waarvan <b>${n}</b> uit je laatste gesprek met Claude — die oefen je nu gericht.`;
+      $("#view").querySelector(".panel").appendChild(p);}}
   if(due.length)$("#go").onclick=()=>startSession(due,"Herhaling");
   const a=$("#all");if(a)a.onclick=()=>startSession(shuffle(IDS.filter(id=>st(id))).slice(0,20),"Oefening");
 }
